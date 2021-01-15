@@ -1,0 +1,77 @@
+{
+    "meta": {
+        "version": 1,
+        "contributors": [
+            "kripesh101",
+            "http://pirate.monkeyness.com/online_pirate_translator"
+        ],
+        "name": "Pirate Speek",
+        "short_name": "pirate",
+        "complete": false
+    },
+    "strings": {
+        "mod_names": {
+            "optifine": "OptiFabric + OptiFine",
+            "sodium": "Sodium + Lithium + Phosphor"
+        },
+        "buttons": {
+            "create_profile": "Create Profile",
+            "check_updates": "Check fer Updates"
+        },
+        "general": {
+            "minecraft": "Minecraft",
+            "fabric": "Fabric",
+            "custom_profile": "Aitecraft",
+            "app_title": "Aitecraft Profile Manager"
+        },
+        "status": {
+            "checking_updates": "Checkin' fer Updates...",
+            "downloading_update": "Downloadin' Update... ({$done_mb} / {$total_mb})",
+            "updating": "Installin' Update..."
+        },
+        "labels": {
+            "ram": "RAM",
+            "xms": "JVM Stack Size",
+            "xmx": "JVM Maximum Size",
+            "jvm_args": "JVM Args"
+        },
+        "units": {
+            "mb": "MB",
+            "gb": "GB" 
+        },
+        "menu_bar": {
+            "import": {
+                "title": "Import",
+                "options": {
+                    "aitecraft_launcher": "from Aitecraft Launcher (Settin's, Resource Packs, Screenshots, Schematics 'n World Saves)",
+                    "general": "from Folder (Only Settin's 'n Resource Packs)"
+                }
+            },
+            "open": {
+                "title": "Open",
+                "options": {
+                    "mods_folder": "Mods Folder",
+                    "logs_folder": "Logs Folder",
+                    "resourcepack_folder": "Resource Packs Folder",
+                    "profile_folder": "Profile Folder"
+                }
+            },
+            "language": {
+                "title": "Language"
+            },
+            "aitecraft": { 
+                "title": "Aitecraft",
+                "options": {
+                    "change_skin": "Change Skin"
+                }
+            },
+            "about": {
+                "title": "About",
+                "options": {
+                    "version": "Version",
+                    "view_source": "View Source Code"
+                }
+            }
+        }
+    }
+}

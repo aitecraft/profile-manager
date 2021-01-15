@@ -1,0 +1,77 @@
+{
+    "meta": {
+        "version": 1,
+        "contributors": [
+            "https://www.upsidedowntext.com/",
+            "kripesh101"
+        ],
+        "name": "ɥsᴉlƃuƎ",
+        "short_name": "upd_en",
+        "complete": false
+    },
+    "strings": {
+        "mod_names": {
+            "optifine": "ǝuᴉℲᴉʇdO + ɔᴉɹqɐℲᴉʇdO",
+            "sodium": "ɹoɥdsoɥԀ + ɯnᴉɥʇᴉ˥ + ɯnᴉpoS"
+        },
+        "buttons": {
+            "create_profile": "ǝlᴉɟoɹԀ ǝʇɐǝɹƆ",
+            "check_updates": "sǝʇɐpd∩ ɹoɟ ʞɔǝɥƆ"
+        },
+        "general": {
+            "minecraft": "ʇɟɐɹɔǝuᴉW",
+            "fabric": "ɔᴉɹqɐℲ",
+            "custom_profile": "ʇɟɐɹɔǝʇᴉ∀",
+            "app_title": "ɹǝƃɐuɐW ǝlᴉɟoɹԀ ʇɟɐɹɔǝʇᴉ∀"
+        },
+        "status": {
+            "checking_updates": "˙˙˙sǝʇɐpd∩ ɹoɟ ƃuᴉʞɔǝɥƆ",
+            "downloading_update": "˙˙˙ǝʇɐpd∩ ƃuᴉpɐoluʍop ({$done_mb} / {$total_mb})",
+            "updating": "˙˙˙ǝʇɐpd∩ ƃuᴉllɐʇsuI"
+        },
+        "labels": {
+            "ram": "W∀ɹ",
+            "xms": "ǝzᴉS ʞɔɐʇS WΛſ",
+            "xmx": "ǝzᴉS ɯnɯᴉxɐW WΛſ",
+            "jvm_args": "sƃɹ∀ WΛſ"
+        },
+        "units": {
+            "mb": "qW",
+            "gb": "qפ" 
+        },
+        "menu_bar": {
+            "import": {
+                "title": "ʇɹodɯI",
+                "options": {
+                    "aitecraft_launcher": "(sǝʌɐS plɹoM puɐ sɔᴉʇɐɯǝɥɔS 'sʇoɥsuǝǝɹɔS 'sʞɔɐԀ ǝɔɹnosǝɹ 'sƃuᴉʇʇǝS) ɹǝɥɔunɐ˥ ʇɟɐɹɔǝʇᴉ∀ ɯoɹɟ",
+                    "general": "(sʞɔɐԀ ǝɔɹnosǝɹ puɐ sƃuᴉʇʇǝS ʎluO) ɹǝploℲ ɯoɹɟ"
+                }
+            },
+            "open": {
+                "title": "uǝdO",
+                "options": {
+                    "mods_folder": "ɹǝploℲ spoW",
+                    "logs_folder": "ɹǝploℲ sƃo˥",
+                    "resourcepack_folder": "ɹǝploℲ sʞɔɐԀ ǝɔɹnosǝɹ",
+                    "profile_folder": "ɹǝploℲ ǝlᴉɟoɹԀ"
+                }
+            },
+            "language": {
+                "title": "ǝƃɐnƃuɐ˥"
+            },
+            "aitecraft": { 
+                "title": "ʇɟɐɹɔǝʇᴉ∀",
+                "options": {
+                    "change_skin": "uᴉʞS ǝƃuɐɥƆ"
+                }
+            },
+            "about": {
+                "title": "ʇnoq∀",
+                "options": {
+                    "version": "uoᴉsɹǝΛ",
+                    "view_source": "ǝpoƆ ǝɔɹnoS ʍǝᴉΛ"
+                }
+            }
+        }
+    }
+}

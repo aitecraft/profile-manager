@@ -1,0 +1,29 @@
+{
+    "_comment": "This file is not meant to be changed, unless you are modifying the profile manager for a different modpack. To change settings, edit the prefs.json file instead. Values in this file are default values and should not be changed.",
+    
+    "api_root": "https://aitecraft.glitch.me/pm/api/",
+    "default_mc_dir": "$appdata\\.minecraft",
+    "default_lang": "en",
+    
+    "profile": {
+        "main": {
+            "name": "(should be provided by language file)",
+            "id": "aitecraft",
+            "dir": "$mc_dir\\aitecraft"
+        },
+        "jvm": {
+            "default_xmx": 2048,
+            "default_xms": 2048,
+            "args": "-XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M"
+        },
+        "misc": {
+            "_comment": "This only works with the Official Minecraft Launcher",
+            "encoded_icon_file": "aitecraft-icon-base64.txt"
+        }
+    },
+    
+    "proprietary": {
+        "change_skin_option": true,
+        "aitecraft_launcher_import": true
+    }
+}
