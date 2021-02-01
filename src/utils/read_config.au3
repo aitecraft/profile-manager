@@ -1,5 +1,6 @@
 #include-once
 #include <JSON.au3>
+#include "lang_manager.au3"
 
 Global Const $configFileName = "resources/config.json"
 Global Const $prefsFileName = "resources/prefs.json"
@@ -23,15 +24,19 @@ Func LoadConfig()
 EndFunc
 
 ; API Root URL
-Func Config_GetAPIRoot()
-    return json_get($config, '.api_root')
+Func Config_GetAPIEndpoint()
+    return json_get($config, '.api.endpoint')
+EndFunc
+
+Func Config_GetAPIIndex()
+    return json_get($config, '.api.index')
 EndFunc
 
 ; Minecraft Installation Directory
 Func Config_GetMCDir()
     ;Local $mc_dir = json_get($config, '.default_mc_dir')
     Local $mc_dir = GetPref('.mc_dir', '.default_mc_dir')
-    return StringReplace($mc_dir, '$appdata', @AppDataDir)
+    return StringReplace($mc_dir, '<appdata>', @AppDataDir)
 EndFunc
 
 Func Config_GetLang()
@@ -40,7 +45,7 @@ EndFunc
 
 ; Profile Name
 Func Config_Profile_GetName()
-    return json_get($config, '.profile.main.name')
+    return Lang('general.custom_profile')
 EndFunc
 
 ; Profile ID (just needs to be unique, used only by launcher)
@@ -51,7 +56,7 @@ EndFunc
 ; Profile Directory (mods, saves and settings files are all inside this directory)
 Func Config_Profile_GetDir()
     Local $profile_dir = json_get($config, '.profile.main.dir')
-    return StringReplace(StringReplace($profile_dir, '$mc_dir', Config_GetMCDir()), '$appdata', @AppDataDir)
+    return StringReplace(StringReplace($profile_dir, '<mc_dir>', Config_GetMCDir()), '<appdata>', @AppDataDir)
 EndFunc
 
 ; Maximum Memory Allocated to the Java VM.

@@ -75,6 +75,12 @@
         "todo": {
             "title": "Error",
             "message": "Feature not yet implemented!"
+        },
+        "errors": {
+            "unexpected_exit": {
+                "title": "Unexpected Error",
+                "message": "Encountered an unexpected and unhandled error! Program will now exit."
+            }
         }
     }
 }

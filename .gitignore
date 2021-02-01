@@ -4,3 +4,4 @@ src/main.exe
 src/aitecraft.ico
 src/resources/prefs.json
 src/resources/lang/experiments
+api_schemas/

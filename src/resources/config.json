@@ -1,15 +1,18 @@
 {
     "_comment": "This file is not meant to be changed, unless you are modifying the profile manager for a different modpack. To change settings, edit the prefs.json file instead. Values in this file are default values and should not be changed.",
     
-    "api_root": "https://aitecraft.glitch.me/pm/api/",
-    "default_mc_dir": "$appdata\\.minecraft",
+    "api": {
+        "endpoint": "https://aitecraft.glitch.me/pm/api/",
+        "index": "index.json"
+    },
+        
+    "default_mc_dir": "<appdata>\\.minecraft",
     "default_lang": "en",
     
     "profile": {
         "main": {
-            "name": "(should be provided by language file)",
             "id": "aitecraft",
-            "dir": "$mc_dir\\aitecraft"
+            "dir": "<mc_dir>\\aitecraft"
         },
         "jvm": {
             "default_xmx": 2048,

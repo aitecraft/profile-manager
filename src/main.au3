@@ -9,14 +9,19 @@
 #AutoIt3Wrapper_Res_LegalCopyright=MIT License
 #AutoIt3Wrapper_Res_Language=1033
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
+
 #include "utils/read_config.au3"
 #include "utils/lang_manager.au3"
 #include "gui/core.au3"
+#include "utils/api_helper.au3"
 
 ; Initialize
 LoadConfig()
 LoadLanguageList()
 LoadLang(Config_GetLang())
+
+; API
+InitAPIData()
 
 ; GUI
 InitGUI()
