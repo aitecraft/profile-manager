@@ -9,13 +9,15 @@
         "complete": true
     },
     "strings": {
-        "mod_names": {
+        "optimizer_mods": {
             "optifine": "OptiFabric + OptiFine",
-            "jellysquid": "Sodium + Lithium + Phosphor"
+            "caffeine_mc": "Sodium + Lithium + Phosphor",
+            "none": "None (Not Recommended)"
         },
         "buttons": {
             "create_profile": "Create Profile",
-            "check_updates": "Check for Updates"
+            "check_updates": "Check for Updates",
+            "initialize": "Initialize"
         },
         "general": {
             "minecraft": "Minecraft",
@@ -52,6 +54,7 @@
                     "mods_folder": "Mods Folder",
                     "logs_folder": "Logs Folder",
                     "resourcepack_folder": "Resource Packs Folder",
+                    "schematics_folder": "Schematics (Litematica) Folder",
                     "profile_folder": "Profile Folder"
                 }
             },
@@ -80,6 +83,10 @@
             "unexpected_exit": {
                 "title": "Unexpected Error",
                 "message": "Encountered an unexpected and unhandled error! Program will now exit."
+            },
+            "unsupported_api_format_version": {
+                "title": "Unsupported API Version",
+                "message": "This installation of Aitecraft Profile Manager does not support the specified API format. Please update to a newer version. Program will now exit."
             }
         }
     }

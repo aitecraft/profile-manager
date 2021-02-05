@@ -3,5 +3,7 @@ aitecraft-profile.json
 src/main.exe
 src/aitecraft.ico
 src/resources/prefs.json
+src/resources/client_data.json
 src/resources/lang/experiments
 api_schemas/
+revised_api/

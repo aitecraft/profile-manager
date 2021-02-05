@@ -59,6 +59,11 @@ Func MainWindowMenuBar()
     $menu_open_rp = GUICtrlCreateMenuItem(MLangO('resourcepack_folder'), $menu_open)
     GUICtrlSetOnEvent(-1, "Open_RP")
 
+    If Config_Proprietary_OpenSchematicsFolderOption() Then
+        $menu_open_schematics = GUICtrlCreateMenuItem(MLangO('schematics_folder'), $menu_open)
+        GUICtrlSetOnEvent(-1, "Open_Schematics")
+    EndIf
+    
     $menu_open_profile = GUICtrlCreateMenuItem(MLangO('profile_folder'), $menu_open)
     GUICtrlSetOnEvent(-1, "Open_Profile")
     ; ----------------------------
@@ -141,6 +146,10 @@ Func Open_Logs()
 EndFunc
 
 Func Open_RP()
+    NotImplementedMsgBox()
+EndFunc
+
+Func Open_Schematics()
     NotImplementedMsgBox()
 EndFunc
 

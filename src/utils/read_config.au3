@@ -84,6 +84,9 @@ Func Config_Proprietary_ChangeSkin()
 EndFunc
 
 Func Config_Proprietary_AitecraftLauncherImport()
-    $test = json_get($config, '.proprietary.aitecraft_launcher_import')
-    return $test
+    return json_get($config, '.proprietary.aitecraft_launcher_import')
+EndFunc
+
+Func Config_Proprietary_OpenSchematicsFolderOption()
+    return json_get($config, '.proprietary.open_schematics_folder_option')
 EndFunc

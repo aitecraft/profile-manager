@@ -2,7 +2,7 @@
     "_comment": "This file is not meant to be changed, unless you are modifying the profile manager for a different modpack. To change settings, edit the prefs.json file instead. Values in this file are default values and should not be changed.",
     
     "api": {
-        "endpoint": "https://aitecraft.glitch.me/pm/api/",
+        "endpoint": "https://aitecraft.glitch.me/pm/rev_api/",
         "index": "index.json"
     },
         
@@ -27,6 +27,7 @@
     
     "proprietary": {
         "change_skin_option": true,
-        "aitecraft_launcher_import": true
+        "aitecraft_launcher_import": true,
+        "open_schematics_folder_option": true
     }
 }

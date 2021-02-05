@@ -2,7 +2,7 @@
 #include <GUIConstantsEx.au3>
 #include "../utils/lang_manager.au3"
 #include "menu_bar.au3"
-#include "../utils/write_prefs.au3"
+#include "../utils/end_program.au3"
 
 Global $hMainGui = 0
 
@@ -22,12 +22,12 @@ Func HideMainWindow()
 EndFunc
 
 Func CloseApp()
-    Exit
+    EndProgram()
 EndFunc
 
 Func ReloadApp()
     HideMainWindow()
-    Prefs_UpdateFile()
+    EndProgram(False)
     GUIDelete($hMainGui)
     CreateMainWindow()
     ShowMainWindow()

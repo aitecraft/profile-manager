@@ -21,6 +21,6 @@ EndFunc
 
 Func Prefs_UpdateFile()
     $file = FileOpen($prefsFileName, $FO_OVERWRITE)
-    FileWrite($file, Json_Encode_Pretty($prefs, $JSON_PRETTY_PRINT, @TAB, "," & @CRLF, "," & @CRLF, ": " ))
+    FileWrite($file, Json_Encode_Pretty($prefs, $JSON_PRETTY_PRINT, "    ", "," & @CRLF, "," & @CRLF, ": " ))
     FileClose($file)
 EndFunc

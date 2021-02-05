@@ -2,9 +2,11 @@
 #include "read_config.au3"
 #include <JSON.au3>
 #include "../gui/extras.au3"
+#include "end_program.au3"
 
 Global $api_data
-Global $versions_api_data
+Global $files_api_data
+Global Const $supported_api_format_version = 1
 
 Func HttpGet($url, $data = "")
     Const $HTTP_STATUS_OK = 200
@@ -27,41 +29,57 @@ Func InitAPIData()
     $response = HttpGet($api_url)
     $api_data = Json_Decode($response)
 
-    ; Now load up the versions API as well.
-    $versions_api_url = API_GetVAPIEndpoint() & API_GetVAPIIndex()
-    $response = HttpGet($versions_api_url)
-    $versions_api_data = Json_Decode($response)
+    ; Ensure API Format Version is supported
+    If (APIGet("metadata.api_format_version") <> $supported_api_format_version) Then
+        UnsupportedAPIFormatVersionMsgBox()
+        EndProgram()
+    EndIf
+
+    ; Now load up the files API as well.
+    $files_api_url = API_GetFAPIEndpoint() & API_GetFAPIIndex()
+    $response = HttpGet($files_api_url)
+    $files_api_data = Json_Decode($response)
 EndFunc
 
 Func APIGet($path)
     Return Json_Get($api_data, "." & $path)
 EndFunc
 
-Func VAPIGet($path)
-    Return Json_Get($versions_api_data, "." & $path)
+Func FAPIGet($path)
+    Return Json_Get($files_api_data, "." & $path)
 EndFunc
 
-Func API_GetVAPIEndpoint()
-    return APIGet("versions_api.endpoint")
+Func API_GetFAPIEndpoint()
+    return APIGet("files_api.endpoint")
 EndFunc
 
-Func API_GetVAPIIndex()
-    return APIGet("versions_api.index")
+Func API_GetFAPIIndex()
+    return APIGet("files_api.index")
 EndFunc
 
-Func API_GetLatestFullVersionJSON()
+Func API_GetLatestVersion()
+    return APIGet("latest_version")
+EndFunc
+
+Func API_GetFabric($path)
+    return APIGet("fabric." & $path)
+EndFunc
+
+Func API_GetOptimizer($path)
+    return APIGet("optimizer_mods." & $path)
+EndFunc
+
+#cs
+ Func API_GetLatestFullVersionJSON()
     $latest_full_version = APIGet("modpack.latest.full.version")
+    return VAPI_GetSpecificVersionJSON($latest_full_version)
+EndFunc
 
-    $versions_array = Json_ObjGet($versions_api_data, "versions")
+Func VAPI_GetSpecificVersionJSON($version)
+    $versions_array = Json_ObjGet($files_api_data, "versions")
     For $i = 0 To UBound($versions_array) - 1
         $ver_num = Json_ObjGet($versions_array[$i], "version")
-        If ($ver_num == $latest_full_version) Then
-            ;$incremental_only = Json_ObjGet($versions_array[$i], "incremental_only")
-            
-            ;If ($incremental_only) Then
-                
-            ;EndIf
-
+        If ($ver_num == $version) Then
             $url = Json_ObjGet($versions_array[$i], "url")
             
             If Json_IsNull($url) Then
@@ -77,8 +95,11 @@ Func API_GetLatestFullVersionJSON()
             Return Json_Decode($response)
         EndIf
     Next
-
-
 EndFunc
 
-
+Func API_GetLatestIncrementalVersionJSON()
+    $latest_inc_version = APIGet("modpack.latest.incremental.version")
+    return VAPI_GetSpecificVersionJSON($latest_inc_version)
+EndFunc
+ 
+#ce

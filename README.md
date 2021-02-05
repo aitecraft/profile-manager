@@ -24,10 +24,10 @@ Other customizable options include: Default Language, Profile Icon (for Vanilla 
 
 Once again, all these significant changes can all be applied without any code changes.
 
-### OptiFine or jellysquid? Let your users decide.
+### OptiFine or CaffeineMC? Let your users decide.
 Stop having to worry about legal issues with shipping OptiFine in your modpacks. Let the Aitecraft Profile Manager handle it for you. The user will be guided by the Profile Manager to correctly download and setup OptiFine.
 
-Or would your users rather have jellysquid's mods? That's totally supported as well.
+Or would your users rather have CaffeineMC's mods? That's totally supported as well.
 
 ### Fabric First
 Fabric is at the forefront of Aitecraft Profile Manager. It will automagically download Fabric Installer and install any version of Fabric as instructed by your API! No more manually updating Fabric.
