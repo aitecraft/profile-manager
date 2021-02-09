@@ -4,6 +4,7 @@ src/main.exe
 src/aitecraft.ico
 src/resources/prefs.json
 src/resources/client_data.json
-src/resources/lang/experiments
+src/resources/lang/experiments/
+src/resources/fabric/
 api_schemas/
 revised_api/

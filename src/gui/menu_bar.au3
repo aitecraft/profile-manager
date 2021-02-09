@@ -6,6 +6,7 @@
 #include "extras.au3"
 #include "main_window.au3"
 #include "../utils/write_prefs.au3"
+#include "../utils/fabric_setup.au3"
 
 Global $option = ''
 
@@ -134,7 +135,8 @@ Func Import_Aitecraft()
 EndFunc
 
 Func Import_General()
-    NotImplementedMsgBox()
+    ;NotImplementedMsgBox()
+    Fabric_InstallOrUpdate()
 EndFunc
 
 Func Open_Mods()

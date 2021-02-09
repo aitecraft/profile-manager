@@ -1,7 +1,7 @@
 #include-once
 #include "read_config.au3"
+#include "json_io.au3"
 #include <JSON.au3>
-#include <FileConstants.au3>
 
 Func Prefs_SetLanguage($lang_id)
     Json_Put($prefs, '.language', $lang_id)
@@ -20,7 +20,5 @@ Func Prefs_SetMC_Dir($val)
 EndFunc
 
 Func Prefs_UpdateFile()
-    $file = FileOpen($prefsFileName, $FO_OVERWRITE)
-    FileWrite($file, Json_Encode_Pretty($prefs, $JSON_PRETTY_PRINT, "    ", "," & @CRLF, "," & @CRLF, ": " ))
-    FileClose($file)
+    Json_ToFile($prefsFileName, $prefs)
 EndFunc

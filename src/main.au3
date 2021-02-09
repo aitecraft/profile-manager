@@ -15,6 +15,7 @@
 #include "gui/core.au3"
 #include "utils/api_helper.au3"
 #include "utils/client_data.au3"
+;#include "utils/fabric_setup.au3"
 
 ; Initialize
 LoadConfig()
@@ -24,6 +25,8 @@ LoadLang(Config_GetLang())
 ; API
 CD_LoadData()
 InitAPIData()
+
+;Fabric_InstallOrUpdate()
 
 ; GUI
 InitGUI()

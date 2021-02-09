@@ -37,6 +37,8 @@
             "jvm_args": "JVM Args"
         },
         "units": {
+            "b": "B",
+            "kb": "KB",
             "mb": "MB",
             "gb": "GB" 
         },

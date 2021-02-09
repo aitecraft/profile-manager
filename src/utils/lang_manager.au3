@@ -1,4 +1,5 @@
 #include-once
+#include "json_io.au3"
 #include <JSON.au3>
 #include <MsgBoxConstants.au3>
 
@@ -11,7 +12,7 @@ Global $current_lang_id = ''
 
 ; Initialize Config Data
 Func LoadLanguageList()
-    $lang_info = json_decode(FileRead($languageListFileName))
+    $lang_info = Json_FromFile($languageListFileName)
     $languages = Json_ObjGet($lang_info, "languages")
 EndFunc
 
@@ -21,7 +22,7 @@ Func LoadLang($name)
         $id = Json_ObjGet($languages[$i], "id")
         If (StringCompare($name, $id) == 0) Then
             $loaded = True
-            $current_lang = json_decode(FileRead($languageFilesFolder & Json_ObjGet($languages[$i], "file_name")))
+            $current_lang = Json_FromFile($languageFilesFolder & Json_ObjGet($languages[$i], "file_name"))
             $current_lang_id = $id
             ExitLoop
         EndIf

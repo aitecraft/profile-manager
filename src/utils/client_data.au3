@@ -3,12 +3,13 @@
 #include <Array.au3>
 #include "../gui/extras.au3"
 #include "end_program.au3"
+#include "json_io.au3"
 
 Global Const $client_file_name = "resources/client_data.json"
 Global $client_data
 
 Func CD_LoadData()
-    $client_data = json_decode(FileRead($client_file_name))
+    $client_data = Json_FromFile($client_file_name)
     If $client_data == "" Then
         Local $files[0]
         CDSet('files', $files)
@@ -26,9 +27,7 @@ Func CDSet($path, $val)
 EndFunc
 
 Func CD_UpdateFile()
-    $file = FileOpen($client_file_name, $FO_OVERWRITE)
-    FileWrite($file, Json_Encode_Pretty($client_data, $JSON_PRETTY_PRINT, "    ", "," & @CRLF, "," & @CRLF, ": " ))
-    FileClose($file)
+    Json_ToFile($client_file_name, $client_data)
 EndFunc
 
 Func CD_GetFilesList()

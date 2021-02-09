@@ -1,6 +1,7 @@
 #include-once
 #include <JSON.au3>
 #include "lang_manager.au3"
+#include "json_io.au3"
 
 Global Const $configFileName = "resources/config.json"
 Global Const $prefsFileName = "resources/prefs.json"
@@ -19,8 +20,8 @@ EndFunc
 
 ; Initialize Config Data
 Func LoadConfig()
-    $config = json_decode(FileRead($configFileName))
-    $prefs = json_decode(FileRead($prefsFileName))
+    $config = Json_FromFile($configFileName)
+    $prefs = Json_FromFile($prefsFileName)
 EndFunc
 
 ; API Root URL

@@ -3,31 +3,15 @@
 #include <JSON.au3>
 #include "../gui/extras.au3"
 #include "end_program.au3"
+#include "json_io.au3"
 
 Global $api_data
 Global $files_api_data
 Global Const $supported_api_format_version = 1
 
-Func HttpGet($url, $data = "")
-    Const $HTTP_STATUS_OK = 200
-
-    Local $oHTTP = ObjCreate("WinHttp.WinHttpRequest.5.1")
-
-    $oHTTP.Open("GET", $url & "?" & $data, False)
-    If (@error) Then Return SetError(1, 0, 0)
-
-    $oHTTP.Send()
-    If (@error) Then Return SetError(2, 0, 0)
-
-    If ($oHTTP.Status <> $HTTP_STATUS_OK) Then Return SetError(3, 0, 0)
-
-    Return SetError(0, 0, $oHTTP.ResponseText)
-EndFunc
-
 Func InitAPIData()
     $api_url = Config_GetAPIEndpoint() & Config_GetAPIIndex()
-    $response = HttpGet($api_url)
-    $api_data = Json_Decode($response)
+    $api_data = Json_FromURL($api_url)
 
     ; Ensure API Format Version is supported
     If (APIGet("metadata.api_format_version") <> $supported_api_format_version) Then
@@ -37,8 +21,7 @@ Func InitAPIData()
 
     ; Now load up the files API as well.
     $files_api_url = API_GetFAPIEndpoint() & API_GetFAPIIndex()
-    $response = HttpGet($files_api_url)
-    $files_api_data = Json_Decode($response)
+    $files_api_data = Json_FromURL($files_api_url)
 EndFunc
 
 Func APIGet($path)
