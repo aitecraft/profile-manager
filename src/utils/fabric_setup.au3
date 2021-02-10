@@ -6,6 +6,8 @@
 #include "end_program.au3"
 #include "download.au3"
 #include "json_io.au3"
+#include "misc.au3"
+#include "launcher_profiles.au3"
 #include <JSON.au3>
 #include <Array.au3>
 
@@ -61,38 +63,7 @@ Func Fabric_ErrorOutAndExit()
     EndProgram()
 EndFunc
 
-Func Fabric_InstallerDWProgress($txt, $done, $total)
-    ConsoleWrite($txt & @CRLF)
-EndFunc
-
-Func Fabric_GetInstallerCommand()
-    ; Base
-    $command = "java -jar fabric-installer.jar client -noprofile "
-    
-    ; Add Directory (-dir) parameter
-    $command = $command & '-dir "' & Config_GetMCDir() & '" '
-    
-    ; Add Snapshot (-snapshot) parameter if targeting snapshots
-    If API_GetFabric("loader.snapshot") Then
-        $command = $command & "-snapshot "
-    EndIf
-
-    ; Add Fabric Loader version (-loader) parameter
-    $loader_version = API_GetFabric("loader.version")
-    If $loader_version = "latest" Then
-        $loader_version = $target_loader_version
-    EndIf
-    
-    $command = $command & '-loader "' & $loader_version & '" ' 
-    ; Add Minecraft version (-mcversion) parameter
-    $command = $command & '-mcversion "' & API_GetFabric("loader.mc_version") & '"'
-
-    ;ConsoleWrite($command)
-
-    return $command
-EndFunc
-
-Func Fabric_FixVersionJSON()
+Func Fabric_CreateVersionJSONAndJAR()
     MojangAPI_Init(API_GetFabric("loader.mc_version"))
     
     $libs = MojangAPI_Get("libraries")
@@ -105,7 +76,29 @@ Func Fabric_FixVersionJSON()
 
     MojangAPI_Put("type", "release")
 
-    Json_ToFile(Config_GetMCDir() & "/versions/" & FabricAPI_Get("id") & "/" & FabricAPI_Get("id") & ".json", $mc_version_data)
+    ; Create Folder if it doesnt exist
+    Local $folder = Config_GetMCDir() & "/versions/" & FabricAPI_Get("id") & "/"
+    
+    CreateFolder($folder)
+
+    ; Empty JAR File
+    FileWrite($folder & FabricAPI_Get("id") & ".jar", "")
+
+    ; Version JSON
+    Json_ToFile($folder & FabricAPI_Get("id") & ".json", $mc_version_data)
+EndFunc
+
+Func Fabric_UpdateProfile()
+    LauncherProfiles_Init()
+    
+    LauncherProfile_Put("name", Config_Profile_GetName())
+    LauncherProfile_Put("gameDir", Config_Profile_GetDir())
+    LauncherProfile_Put("javaArgs", Config_Profile_GetJVM_Args())
+    LauncherProfile_Put("icon", Config_Profile_GetIcon())
+    
+    LauncherProfile_Put("lastVersionId", FabricAPI_Get("id"))
+
+    LauncherProfiles_Update()
 EndFunc
 
 Func Fabric_InstallOrUpdate()
@@ -121,63 +114,10 @@ Func Fabric_InstallOrUpdate()
 
     ; Init Fabric's API Data
     FabricAPI_Init(API_GetFabric("loader.version"), API_GetFabric("loader.mc_version"))
-
-    ; Download fabric installer
-    $installer_src = API_GetFabric("installer.get_from")
-    $download_url = ""
-
-    If $installer_src = "api" Then
-        
-        $installer_list_json = Json_FromURL(API_GetFabric("installer.api_endpoint"))
-
-        If @error > 0 Then
-            Fabric_ErrorOutAndExit()
-        EndIf
-
-        If (API_GetFabric("installer.get_version") = "latest") Then
-            $download_url = Json_ObjGet($installer_list_json[0], "url") 
-        Else
-            $found = False
-            For $i = 0 To UBound($installer_list_json) - 1
-                If Json_ObjGet($installer_list_json[$i], "version") == API_GetFabric("installer.get_version") Then
-                    $download_url = Json_ObjGet($installer_list_json[$i], "url")
-                    $found = True
-                    ExitLoop
-                EndIf
-            Next
-
-            If Not ($found) Then
-                Fabric_ErrorOutAndExit()
-            EndIf
-        EndIf
-
-    ElseIf $installer_src == "url" Then
-        $download_url = API_GetFabric("url")
-        If Json_IsNull($download_url) Then
-            Fabric_ErrorOutAndExit()
-        EndIf
-    Else
-        Fabric_ErrorOutAndExit()
-    EndIf
-
-    ;#cs
-    $installer_dw_success = DownloadFile($download_url, "resources/fabric/fabric-installer.jar", Fabric_InstallerDWProgress)
-
-    If Not $installer_dw_success Then
-        ; Todo handle this error a bit better. At least a more specific error message
-        Fabric_ErrorOutAndExit()
-    EndIf
-    ;#ce
-
-    $fabric_installer_success = RunWait(@ComSpec & " /c " & Fabric_GetInstallerCommand(), "resources/fabric/", @SW_MAXIMIZE)
-
-    If @error > 0 Then
-        Fabric_ErrorOutAndExit()
-    EndIf
-
-    ; Todo also check return code
     
-    Fabric_FixVersionJSON()
+    Fabric_CreateVersionJSONAndJAR()
+
+    Fabric_UpdateProfile()
 
     Return True
 EndFunc

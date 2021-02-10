@@ -11,7 +11,8 @@
     
     "profile": {
         "main": {
-            "id": "aitecraft",
+            "id": "Aitecraft",
+            "name_is_id": true,
             "dir": "<mc_dir>\\aitecraft"
         },
         "jvm": {
@@ -20,8 +21,8 @@
             "args": "-XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M"
         },
         "misc": {
-            "_comment": "This only works with the Official Minecraft Launcher",
-            "encoded_icon_file": "aitecraft-icon-base64.txt"
+            "_comment": "This only works with the Official Minecraft Launcher. Path relative to main AU3/EXE.",
+            "encoded_icon_file": "resources/aitecraft-icon-base64.txt"
         }
     },
     

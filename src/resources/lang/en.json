@@ -17,7 +17,9 @@
         "buttons": {
             "create_profile": "Create Profile",
             "check_updates": "Check for Updates",
-            "initialize": "Initialize"
+            "initialize": "Initialize",
+            "ok": "OK",
+            "cancel": "Cancel"
         },
         "general": {
             "minecraft": "Minecraft",

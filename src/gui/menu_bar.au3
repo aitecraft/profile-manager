@@ -165,7 +165,7 @@ EndFunc
 
 Func About_Version()
     SMLang('about')
-    MsgBox($MB_OK + $MB_ICONINFORMATION, MLangO('version'), $version)
+    QuickOKMsgBox(MLangO('version'), $version)
 EndFunc
 
 Func About_ViewSrc()

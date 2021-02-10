@@ -19,6 +19,10 @@ Func Prefs_SetMC_Dir($val)
     Json_Put($prefs, '.mc_dir', $val)
 EndFunc
 
+Func Prefs_SetProfileNameIsSameAsProfileID($val)
+    Json_Put($prefs, '.profile_name_is_id', $val)
+EndFunc
+
 Func Prefs_UpdateFile()
     Json_ToFile($prefsFileName, $prefs)
 EndFunc

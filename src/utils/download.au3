@@ -3,17 +3,74 @@
 #include <Array.au3>
 #include <Math.au3>
 #include "lang_manager.au3"
+#include "misc.au3"
+#include "../gui/extras.au3"
+
+Func DownloadFileBulk(ByRef $url_list, ByRef $file_list, $progress_callback_func, $callback_timer = 400)
+    
+    ; Ensure Arrays are of same size, and also array size > 0
+    $list_size = UBound($url_list)
+    If ($list_size <> UBound($file_list)) Or ($list_size <= 0) Then
+        UnexpectedExitErrorMsgBox()
+        Exit
+    EndIf
+
+    ; Array of Download handles
+    Local $dw_handles[$list_size]
+
+    ; Start Downloading
+    For $i = 0 To $list_size - 1
+        CreateFolderFromFilePath($file_list[$i])
+
+        $dw_handles[$i] = InetGet($url_list[$i], $file_list[$i], 0, $INET_DOWNLOADBACKGROUND)
+    Next
+
+    ; Progress Callbacks
+    Do
+        Sleep($callback_timer)
+        Local $dw_bytes_raw = 0
+        Local $total_bytes_raw = 0
+        $done = True
+        
+        For $i = 0 To $list_size - 1
+            $dw_bytes_raw += InetGetInfo($dw_handles[$i], $INET_DOWNLOADREAD)
+            $total_bytes_raw += InetGetInfo($dw_handles[$i], $INET_DOWNLOADSIZE)
+            $done = $done And InetGetInfo($dw_handles[$i], $INET_DOWNLOADCOMPLETE)
+        Next
+
+        $dw = DownloadProgress_BytesToAppropriateUnit($dw_bytes_raw)
+        $total = DownloadProgress_BytesToAppropriateUnit($total_bytes_raw)
+        $done_percent = Round($dw_bytes_raw / $total_bytes_raw * 100, 1)
+
+        $progress_txt = $dw & " / " & $total & " (" & $done_percent & "%)" 
+
+        If $total_bytes_raw > 0 Then
+            $progress_callback_func($progress_txt, $dw_bytes_raw, $total_bytes_raw)
+        EndIf
+
+
+    Until $done
+
+    ; Check if any file failed to download
+    ; and close handles
+    For $i = 0 To $list_size - 1
+        Local $aData = InetGetInfo($dw_handles[$i])
+        If @error Or $aData[$INET_DOWNLOADSIZE] <= 0 Then
+            FileDelete($file_list[$i])
+            Return False ; If an error occurred then return from the function and delete the file.
+        EndIf
+        
+        InetClose($dw_handles[$i])
+    Next
+
+    ; If everything was downloaded, return true
+    Return True
+    
+EndFunc
 
 Func DownloadFile($url, $file, $progress_callback_func)
 
-    $lastSlashPos = _Max(StringInStr($file, "/", 1, -1), StringInStr($file, "\", 1, -1))
-    
-    If $lastSlashPos > 0 Then
-        $folder = StringLeft($file, $lastSlashPos)
-        If Not FileExists($folder) Then
-            DirCreate($folder)
-        EndIf
-    EndIf
+    CreateFolderFromFilePath($file)
 
     Local $dwHandle = InetGet($url, $file, 0, $INET_DOWNLOADBACKGROUND)
 
@@ -28,7 +85,7 @@ Func DownloadFile($url, $file, $progress_callback_func)
 
         $progress_txt = $dw & " / " & $total & " (" & $done_percent & "%)" 
 
-        If $total > 0 Then
+        If $total_bytes_raw > 0 Then
             $progress_callback_func($progress_txt, $dw_bytes_raw, $total_bytes_raw)
         EndIf
         

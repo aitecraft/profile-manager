@@ -3,9 +3,13 @@
 #include <FileConstants.au3>
 #include "http.au3"
 
+Func Json_ToString(ByRef $json_obj)
+    Return Json_Encode_Pretty($json_obj, $JSON_PRETTY_PRINT + $JSON_UNESCAPED_SLASHES, "    ", "," & @CRLF, "," & @CRLF, ": " )
+EndFunc
+
 Func Json_ToFile($path, ByRef $json_obj)
-    $file = FileOpen(Config_GetMCDir() & "/versions/" & FabricAPI_Get("id") & "/" & FabricAPI_Get("id") & ".json", $FO_OVERWRITE)
-    FileWrite($file, Json_Encode_Pretty($json_obj, $JSON_PRETTY_PRINT + $JSON_UNESCAPED_SLASHES, "    ", "," & @CRLF, "," & @CRLF, ": " ))
+    $file = FileOpen($path, $FO_OVERWRITE)
+    FileWrite($file, Json_ToString($json_obj))
     FileClose($file)
 EndFunc
 

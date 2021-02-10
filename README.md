@@ -30,7 +30,7 @@ Stop having to worry about legal issues with shipping OptiFine in your modpacks.
 Or would your users rather have CaffeineMC's mods? That's totally supported as well.
 
 ### Fabric First
-Fabric is at the forefront of Aitecraft Profile Manager. It will automagically download Fabric Installer and install any version of Fabric as instructed by your API! No more manually updating Fabric.
+Fabric is at the forefront of Aitecraft Profile Manager. It will automatically install any version of Fabric as instructed by your API! No more manually updating Fabric.
 
 ### User Preferences Storage
 User Preferences are stored permanently by the Profile Manager to make installing future updates far more easier.

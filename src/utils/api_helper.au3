@@ -6,7 +6,6 @@
 #include "json_io.au3"
 
 Global $api_data
-Global $files_api_data
 Global Const $supported_api_format_version = 1
 
 Func InitAPIData()
@@ -18,18 +17,10 @@ Func InitAPIData()
         UnsupportedAPIFormatVersionMsgBox()
         EndProgram()
     EndIf
-
-    ; Now load up the files API as well.
-    $files_api_url = API_GetFAPIEndpoint() & API_GetFAPIIndex()
-    $files_api_data = Json_FromURL($files_api_url)
 EndFunc
 
 Func APIGet($path)
     Return Json_Get($api_data, "." & $path)
-EndFunc
-
-Func FAPIGet($path)
-    Return Json_Get($files_api_data, "." & $path)
 EndFunc
 
 Func API_GetFAPIEndpoint()
