@@ -30,6 +30,11 @@ Func CD_UpdateFile()
     Json_ToFile($client_file_name, $client_data)
 EndFunc
 
+Func CD_ClearFilesList()
+    Local $empty_arr[0]
+    CDSet('files', $empty_arr)
+EndFunc
+
 Func CD_GetFilesList()
     return CDGet('files')
 EndFunc

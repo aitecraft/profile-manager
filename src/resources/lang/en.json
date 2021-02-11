@@ -19,7 +19,8 @@
             "check_updates": "Check for Updates",
             "initialize": "Initialize",
             "ok": "OK",
-            "cancel": "Cancel"
+            "cancel": "Cancel",
+            "start": "START"
         },
         "general": {
             "minecraft": "Minecraft",
@@ -91,6 +92,20 @@
             "unsupported_api_format_version": {
                 "title": "Unsupported API Version",
                 "message": "This installation of Aitecraft Profile Manager does not support the specified API format. Please update to a newer version. Program will now exit."
+            }
+        },
+        "update_done": {
+            "success": {
+                "title": "Success",
+                "message": "Update installed successfully!"
+            },
+            "uptodate": {
+                "title": "Up-to-date",
+                "message": "No update required! You have the latest version of the modpack installed."
+            },
+            "failure": {
+                "title": "Failed",
+                "message": "Update installation failed."
             }
         }
     }

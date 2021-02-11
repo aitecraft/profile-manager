@@ -135,8 +135,7 @@ Func Import_Aitecraft()
 EndFunc
 
 Func Import_General()
-    ;NotImplementedMsgBox()
-    Fabric_InstallOrUpdate()
+    NotImplementedMsgBox()
 EndFunc
 
 Func Open_Mods()

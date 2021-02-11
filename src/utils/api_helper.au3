@@ -6,20 +6,26 @@
 #include "json_io.au3"
 
 Global $api_data
-Global Const $supported_api_format_version = 1
+Global Const $supported_api_format_version = -10
+Global $api_initialized = False
 
 Func InitAPIData()
     $api_url = Config_GetAPIEndpoint() & Config_GetAPIIndex()
     $api_data = Json_FromURL($api_url)
+    $api_initialized = True
 
     ; Ensure API Format Version is supported
     If (APIGet("metadata.api_format_version") <> $supported_api_format_version) Then
         UnsupportedAPIFormatVersionMsgBox()
         EndProgram()
     EndIf
+
 EndFunc
 
 Func APIGet($path)
+    If Not $api_initialized Then
+        InitAPIData()
+    EndIf
     Return Json_Get($api_data, "." & $path)
 EndFunc
 

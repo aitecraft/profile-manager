@@ -8,3 +8,4 @@ src/resources/lang/experiments/
 src/resources/fabric/
 api_schemas/
 revised_api/
+bin/

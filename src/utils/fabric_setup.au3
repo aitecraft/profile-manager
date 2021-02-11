@@ -104,12 +104,12 @@ EndFunc
 Func Fabric_InstallOrUpdate()
     If (CD_GetVersion() >= API_GetFabric("last_updated_version")) Then
         ; Already up-to-date
-        Return False
+        Return True
     EndIf
 
     If Not (API_GetFabric("install")) Then
         ; Fabric installation disabled
-        Return False
+        Return True
     EndIf
 
     ; Init Fabric's API Data

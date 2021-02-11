@@ -8,6 +8,10 @@
 
 Func DownloadFileBulk(ByRef $url_list, ByRef $file_list, $progress_callback_func, $callback_timer = 400)
     
+    ;_ArrayDisplay($url_list)
+    ;_ArrayDisplay($file_list)
+    ;Exit
+
     ; Ensure Arrays are of same size, and also array size > 0
     $list_size = UBound($url_list)
     If ($list_size <> UBound($file_list)) Or ($list_size <= 0) Then
@@ -22,7 +26,8 @@ Func DownloadFileBulk(ByRef $url_list, ByRef $file_list, $progress_callback_func
     For $i = 0 To $list_size - 1
         CreateFolderFromFilePath($file_list[$i])
 
-        $dw_handles[$i] = InetGet($url_list[$i], $file_list[$i], 0, $INET_DOWNLOADBACKGROUND)
+        ;$dw_handles[$i] = InetGet($url_list[$i], $file_list[$i], 0, $INET_DOWNLOADBACKGROUND)
+        $dw_handles[$i] = InetGet($url_list[$i], $file_list[$i], 1, $INET_DOWNLOADBACKGROUND)
     Next
 
     ; Progress Callbacks
@@ -30,33 +35,52 @@ Func DownloadFileBulk(ByRef $url_list, ByRef $file_list, $progress_callback_func
         Sleep($callback_timer)
         Local $dw_bytes_raw = 0
         Local $total_bytes_raw = 0
-        $done = True
+
+        $skip_callback = False
         
         For $i = 0 To $list_size - 1
             $dw_bytes_raw += InetGetInfo($dw_handles[$i], $INET_DOWNLOADREAD)
-            $total_bytes_raw += InetGetInfo($dw_handles[$i], $INET_DOWNLOADSIZE)
-            $done = $done And InetGetInfo($dw_handles[$i], $INET_DOWNLOADCOMPLETE)
+            
+            $current_total_bytes_raw = InetGetInfo($dw_handles[$i], $INET_DOWNLOADSIZE)
+            
+            ; If any of the files' total size hasn't been loaded yet, skip sending any callbacks.
+            If $current_total_bytes_raw <= 0 Then
+                $skip_callback = True
+                ExitLoop
+            EndIf
+
+            $total_bytes_raw += $current_total_bytes_raw
         Next
 
-        $dw = DownloadProgress_BytesToAppropriateUnit($dw_bytes_raw)
-        $total = DownloadProgress_BytesToAppropriateUnit($total_bytes_raw)
-        $done_percent = Round($dw_bytes_raw / $total_bytes_raw * 100, 1)
+        If Not $skip_callback Then
+            $dw = DownloadProgress_BytesToAppropriateUnit($dw_bytes_raw)
+            $total = DownloadProgress_BytesToAppropriateUnit($total_bytes_raw)
+            $done_percent = Round($dw_bytes_raw / $total_bytes_raw * 100, 1)
 
-        $progress_txt = $dw & " / " & $total & " (" & $done_percent & "%)" 
-
-        If $total_bytes_raw > 0 Then
+            $progress_txt = $dw & " / " & $total & " (" & $done_percent & "%)" 
+            
             $progress_callback_func($progress_txt, $dw_bytes_raw, $total_bytes_raw)
         EndIf
 
-
+        $done = True
+        For $i = 0 To $list_size - 1
+            If Not InetGetInfo($dw_handles[$i], $INET_DOWNLOADCOMPLETE) Then
+                $done = False
+                ExitLoop
+            EndIf
+        Next
     Until $done
 
     ; Check if any file failed to download
     ; and close handles
     For $i = 0 To $list_size - 1
         Local $aData = InetGetInfo($dw_handles[$i])
-        If @error Or $aData[$INET_DOWNLOADSIZE] <= 0 Then
+        ;ConsoleWrite(@error & @CRLF)
+        ;ConsoleWrite($aData[$INET_DOWNLOADSIZE] & @CRLF)
+        If @error <> 0 Or $aData[$INET_DOWNLOADSIZE] <= 0 Then
             FileDelete($file_list[$i])
+            ;ConsoleWrite("ERROR triggered")
+            ;ConsoleWrite($file_list[$i])
             Return False ; If an error occurred then return from the function and delete the file.
         EndIf
         
