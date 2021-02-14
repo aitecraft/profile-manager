@@ -1,6 +1,7 @@
 #include-once
 #include "../utils/lang_manager.au3"
 #include "libs/CustomMsgBox.au3"
+#include "../utils/misc.au3"
 
 Func QuickOKMsgBox($title, $message, $flags = $mbInformation)
     xMsgBox($flags, $title, $message, Lang('buttons.ok'))
@@ -29,7 +30,18 @@ Func UnsupportedAPIFormatVersionMsgBox()
     ;MsgBox($MB_OK + $MB_ICONINFORMATION, Lang('errors.unsupported_api_format_version.title'), Lang('errors.unsupported_api_format_version.message'))
 EndFunc
 
-Func OpenFolder()
-
+Func OpenFolder($path)
+    If Not FileExists($path) Then
+        $yesno = xMsgBox($MB_YESNO + $mbInformation, Lang("folder_doesnt_exist.title"), Lang("folder_doesnt_exist.message"), Lang("buttons.yes"), Lang("buttons.no"))
+        If $yesno = 6 Then
+            CreateFolder($path)
+        Else
+            Return
+        EndIf
+    EndIf
+    Run("explorer /e, " & '"' & $path & '"')
 EndFunc
 
+Func OpenInBrowser($url)
+    ShellExecute($url)
+EndFunc

@@ -15,12 +15,14 @@
             "none": "None (Not Recommended)"
         },
         "buttons": {
-            "create_profile": "Create Profile",
+            "update_profile": "Update Profile",
             "check_updates": "Check for Updates",
             "initialize": "Initialize",
             "ok": "OK",
             "cancel": "Cancel",
-            "start": "START"
+            "start": "INSTALL / UPDATE",
+            "yes": "Yes",
+            "no": "No"
         },
         "general": {
             "minecraft": "Minecraft",
@@ -35,8 +37,7 @@
         },
         "labels": {
             "ram": "RAM",
-            "xms": "JVM Stack Size",
-            "xmx": "JVM Maximum Size",
+            "jvm_heap_size": "JVM Heap Size",
             "jvm_args": "JVM Args"
         },
         "units": {
@@ -100,13 +101,17 @@
                 "message": "Update installed successfully!"
             },
             "uptodate": {
-                "title": "Up-to-date",
+                "title": "Up-To-Date",
                 "message": "No update required! You have the latest version of the modpack installed."
             },
             "failure": {
                 "title": "Failed",
                 "message": "Update installation failed."
             }
+        },
+        "folder_doesnt_exist": {
+            "title": "Folder Not Found",
+            "message": "The folder you were trying to open does not exist. Would you like to create and then open the folder?"
         }
     }
 }

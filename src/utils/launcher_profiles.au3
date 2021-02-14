@@ -4,9 +4,12 @@
 #include "json_io.au3"
 
 Global $launcher_profiles
+Global $lp_initialized = False
 
 Func LauncherProfiles_Init()
-    $launcher_profiles = Json_FromFile(Config_GetMCDir() & "/launcher_profiles.json")
+    If Not $lp_initialized Then
+        $launcher_profiles = Json_FromFile(Config_GetMCDir() & "/launcher_profiles.json")
+    EndIf
 EndFunc
 
 Func LauncherProfile_Put($path, $value)

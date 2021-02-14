@@ -7,12 +7,8 @@ Func Prefs_SetLanguage($lang_id)
     Json_Put($prefs, '.language', $lang_id)
 EndFunc
 
-Func Prefs_SetJVM_XMX($val)
-    Json_Put($prefs, '.jvm_xmx', $val)
-EndFunc
-
-Func Prefs_SetJVM_XMS($val)
-    Json_Put($prefs, '.jvm_xms', $val)
+Func Prefs_SetJVM_Heap_Size($val)
+    Json_Put($prefs, '.jvm_heap_size', $val)
 EndFunc
 
 Func Prefs_SetMC_Dir($val)

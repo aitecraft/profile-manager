@@ -7,6 +7,7 @@
 #include "main_window.au3"
 #include "../utils/write_prefs.au3"
 #include "../utils/fabric_setup.au3"
+#include "../utils/api_helper.au3"
 
 Global $option = ''
 
@@ -139,7 +140,7 @@ Func Import_General()
 EndFunc
 
 Func Open_Mods()
-    NotImplementedMsgBox()
+    OpenFolder(Config_Profile_GetDir("mods"))
 EndFunc
 
 Func Open_Logs()
@@ -147,19 +148,19 @@ Func Open_Logs()
 EndFunc
 
 Func Open_RP()
-    NotImplementedMsgBox()
+    OpenFolder(Config_Profile_GetDir("resourcepacks"))
 EndFunc
 
 Func Open_Schematics()
-    NotImplementedMsgBox()
+    OpenFolder(Config_Profile_GetDir("schematics"))
 EndFunc
 
 Func Open_Profile()
-    NotImplementedMsgBox()
+    OpenFolder(Config_Profile_GetDir())
 EndFunc
 
 Func Aitecraft_ChangeSkin()
-    NotImplementedMsgBox()
+    OpenInBrowser(API_GetSkinChangerURL())
 EndFunc
 
 Func About_Version()
@@ -168,5 +169,5 @@ Func About_Version()
 EndFunc
 
 Func About_ViewSrc()
-    NotImplementedMsgBox()
+    OpenInBrowser(API_GetSrcRepoURL())
 EndFunc

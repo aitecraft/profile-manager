@@ -18,10 +18,7 @@ Func FAPI_Init()
     $files_api_data = Json_FromURL($files_api_url)
 EndFunc
 
-Func FAPI_GetFromFilePath($path)
-    ; Todo work on situation where this $path doesnt exist in the Files API
-    ; probably return with seterror or something
-    
+Func FAPI_GetFromFilePath($path)    
     $obj = Json_ObjGet($files_api_data, $path)
     
     If @error = 1 Then

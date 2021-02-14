@@ -1,4 +1,5 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#AutoIt3Wrapper_Outfile_type=a3x
 #AutoIt3Wrapper_Icon=aitecraft.ico
 #AutoIt3Wrapper_Change2CUI=y
 #AutoIt3Wrapper_Res_Description=Aitecraft Profile Manager

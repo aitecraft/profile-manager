@@ -2,6 +2,7 @@
 #include <JSON.au3>
 #include "lang_manager.au3"
 #include "json_io.au3"
+#include "misc.au3"
 
 Global Const $configFileName = "resources/config.json"
 Global Const $prefsFileName = "resources/prefs.json"
@@ -62,25 +63,24 @@ Func Config_Profile_GetID()
 EndFunc
 
 ; Profile Directory (mods, saves and settings files are all inside this directory)
-Func Config_Profile_GetDir()
+Func Config_Profile_GetDir($sub_dir = "")
     Local $profile_dir = json_get($config, '.profile.main.dir')
+    If $sub_dir <> "" Then
+        $profile_dir &= "\" & $sub_dir
+        NormalizePath($profile_dir)
+    EndIf
     return StringReplace(StringReplace($profile_dir, '<mc_dir>', Config_GetMCDir()), '<appdata>', @AppDataDir)
 EndFunc
 
-; Maximum Memory Allocated to the Java VM.
-Func Config_Profile_GetJVM_XMX()
-    return GetPref('.jvm_xmx', '.profile.jvm.default_xmx')
-EndFunc
-
-; Memory Allocated to the Java VM Stack.
-Func Config_Profile_GetJVM_XMS()
-    return GetPref('.jvm_xms', '.profile.jvm.default_xms')
+; Maximum Memory Allocated to the Java VM Heap.
+Func Config_Profile_GetJVM_Heap_Size()
+    return GetPref('.jvm_heap_size', '.profile.jvm.default_heap_size')
 EndFunc
 
 ; Arguments passed to the Java VM.
 Func Config_Profile_GetJVM_Args()
     $j_args = json_get($config, '.profile.jvm.args')
-    $mem_args = "-Xmx" & Config_Profile_GetJVM_XMX() & "M -Xms" & Config_Profile_GetJVM_XMS() & "M "
+    $mem_args = "-Xmx" & Config_Profile_GetJVM_Heap_Size() & "M -Xms" & Config_Profile_GetJVM_Heap_Size() & "M "
 
     return ($mem_args & $j_args)
 EndFunc

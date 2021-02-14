@@ -49,6 +49,14 @@ Func API_GetOptimizer($path)
     return APIGet("optimizer_mods." & $path)
 EndFunc
 
+Func API_GetSrcRepoURL()
+    return APIGet("other.source_repo")
+EndFunc
+
+Func API_GetSkinChangerURL()
+    return APIGet("other.skin_changer")
+EndFunc
+
 #cs
  Func API_GetLatestFullVersionJSON()
     $latest_full_version = APIGet("modpack.latest.full.version")
