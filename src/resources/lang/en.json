@@ -14,6 +14,10 @@
             "caffeine_mc": "Sodium + Lithium + Phosphor",
             "none": "None (Not Recommended)"
         },
+        "select_one": {
+            "title": "No Mod Chosen",
+            "message": "You must choose an Optimization Mod to use."
+        },
         "buttons": {
             "update_profile": "Update Profile",
             "check_updates": "Check for Updates",
@@ -22,7 +26,11 @@
             "cancel": "Cancel",
             "start": "INSTALL / UPDATE",
             "yes": "Yes",
-            "no": "No"
+            "no": "No",
+            "confirm": "Confirm",
+            "reinstall_fabric": "Re-install Fabric",
+            "verify_files": "Verify Files",
+            "change": "Change"
         },
         "general": {
             "minecraft": "Minecraft",
@@ -38,7 +46,11 @@
         "labels": {
             "ram": "RAM",
             "jvm_heap_size": "JVM Heap Size",
-            "jvm_args": "JVM Args"
+            "jvm_args": "JVM Args",
+            "profile_settings": "Launcher Profile Settings",
+            "misc_settings": "Miscellaneous Settings",
+            "optimizer_mod": "Optimizer Mod",
+            "pick_optimizer_mod": "Please choose an Optimization Mod you prefer from the options below:"
         },
         "units": {
             "b": "B",

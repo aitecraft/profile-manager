@@ -13,7 +13,13 @@ Global $prefs = 0
 Func GetPref($prefsPath, $configPath)
     $prefsVal = json_get($prefs, $prefsPath)
     If (@error == 1 And @extended == 0) Or Json_IsNull($prefsVal) Then
-        Return Json_Get($config, $configPath)
+        ; Doesn't exist in prefs JSON
+        ; Get default value from config
+        $confVal = Json_Get($config, $configPath)
+        ; Add value to prefs
+        Json_Put($prefs, $prefsPath, $confVal)
+        ; Return
+        Return $confVal
     Else
         Return $prefsVal
     EndIf

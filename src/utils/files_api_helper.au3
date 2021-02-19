@@ -47,6 +47,26 @@ Func FAPIFile_GetURL($obj)
     Return Json_ObjGet($obj, "url")
 EndFunc
 
+Func FAPIFile_CheckCondition($obj, $condition_key, $condition_value)
+    $condition_obj = Json_ObjGet($obj, "condition")
+
+    ; If condition key not found, then return true / download file anyway
+    ; This function returns false only if the condition key exists
+    If @error = 1 Then
+        Return True
+    EndIf
+
+    If Json_ObjGet($condition_obj, $condition_key) == $condition_value Then
+        ;ConsoleWrite($condition_value & @CRLF & Json_ObjGet($condition_obj, $condition_key) & @CRLF)
+        Return True
+    ElseIf @error = 1 Then
+        ; If $condition_key doesn't exist, ignore.
+        Return True
+    Else
+        Return False
+    EndIf
+EndFunc
+
 Func FAPIFile_InitDownloadList()
     Local $empty_arr[0]
     $files_download_list_urls = $empty_arr
@@ -80,8 +100,29 @@ Func FAPI_InstallOrUpdate()
     FAPI_Init()
     FAPIFile_InitDownloadList()
 
+    ; Apply condition filters
+    For $file In FAPI_GetAllFilePaths()
+        
+        $fobj = FAPI_GetFromFilePath($file)
+
+        ; Also ensure all files' Last Updated is not > API Latest Version
+        If API_GetLatestVersion() < FAPIFile_GetLastUpdated($fobj) Then
+            UnexpectedExitErrorMsgBox()
+            Exit
+        EndIf
+        
+        ; Condition Filter
+        If Not (FAPIFile_CheckCondition($fobj, "optimizer_mod", CD_GetOptimizerMod())) Then
+            FAPI_DeleteFromFilePath($file)
+        EndIf
+        
+    Next
+
+
+    ; Do the actual file check and downloading
     For $file In CD_GetFilesList()
         $obj = FAPI_GetFromFilePath($file)
+
         If $obj <> False Then
             If (CD_GetVersion() >= FAPIFile_GetLastUpdated($obj)) Then
                 ; We can just ignore this..., file exists and is up-to-date.
@@ -89,7 +130,6 @@ Func FAPI_InstallOrUpdate()
                 ; Maybe add check for whether or not file actually exists here later?
                 ; If missing then add to download list
             Else
-                ; TODO Add Condition checks
                 ; TODO Implement Special attributes (only download_from_browser for now)
                 ; File out-of-date.
                 ; Add to download list, and remove from FAPI.

@@ -14,11 +14,7 @@
 #include "utils/read_config.au3"
 #include "utils/lang_manager.au3"
 #include "gui/core.au3"
-#include "utils/api_helper.au3"
 #include "utils/client_data.au3"
-
-#include "utils/json_io.au3"
-#include "utils/files_api_helper.au3"
 
 ; Initialize
 LoadConfig()

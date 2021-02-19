@@ -2,12 +2,14 @@
 #include <JSON.au3>
 #include <FileConstants.au3>
 #include "http.au3"
+#include "misc.au3"
 
 Func Json_ToString(ByRef $json_obj)
     Return Json_Encode_Pretty($json_obj, $JSON_PRETTY_PRINT + $JSON_UNESCAPED_SLASHES, "    ", "," & @CRLF, "," & @CRLF, ": " )
 EndFunc
 
 Func Json_ToFile($path, ByRef $json_obj)
+    CreateFolderFromFilePath($path)
     $file = FileOpen($path, $FO_OVERWRITE)
     FileWrite($file, Json_ToString($json_obj))
     FileClose($file)

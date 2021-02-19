@@ -4,12 +4,15 @@
 #include "../gui/extras.au3"
 #include "end_program.au3"
 #include "json_io.au3"
+#include "read_config.au3"
 
-Global Const $client_file_name = "resources/client_data.json"
+Global Const $client_file_name = "client_data.json"
+Global $client_file_path
 Global $client_data
 
 Func CD_LoadData()
-    $client_data = Json_FromFile($client_file_name)
+    $client_file_path = Config_Profile_GetDir() & "/" & $client_file_name
+    $client_data = Json_FromFile($client_file_path)
     If $client_data == "" Then
         Local $files[0]
         CDSet('files', $files)
@@ -27,7 +30,7 @@ Func CDSet($path, $val)
 EndFunc
 
 Func CD_UpdateFile()
-    Json_ToFile($client_file_name, $client_data)
+    Json_ToFile($client_file_path, $client_data)
 EndFunc
 
 Func CD_ClearFilesList()
