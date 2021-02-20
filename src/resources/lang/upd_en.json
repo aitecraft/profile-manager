@@ -10,35 +10,38 @@
         "complete": false
     },
     "strings": {
-        "mod_names": {
+        "optimizer_mods": {
             "optifine": "ǝuᴉℲᴉʇdO + ɔᴉɹqɐℲᴉʇdO",
-            "sodium": "ɹoɥdsoɥԀ + ɯnᴉɥʇᴉ˥ + ɯnᴉpoS"
+            "caffeine_mc": "ɹoɥdsoɥԀ + ɯnᴉɥʇᴉ˥ + ɯnᴉpoS"
         },
         "buttons": {
-            "create_profile": "ǝlᴉɟoɹԀ ǝʇɐǝɹƆ",
-            "check_updates": "sǝʇɐpd∩ ɹoɟ ʞɔǝɥƆ",
-            "ok": "ʞO"
+            "update_profile": "ǝlᴉɟoɹԀ ǝʇɐpd∩",
+            "ok": "ʞO",
+            "cancel": "lǝɔuɐƆ",
+            "start": "Ǝ┴∀pԀ∩ / ˥˥∀┴SNI",
+            "yes": "sǝ⅄",
+            "no": "oN",
+            "confirm": "ɯɹᴉɟuoƆ",
+            "reinstall_fabric": "ɔᴉɹqɐℲ llɐʇsuᴉ-ǝɹ",
+            "verify_files": "sǝlᴉℲ ʎɟᴉɹǝΛ",
+            "change": "ǝƃuɐɥƆ"
         },
         "general": {
-            "minecraft": "ʇɟɐɹɔǝuᴉW",
-            "fabric": "ɔᴉɹqɐℲ",
             "custom_profile": "ʇɟɐɹɔǝʇᴉ∀",
             "app_title": "ɹǝƃɐuɐW ǝlᴉɟoɹԀ ʇɟɐɹɔǝʇᴉ∀"
         },
-        "status": {
-            "checking_updates": "˙˙˙sǝʇɐpd∩ ɹoɟ ƃuᴉʞɔǝɥƆ",
-            "downloading_update": "˙˙˙ǝʇɐpd∩ ƃuᴉpɐoluʍop ({$done_mb} / {$total_mb})",
-            "updating": "˙˙˙ǝʇɐpd∩ ƃuᴉllɐʇsuI"
-        },
         "labels": {
-            "ram": "W∀ɹ",
-            "xms": "ǝzᴉS ʞɔɐʇS WΛſ",
-            "xmx": "ǝzᴉS ɯnɯᴉxɐW WΛſ",
-            "jvm_args": "sƃɹ∀ WΛſ"
+            "jvm_heap_size": "ǝzᴉS dɐǝH WΛſ",
+            "profile_settings": "sƃuᴉʇʇǝS ǝlᴉɟoɹԀ ɹǝɥɔunɐ˥",
+            "misc_settings": "sƃuᴉʇʇǝS snoǝuɐllǝɔsᴉW",
+            "optimizer_mod": "poW ɹǝzᴉɯᴉʇdO",
+            "pick_optimizer_mod": ":ʍolǝq suoᴉʇdo ǝɥʇ ɯoɹɟ ɹǝɟǝɹd noʎ poW uoᴉʇɐzᴉɯᴉʇdO uɐ ǝsooɥɔ ǝsɐǝlԀ"
         },
         "units": {
+            "b": "q",
+            "kb": "qʞ",
             "mb": "qW",
-            "gb": "qפ" 
+            "gb": "qפ"
         },
         "menu_bar": {
             "import": {
@@ -54,6 +57,7 @@
                     "mods_folder": "ɹǝploℲ spoW",
                     "logs_folder": "ɹǝploℲ sƃo˥",
                     "resourcepack_folder": "ɹǝploℲ sʞɔɐԀ ǝɔɹnosǝɹ",
+                    "schematics_folder": "ɹǝploℲ (ɐɔᴉʇɐɯǝʇᴉ˥) sɔᴉʇɐɯǝɥɔS",
                     "profile_folder": "ɹǝploℲ ǝlᴉɟoɹԀ"
                 }
             },
@@ -72,6 +76,44 @@
                     "version": "uoᴉsɹǝΛ",
                     "view_source": "ǝpoƆ ǝɔɹnoS ʍǝᴉΛ"
                 }
+            }
+        },
+        "msgboxes": {
+            "select_one": {
+                "title": "uǝsoɥƆ poW oN",
+                "message": "˙ǝsn oʇ poW uoᴉʇɐzᴉɯᴉʇdO uɐ ǝsooɥɔ ʇsnɯ no⅄"
+            },
+            "todo": {
+                "title": "ɹoɹɹƎ",
+                "message": "¡pǝʇuǝɯǝldɯᴉ ʇǝʎ ʇou ǝɹnʇɐǝℲ"
+            },
+            "errors": {
+                "unexpected_exit": {
+                    "title": "ɹoɹɹƎ pǝʇɔǝdxǝu∩",
+                    "message": "˙ʇᴉxǝ ʍou llᴉʍ ɯɐɹƃoɹԀ ¡ɹoɹɹǝ pǝlpuɐɥun puɐ pǝʇɔǝdxǝun uɐ pǝɹǝʇunoɔuƎ"
+                },
+                "unsupported_api_format_version": {
+                    "title": "uoᴉsɹǝΛ IԀ∀ pǝʇɹoddnsu∩",
+                    "message": "˙ʇᴉxǝ ʍou llᴉʍ ɯɐɹƃoɹԀ ˙uoᴉsɹǝʌ ɹǝʍǝu ɐ oʇ ǝʇɐpdn ǝsɐǝlԀ ˙ʇɐɯɹoɟ IԀ∀ pǝᴉɟᴉɔǝds ǝɥʇ ʇɹoddns ʇou sǝop ɹǝƃɐuɐW ǝlᴉɟoɹԀ ʇɟɐɹɔǝʇᴉ∀ ɟo uoᴉʇɐllɐʇsuᴉ sᴉɥ┴"
+                }
+            },
+            "update_done": {
+                "success": {
+                    "title": "ssǝɔɔnS",
+                    "message": "¡ʎllnɟssǝɔɔns pǝllɐʇsuᴉ ǝʇɐpd∩"
+                },
+                "uptodate": {
+                    "title": "ǝʇɐp-o┴-d∩",
+                    "message": "˙pǝllɐʇsuᴉ ʞɔɐdpoɯ ǝɥʇ ɟo uoᴉsɹǝʌ ʇsǝʇɐl ǝɥʇ ǝʌɐɥ no⅄ ¡pǝɹᴉnbǝɹ ǝʇɐpdn oN"
+                },
+                "failure": {
+                    "title": "pǝlᴉɐℲ",
+                    "message": "˙pǝlᴉɐɟ uoᴉʇɐllɐʇsuᴉ ǝʇɐpd∩"
+                }
+            },
+            "folder_doesnt_exist": {
+                "title": "punoℲ ʇoN ɹǝploℲ",
+                "message": "¿ɹǝploɟ ǝɥʇ uǝdo uǝɥʇ puɐ ǝʇɐǝɹɔ oʇ ǝʞᴉl noʎ plnoM ˙ʇsᴉxǝ ʇou sǝop uǝdo oʇ ƃuᴉʎɹʇ ǝɹǝʍ noʎ ɹǝploɟ ǝɥ┴"
             }
         }
     }

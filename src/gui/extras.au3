@@ -8,7 +8,15 @@ Func QuickOKMsgBox($title, $message, $flags = $mbInformation)
 EndFunc
 
 Func QuickOKMsgBox_Lang($lang_str, $flags = $mbInformation)
-    QuickOKMsgBox(Lang($lang_str & '.title'), Lang($lang_str & '.message'), $flags)
+    QuickOKMsgBox(Lang('msgboxes.' & $lang_str & '.title'), Lang('msgboxes.' & $lang_str & '.message'), $flags)
+EndFunc
+
+Func QuickYesNoMsgBox($title, $message, $flags = $mbInformation)
+    Return xMsgBox($MB_YESNO + $flags, $title, $message, Lang("buttons.yes"), Lang("buttons.no"))
+EndFunc
+
+Func QuickYesNoMsgBox_Lang($lang_str, $flags = $mbInformation)
+    Return QuickYesNoMsgBox(Lang('msgboxes.' & $lang_str & '.title'), Lang('msgboxes.' & $lang_str & '.message'), $flags)
 EndFunc
 
 Func NotImplementedMsgBox()
@@ -32,7 +40,7 @@ EndFunc
 
 Func OpenFolder($path)
     If Not FileExists($path) Then
-        $yesno = xMsgBox($MB_YESNO + $mbInformation, Lang("folder_doesnt_exist.title"), Lang("folder_doesnt_exist.message"), Lang("buttons.yes"), Lang("buttons.no"))
+        $yesno = QuickYesNoMsgBox_Lang("folder_doesnt_exist")
         If $yesno = 6 Then
             CreateFolder($path)
         Else

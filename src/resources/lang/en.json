@@ -11,17 +11,10 @@
     "strings": {
         "optimizer_mods": {
             "optifine": "OptiFabric + OptiFine",
-            "caffeine_mc": "Sodium + Lithium + Phosphor",
-            "none": "None (Not Recommended)"
-        },
-        "select_one": {
-            "title": "No Mod Chosen",
-            "message": "You must choose an Optimization Mod to use."
+            "caffeine_mc": "Sodium + Lithium + Phosphor"
         },
         "buttons": {
             "update_profile": "Update Profile",
-            "check_updates": "Check for Updates",
-            "initialize": "Initialize",
             "ok": "OK",
             "cancel": "Cancel",
             "start": "INSTALL / UPDATE",
@@ -33,20 +26,11 @@
             "change": "Change"
         },
         "general": {
-            "minecraft": "Minecraft",
-            "fabric": "Fabric",
             "custom_profile": "Aitecraft",
             "app_title": "Aitecraft Profile Manager"
         },
-        "status": {
-            "checking_updates": "Checking for Updates...",
-            "downloading_update": "Downloading Update... ({$done_mb} / {$total_mb})",
-            "updating": "Installing Update..."
-        },
         "labels": {
-            "ram": "RAM",
             "jvm_heap_size": "JVM Heap Size",
-            "jvm_args": "JVM Args",
             "profile_settings": "Launcher Profile Settings",
             "misc_settings": "Miscellaneous Settings",
             "optimizer_mod": "Optimizer Mod",
@@ -93,37 +77,43 @@
                 }
             }
         },
-        "todo": {
-            "title": "Error",
-            "message": "Feature not yet implemented!"
-        },
-        "errors": {
-            "unexpected_exit": {
-                "title": "Unexpected Error",
-                "message": "Encountered an unexpected and unhandled error! Program will now exit."
+        "msgboxes": {
+            "select_one": {
+                "title": "No Mod Chosen",
+                "message": "You must choose an Optimization Mod to use."
             },
-            "unsupported_api_format_version": {
-                "title": "Unsupported API Version",
-                "message": "This installation of Aitecraft Profile Manager does not support the specified API format. Please update to a newer version. Program will now exit."
+            "todo": {
+                "title": "Error",
+                "message": "Feature not yet implemented!"
+            },
+            "errors": {
+                "unexpected_exit": {
+                    "title": "Unexpected Error",
+                    "message": "Encountered an unexpected and unhandled error! Program will now exit."
+                },
+                "unsupported_api_format_version": {
+                    "title": "Unsupported API Version",
+                    "message": "This installation of Aitecraft Profile Manager does not support the specified API format. Please update to a newer version. Program will now exit."
+                }
+            },
+            "update_done": {
+                "success": {
+                    "title": "Success",
+                    "message": "Update installed successfully!"
+                },
+                "uptodate": {
+                    "title": "Up-To-Date",
+                    "message": "No update required! You have the latest version of the modpack installed."
+                },
+                "failure": {
+                    "title": "Failed",
+                    "message": "Update installation failed."
+                }
+            },
+            "folder_doesnt_exist": {
+                "title": "Folder Not Found",
+                "message": "The folder you were trying to open does not exist. Would you like to create and then open the folder?"
             }
-        },
-        "update_done": {
-            "success": {
-                "title": "Success",
-                "message": "Update installed successfully!"
-            },
-            "uptodate": {
-                "title": "Up-To-Date",
-                "message": "No update required! You have the latest version of the modpack installed."
-            },
-            "failure": {
-                "title": "Failed",
-                "message": "Update installation failed."
-            }
-        },
-        "folder_doesnt_exist": {
-            "title": "Folder Not Found",
-            "message": "The folder you were trying to open does not exist. Would you like to create and then open the folder?"
         }
     }
 }

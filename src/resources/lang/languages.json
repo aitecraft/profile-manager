@@ -6,19 +6,9 @@
             "name": "English"
         },
         {
-            "id": "pirate",
-            "file_name": "arr.json",
-            "name": "Pirate Speek"
-        },
-        {
             "id": "upd_en",
             "file_name": "upd_en.json",
             "name": "ɥsᴉlƃuƎ"
-        },
-        {
-            "id": "lol_en",
-            "file_name": "lol_en.json",
-            "name": "LOLCAT"
         }
     ],
     "fallback": {
