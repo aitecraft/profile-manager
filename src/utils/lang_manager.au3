@@ -44,6 +44,53 @@ Func Lang($term)
     EndIf
 EndFunc
 
+Func LangNum($num)
+    ; Convert to string
+    $num_str = String($num)
+
+    If Not (StringIsInt($num_str) Or StringIsFloat($num_str)) Then
+        Return "[error-localizing-number]"
+    EndIf
+
+    ; Localize
+    $output = LangStringNum($num_str)
+    
+    ; Optional reverse
+    If LangJsonNum("reverse.reverse_final_string") Then $output = StringReverse($output)
+
+    Return $output
+EndFunc
+
+Func LangJsonNum($term)
+    Return Json_Get($current_lang, ".numbers." & $term)
+EndFunc
+
+Func LangStringNum($num_str)
+    $ret = ""
+    For $char In StringSplit($num_str, "", 2)
+        If $char == "-" Then
+            $new = LangJsonNum("negative_notation")
+        ElseIf $char == "." Then
+            $new = LangJsonNum("decimal_point_notation")
+        Else
+            $new = LangJsonNum("characters[" & $char & "]")
+        EndIf
+        $ret = $ret & $new
+    Next
+    Return $ret
+EndFunc
+
+Func LangDynamic($term, $dict)
+    $txt = Lang($term)
+
+    For $key In $dict
+        $search_term = "$<" & $key & ">"
+        $txt = StringReplace($txt, $search_term, $dict.Item($key))
+    Next
+
+    Return $txt
+EndFunc
+
 Func GetLangNamesList()
     Local $lang_list[UBound($languages)]
 

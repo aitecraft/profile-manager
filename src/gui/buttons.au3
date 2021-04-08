@@ -12,6 +12,7 @@ Func OnClick_StartButton()
     ElseIf $res Then
         QuickOKMsgBox_Lang("update_done.success")
     Else
+        ;0x10 - Error Icon
         QuickOKMsgBox_Lang("update_done.failure",0x10)
     EndIf
 EndFunc

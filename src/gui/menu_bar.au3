@@ -144,7 +144,7 @@ Func Open_Mods()
 EndFunc
 
 Func Open_Logs()
-    NotImplementedMsgBox()
+    OpenFolder(Config_Profile_GetDir("logs"))
 EndFunc
 
 Func Open_RP()
