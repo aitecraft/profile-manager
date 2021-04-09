@@ -43,7 +43,10 @@ Func UpdateProfileButtonClicked()
 EndFunc
 
 Func GetLabelText()
-    Return Config_Profile_GetJVM_Heap_Size() & " " & Lang("units.mb")
+    $ob = ObjCreate("Scripting.Dictionary")
+    $ob.Add("mem_size_amount", LangNum(Config_Profile_GetJVM_Heap_Size()))
+    $ob.Add("mem_size_unit", Lang("units.mb"))
+    Return LangDynamic("labels_dynamic.mem_size", $ob)
 EndFunc
 
 Func MemSliderMoved()

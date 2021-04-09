@@ -83,19 +83,20 @@ Func FAPIFile_AddToDownloadList($file, $url)
     EndIf
 EndFunc
 
-Func FAPIFile_DownloadCallback($txt, $dw, $total)
-    ConsoleWrite($txt & @CRLF)
+Func FAPIFile_DownloadCallback($downloaded_count, $total_count, $downloaded_size, $total_broken, $total_size)
+    ConsoleWrite($downloaded_size & @CRLF)
 EndFunc
 
-Func FAPIFile_DownloadFromList()
+Func FAPIFile_DownloadFromList($downloadCallback = "")
     If UBound($files_download_list_urls) <= 0 Then
         Return True
     EndIf
 
-    Return DownloadFileBulk($files_download_list_urls, $files_download_list_file_paths, FAPIFile_DownloadCallback)
+    If Not IsFunc($downloadCallback) Then $downloadCallback = FAPIFile_DownloadCallback
+    Return DownloadFileBulk($files_download_list_urls, $files_download_list_file_paths, $downloadCallback)
 EndFunc
 
-Func FAPI_InstallOrUpdate()
+Func FAPI_InstallOrUpdate($downloadCallback = "")
 
     FAPI_Init()
     FAPIFile_InitDownloadList()
@@ -158,5 +159,5 @@ Func FAPI_InstallOrUpdate()
     Next
 
     ; Start Download
-    Return FAPIFile_DownloadFromList()
+    Return FAPIFile_DownloadFromList($downloadCallback)
 EndFunc

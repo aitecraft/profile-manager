@@ -6,7 +6,7 @@
 #include "../gui/optimizer_mod.au3"
 #include <JSON.au3>
 
-Func InstallOrUpdate($forced = False)
+Func InstallOrUpdate($forced = False, $filesDownloadCallback = "")
     ; If Optimizer Mod is set to null, make user set optimizer mod first.
     $om_val = CD_GetOptimizerMod()
     If Json_IsNull($om_val) Or $om_val == "" Then
@@ -44,7 +44,7 @@ Func InstallOrUpdate($forced = False)
     EndIf
     ;#ce
 
-    $files = FAPI_InstallOrUpdate()
+    $files = FAPI_InstallOrUpdate($filesDownloadCallback)
     If $files Then
         CD_SetVersion(API_GetLatestVersion())
     Else

@@ -33,42 +33,36 @@ Func DownloadFileBulk(ByRef $url_list, ByRef $file_list, $progress_callback_func
     ; Progress Callbacks
     Do
         Sleep($callback_timer)
-        Local $dw_bytes_raw = 0
         Local $total_bytes_raw = 0
-
-        $skip_callback = False
         
-        For $i = 0 To $list_size - 1
-            $dw_bytes_raw += InetGetInfo($dw_handles[$i], $INET_DOWNLOADREAD)
-            
+        $total_raw_broken = False
+        
+        For $i = 0 To $list_size - 1            
             $current_total_bytes_raw = InetGetInfo($dw_handles[$i], $INET_DOWNLOADSIZE)
             
-            ; If any of the files' total size hasn't been loaded yet, skip sending any callbacks.
+            ; If any of the files' total size hasn't been loaded yet, let the callback function know.
             If $current_total_bytes_raw <= 0 Then
-                $skip_callback = True
+                $total_raw_broken = True
                 ExitLoop
             EndIf
-
+            
             $total_bytes_raw += $current_total_bytes_raw
         Next
-
-        If Not $skip_callback Then
-            $dw = DownloadProgress_BytesToAppropriateUnit($dw_bytes_raw)
-            $total = DownloadProgress_BytesToAppropriateUnit($total_bytes_raw)
-            $done_percent = Round($dw_bytes_raw / $total_bytes_raw * 100, 1)
-
-            $progress_txt = $dw & " / " & $total & " (" & $done_percent & "%)" 
-            
-            $progress_callback_func($progress_txt, $dw_bytes_raw, $total_bytes_raw)
-        EndIf
-
+        
+        
         $done = True
+        $dw_files_count = 0
+        Local $dw_bytes_raw = 0
         For $i = 0 To $list_size - 1
-            If Not InetGetInfo($dw_handles[$i], $INET_DOWNLOADCOMPLETE) Then
+            $dw_bytes_raw += InetGetInfo($dw_handles[$i], $INET_DOWNLOADREAD)
+            If InetGetInfo($dw_handles[$i], $INET_DOWNLOADCOMPLETE) Then
+                $dw_files_count = $dw_files_count + 1
+            Else
                 $done = False
-                ExitLoop
             EndIf
         Next
+
+        $progress_callback_func($dw_files_count, $list_size, BytesToAppropriateUnit($dw_bytes_raw), $total_raw_broken, BytesToAppropriateUnit($total_bytes_raw))
     Until $done
 
     ; Check if any file failed to download
@@ -103,8 +97,8 @@ Func DownloadFile($url, $file, $progress_callback_func)
         $dw_bytes_raw = InetGetInfo($dwHandle, $INET_DOWNLOADREAD)
         $total_bytes_raw = InetGetInfo($dwHandle, $INET_DOWNLOADSIZE)
 
-        $dw = DownloadProgress_BytesToAppropriateUnit($dw_bytes_raw)
-        $total = DownloadProgress_BytesToAppropriateUnit($total_bytes_raw)
+        $dw = BytesToAppropriateUnit($dw_bytes_raw)
+        $total = BytesToAppropriateUnit($total_bytes_raw)
         $done_percent = Round($dw_bytes_raw / $total_bytes_raw * 100, 1)
 
         $progress_txt = $dw & " / " & $total & " (" & $done_percent & "%)" 
@@ -129,7 +123,7 @@ Func DownloadFile($url, $file, $progress_callback_func)
     Return True
 EndFunc
 
-Func DownloadProgress_BytesToAppropriateUnit($bytes)
+Func BytesToAppropriateUnit($bytes)
     Local $unit = ""
 
     If $bytes < 1024 Then
@@ -149,6 +143,9 @@ Func DownloadProgress_BytesToAppropriateUnit($bytes)
         $unit = Lang("units.gb")
     EndIf
 
-    return Round($bytes, 2) & " " & $unit
-
+    $ob = ObjCreate("Scripting.Dictionary")
+    $ob.Add("mem_size_amount", LangNum(Round($bytes, 2)))
+    $ob.Add("mem_size_unit", $unit)
+    
+    return LangDynamic("labels_dynamic.mem_size", $ob)
 EndFunc

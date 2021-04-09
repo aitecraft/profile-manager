@@ -10,6 +10,7 @@
 #include "launcher_profiles.au3"
 #include <JSON.au3>
 #include <Array.au3>
+#include <FileConstants.au3>
 
 Global $fabric_loader_version_data
 Global $mc_version_data
@@ -82,7 +83,9 @@ Func Fabric_CreateVersionJSONAndJAR()
     CreateFolder($folder)
 
     ; Empty JAR File
-    FileWrite($folder & FabricAPI_Get("id") & ".jar", "")
+    $jar_file = FileOpen($folder & FabricAPI_Get("id") & ".jar", $FO_OVERWRITE)
+    FileWrite($jar_file, "")
+    FileClose($jar_file)
 
     ; Version JSON
     Json_ToFile($folder & FabricAPI_Get("id") & ".json", $mc_version_data)
