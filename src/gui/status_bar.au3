@@ -1,14 +1,11 @@
 #include-once
-#include "../utils/update.au3"
-#include "../utils/lang_manager.au3"
-#include "extras.au3"
 #include <StaticConstants.au3>
 
 Global $progress_bar
 Global $progress_label_1
 Global $progress_label_2
 
-Func DownloadCallback($downloaded_count, $total_count, $downloaded_size, $total_broken, $total_size)
+Func Status_DownloadCallback($downloaded_count, $total_count, $downloaded_size, $total_broken, $total_size)
     ; Unhide Progress Bar
     GUICtrlSetState($progress_bar, 16)
     
@@ -34,35 +31,23 @@ Func DownloadCallback($downloaded_count, $total_count, $downloaded_size, $total_
     EndIf
 EndFunc
 
-Func OnClick_StartButton()
+Func Status_SetPleaseWait()
     GUICtrlSetData($progress_label_1, Lang("labels.please_wait"))
+EndFunc
 
-    $res = InstallOrUpdate(False, DownloadCallback)
-
+Func Status_Hide()
     ; Hide everything
     GUICtrlSetState($progress_bar, 32)
     GUICtrlSetData($progress_label_1, "")
     GUICtrlSetData($progress_label_2, "")
-
-    If $res == "uptodate" Then
-        QuickOKMsgBox_Lang("update_done.uptodate")
-    ElseIf $res Then
-        QuickOKMsgBox_Lang("update_done.success")
-    Else
-        ;0x10 - Error Icon
-        QuickOKMsgBox_Lang("update_done.failure",0x10)
-    EndIf
 EndFunc
 
-Func MainWindowUpdateGUI()
-    $startButton = GUICtrlCreateButton(Lang("buttons.start"), 100, 20, 150, 80)
-    GUICtrlSetOnEvent(-1, "OnClick_StartButton")
-
-    $progress_bar = GUICtrlCreateProgress(21, 110, 308, 20)
+Func MainWindowStatusBar($top)
+    $progress_bar = GUICtrlCreateProgress(21, $top, 308, 20)
     ; Hide the progress bar
-    GUICtrlSetState(-1, 32)
+    GUICtrlSetState($progress_bar, 32)
 
-    $progress_label_1 = GUICtrlCreateLabel("", 5, 140, 330, 15, BitOR($SS_CENTER, $SS_CENTERIMAGE))
+    $progress_label_1 = GUICtrlCreateLabel("", 5, $top + 30, 330, 15, BitOR($SS_CENTER, $SS_CENTERIMAGE))
 
-    $progress_label_2 = GUICtrlCreateLabel("", 5, 160, 330, 15, BitOR($SS_CENTER, $SS_CENTERIMAGE))
+    $progress_label_2 = GUICtrlCreateLabel("", 5, $top + 50, 330, 15, BitOR($SS_CENTER, $SS_CENTERIMAGE))
 EndFunc

@@ -41,12 +41,6 @@ These are features that we plan to add before reaching v1.0.
 ### Download via Browser
 Looking at you OptiFine.
 
-### File Verification
-A simple checksum verification for existing files so you can be sure all your users have the same version of a file.
-
-### Fabric Re-installation
-Self-explanatory.
-
 ## Planned Features II
 
 These are nice-to-have features that we are planning to add post v1.0. No promises though.

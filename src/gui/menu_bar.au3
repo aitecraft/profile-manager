@@ -35,16 +35,16 @@ Func MainWindowMenuBar()
     
     ; ----------------------------
     ; Import Options
-    SMLang('import')
-    $menu_import = GUICtrlCreateMenu(MLangT())
+    ;SMLang('import')
+    ;$menu_import = GUICtrlCreateMenu(MLangT())
     
-    If (Config_Proprietary_AitecraftLauncherImport()) Then
-        $menu_import_aitecraft = GUICtrlCreateMenuItem(MLangO('aitecraft_launcher'), $menu_import)
-        GUICtrlSetOnEvent(-1, "Import_Aitecraft")
-    EndIf
+    ;If (Config_Proprietary_AitecraftLauncherImport()) Then
+    ;    $menu_import_aitecraft = GUICtrlCreateMenuItem(MLangO('aitecraft_launcher'), $menu_import)
+    ;    GUICtrlSetOnEvent(-1, "Import_Aitecraft")
+    ;EndIf
 
-    $menu_import_general = GUICtrlCreateMenuItem(MLangO('general'), $menu_import)
-    GUICtrlSetOnEvent(-1, "Import_General")
+    ;$menu_import_general = GUICtrlCreateMenuItem(MLangO('general'), $menu_import)
+    ;GUICtrlSetOnEvent(-1, "Import_General")
     ; ----------------------------
 
     ; ----------------------------
@@ -131,13 +131,13 @@ Func OnLanguageChange()
     EndIf
 EndFunc
 
-Func Import_Aitecraft()
-    NotImplementedMsgBox()
-EndFunc
+;Func Import_Aitecraft()
+;    NotImplementedMsgBox()
+;EndFunc
 
-Func Import_General()
-    NotImplementedMsgBox()
-EndFunc
+;Func Import_General()
+;    NotImplementedMsgBox()
+;EndFunc
 
 Func Open_Mods()
     OpenFolder(Config_Profile_GetDir("mods"))

@@ -6,7 +6,7 @@
 #include "json_io.au3"
 
 Global $api_data
-Global Const $supported_api_format_version = -9
+Global Const $supported_api_format_version = -8
 Global $api_initialized = False
 
 Func InitAPIData()

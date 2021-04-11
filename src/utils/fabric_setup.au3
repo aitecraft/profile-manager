@@ -104,10 +104,12 @@ Func Fabric_UpdateProfile()
     LauncherProfiles_Update()
 EndFunc
 
-Func Fabric_InstallOrUpdate()
-    If (CD_GetVersion() >= API_GetFabric("last_updated_version")) Then
-        ; Already up-to-date
-        Return True
+Func Fabric_InstallOrUpdate($forced = False)
+    If Not $forced Then
+        If (CD_GetVersion() >= API_GetFabric("last_updated_version")) Then
+            ; Already up-to-date
+            Return True
+        EndIf
     EndIf
 
     If Not (API_GetFabric("install")) Then

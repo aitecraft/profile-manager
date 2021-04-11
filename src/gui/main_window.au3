@@ -3,7 +3,7 @@
 #include "../utils/lang_manager.au3"
 #include "menu_bar.au3"
 #include "../utils/end_program.au3"
-#include "update_gui.au3"
+#include "start_button.au3"
 #include "profile_settings.au3"
 #include "misc_settings.au3"
 #include "optimizer_mod.au3"
@@ -15,7 +15,8 @@ Func CreateMainWindow()
     GUISetOnEvent($GUI_EVENT_CLOSE, "CloseApp")
 
     MainWindowMenuBar()
-    MainWindowUpdateGUI()
+    MainWindowStartButton()
+    MainWindowStatusBar(110)
     MainWindowOMSettings(180)
     MainWindowMiscSettings(250)
     MainWindowProfileSettings(320)

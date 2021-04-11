@@ -1,5 +1,6 @@
 #include-once
 #include "extras.au3"
+#include "../utils/update.au3"
 
 Func MainWindowMiscSettings($top)
     MS_CreateGroup($top)
@@ -24,9 +25,31 @@ Func MS_CreateButtons($top)
 EndFunc
 
 Func MS_ReinstallFabric()
-    NotImplementedMsgBox()
+    Status_SetPleaseWait()
+
+    $res = InstallOrUpdate(True, False, True, Status_DownloadCallback)
+
+    Status_Hide()
+
+    If $res Then
+        QuickOKMsgBox_Lang("fabric_reinstall_done.success")
+    Else
+        ;0x10 - Error Icon
+        QuickOKMsgBox_Lang("fabric_reinstall_done.failure",0x10)
+    EndIf
 EndFunc
 
 Func MS_VerifyFiles()
-    NotImplementedMsgBox()
+    Status_SetPleaseWait()
+
+    $res = InstallOrUpdate(True, True, False, Status_DownloadCallback)
+
+    Status_Hide()
+
+    If $res Then
+        QuickOKMsgBox_Lang("file_verify_done.success")
+    Else
+        ;0x10 - Error Icon
+        QuickOKMsgBox_Lang("file_verify_done.failure",0x10)
+    EndIf
 EndFunc

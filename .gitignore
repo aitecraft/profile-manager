@@ -10,3 +10,4 @@ src/resources/fabric/
 api_schemas/
 revised_api/
 bin/
+hash_helper/

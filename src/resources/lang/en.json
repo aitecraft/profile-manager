@@ -137,6 +137,26 @@
                     "message": "Update installation failed."
                 }
             },
+            "fabric_reinstall_done": {
+                "success": {
+                    "title": "Success",
+                    "message": "Fabric was successfully re-installed!"
+                },
+                "failure": {
+                    "title": "Failed",
+                    "message": "Fabric re-installation failed."
+                }
+            },
+            "file_verify_done": {
+                "success": {
+                    "title": "Success",
+                    "message": "Files verification completed successfully!"
+                },
+                "failure": {
+                    "title": "Failed",
+                    "message": "Files verification failed."
+                }
+            },
             "folder_doesnt_exist": {
                 "title": "Folder Not Found",
                 "message": "The folder you were trying to open does not exist. Would you like to create and then open the folder?"

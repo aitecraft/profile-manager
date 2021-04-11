@@ -8,6 +8,7 @@
 #include <StringConstants.au3>
 #include <JSON.au3>
 #include <Array.au3>
+#include <Crypt.au3>
 
 Global $files_api_data
 Global $files_download_list_urls[0]
@@ -41,6 +42,10 @@ EndFunc
 
 Func FAPIFile_GetLastUpdated($obj)
     Return Json_ObjGet($obj, "last_updated_version")
+EndFunc
+
+Func FAPIFile_GetHash($obj)
+    Return Json_ObjGet($obj, "hash")
 EndFunc
 
 Func FAPIFile_GetURL($obj)
@@ -83,7 +88,7 @@ Func FAPIFile_AddToDownloadList($file, $url)
     EndIf
 EndFunc
 
-Func FAPIFile_DownloadCallback($downloaded_count, $total_count, $downloaded_size, $total_broken, $total_size)
+Func FAPIFile_FallbackDownloadCallback($downloaded_count, $total_count, $downloaded_size, $total_broken, $total_size)
     ConsoleWrite($downloaded_size & @CRLF)
 EndFunc
 
@@ -92,11 +97,11 @@ Func FAPIFile_DownloadFromList($downloadCallback = "")
         Return True
     EndIf
 
-    If Not IsFunc($downloadCallback) Then $downloadCallback = FAPIFile_DownloadCallback
+    If Not IsFunc($downloadCallback) Then $downloadCallback = FAPIFile_FallbackDownloadCallback
     Return DownloadFileBulk($files_download_list_urls, $files_download_list_file_paths, $downloadCallback)
 EndFunc
 
-Func FAPI_InstallOrUpdate($downloadCallback = "")
+Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
 
     FAPI_Init()
     FAPIFile_InitDownloadList()
@@ -119,10 +124,13 @@ Func FAPI_InstallOrUpdate($downloadCallback = "")
         
     Next
 
+    ; Initialize the crypt library
+    If $hashCheckAllFiles Then _Crypt_Startup()
 
     ; Do the actual file check and downloading
     For $file In CD_GetFilesList()
         $obj = FAPI_GetFromFilePath($file)
+
 
         If $obj <> False Then
             If (CD_GetVersion() >= FAPIFile_GetLastUpdated($obj)) Then
@@ -130,6 +138,24 @@ Func FAPI_InstallOrUpdate($downloadCallback = "")
                 ; TODO
                 ; Maybe add check for whether or not file actually exists here later?
                 ; If missing then add to download list
+
+                If $hashCheckAllFiles Then
+                    $filepath = FAPI_FilePathToFullPath($file)
+
+                    If FileExists($filepath) Then
+                        $local_hash = _Crypt_HashFile($filepath, $CALG_SHA_256)
+                        $remote_hash = FAPIFile_GetHash($obj)
+                        If $local_hash = $remote_hash Then
+                            ; File exists and hash matches with API. Do nothing.
+                        Else
+                            ; File exists but hash mismatch
+                            FAPIFile_AddToDownloadList($file, FAPIFile_GetURL($obj))
+                        EndIf
+                    Else
+                        ; File doesn't exist
+                        FAPIFile_AddToDownloadList($file, FAPIFile_GetURL($obj))
+                    EndIf
+                EndIf
             Else
                 ; TODO Implement Special attributes (only download_from_browser for now)
                 ; File out-of-date.
@@ -150,6 +176,9 @@ Func FAPI_InstallOrUpdate($downloadCallback = "")
             FileDelete(FAPI_FilePathToFullPath($file))
         EndIf
     Next
+
+    ; Shutdown the crypt library
+    If $hashCheckAllFiles Then _Crypt_Shutdown()
 
     ; Now, add all files remaining in the FAPI to the Download List
     ; Also add those files to the CD File List
