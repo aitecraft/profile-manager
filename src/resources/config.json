@@ -12,7 +12,6 @@
     "profile": {
         "main": {
             "id": "Aitecraft",
-            "name_is_id": true,
             "dir": "<mc_dir>\\aitecraft"
         },
         "jvm": {
@@ -23,6 +22,13 @@
             "_comment": "This only works with the Official Minecraft Launcher. Path relative to main AU3/EXE.",
             "encoded_icon_file": "resources/aitecraft-icon-base64.txt"
         }
+    },
+
+    "compatibility": {
+        "_comment": "These settings help maintain compatibility with third-party / older launchers.",
+
+        "profile_name_is_id": true,
+        "create_empty_jar": false
     },
     
     "proprietary": {

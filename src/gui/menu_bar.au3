@@ -71,6 +71,21 @@ Func MainWindowMenuBar()
     ; ----------------------------
 
     ; ----------------------------
+    ; Settings..
+
+    SMLang('settings')
+    $menu_settings = GUICtrlCreateMenu(MLangT())
+
+    Global $menu_settings_createEmptyJAR = GUICtrlCreateMenuItem(MLangO('create_empty_jar'), $menu_settings)
+    SetMenuBarCheckboxState(-1, Config_GetCreateEmptyJAR())
+    GUICtrlSetOnEvent(-1, "Settings_CreateEmptyJAR")
+
+    Global $menu_settings_profileNameIsID = GUICtrlCreateMenuItem(MLangO('profile_name_is_id'), $menu_settings)
+    SetMenuBarCheckboxState(-1, Config_GetProfileNameIsID())
+    GUICtrlSetOnEvent(-1, "Settings_ProfileNameIsID")
+    ; ----------------------------
+
+    ; ----------------------------
     ; Language Options..
     SMLang('language')
     $menu_language = GUICtrlCreateMenu(MLangT())
@@ -159,6 +174,20 @@ Func Open_Profile()
     OpenFolder(Config_Profile_GetDir())
 EndFunc
 
+Func Settings_CreateEmptyJAR()
+    If QuickYesNoMsgBox_Lang("compatibility_settings_changed_warning.create_empty_jar", $mbExclamation) = 6 Then
+        Prefs_SetCreateEmptyJAR(Not Config_GetCreateEmptyJAR())
+        SetMenuBarCheckboxState($menu_settings_createEmptyJAR, Config_GetCreateEmptyJAR())
+    EndIf
+EndFunc
+
+Func Settings_ProfileNameIsID()
+    If QuickYesNoMsgBox_Lang("compatibility_settings_changed_warning.profile_name_is_id", $mbExclamation) = 6 Then
+        Prefs_SetProfileNameIsID(Not Config_GetProfileNameIsID())
+        SetMenuBarCheckboxState($menu_settings_profileNameIsID, Config_GetProfileNameIsID())
+    EndIf
+EndFunc
+
 Func Aitecraft_ChangeSkin()
     OpenInBrowser(API_GetSkinChangerURL())
 EndFunc
@@ -170,4 +199,12 @@ EndFunc
 
 Func About_ViewSrc()
     OpenInBrowser(API_GetSrcRepoURL())
+EndFunc
+
+Func SetMenuBarCheckboxState($control, $state)
+    If $state Then
+        GUICtrlSetState($control, $GUI_CHECKED)
+    Else
+        GUICtrlSetState($control, $GUI_UNCHECKED)
+    EndIf
 EndFunc

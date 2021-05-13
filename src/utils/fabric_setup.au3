@@ -82,10 +82,17 @@ Func Fabric_CreateVersionJSONAndJAR()
     
     CreateFolder($folder)
 
-    ; Empty JAR File
-    $jar_file = FileOpen($folder & FabricAPI_Get("id") & ".jar", $FO_OVERWRITE)
-    FileWrite($jar_file, "")
-    FileClose($jar_file)
+    ; JAR File
+    $jar_file_name = $folder & FabricAPI_Get("id") & ".jar"
+
+    If Config_GetCreateEmptyJAR() Then
+        $jar_file = FileOpen($jar_file_name, $FO_OVERWRITE)
+        FileWrite($jar_file, "")
+        FileClose($jar_file)
+    Else
+        ; Delete JAR File in case it already exists
+        FileDelete($jar_file_name)
+    EndIf
 
     ; Version JSON
     Json_ToFile($folder & FabricAPI_Get("id") & ".json", $mc_version_data)

@@ -56,11 +56,19 @@ Func Config_Profile_GetName()
     ; Crude Support for old Minecraft Launchers
     ; Old MC Launchers seem to not support a different value for Profile ID and Profile Name.
     ; So we'll just set the name to the profile ID.
-    If GetPref('.profile_name_is_id', '.profile.main.name_is_id') Then
+    If Config_GetProfileNameIsID() Then
         return Config_Profile_GetID()
     EndIf
 
     return Lang('general.custom_profile')
+EndFunc
+
+Func Config_GetProfileNameIsID()
+    return GetPref('.profile_name_is_id', '.compatibility.profile_name_is_id')
+EndFunc
+
+Func Config_GetCreateEmptyJAR()
+    return GetPref('.create_empty_jar', '.compatibility.create_empty_jar')
 EndFunc
 
 ; Profile ID (just needs to be unique, used only by launcher)

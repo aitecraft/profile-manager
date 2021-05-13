@@ -4,11 +4,11 @@ Introducing the Aitecraft Profile Manager, a heavily customizable profile manage
 
 Built and supported by the Aitecraft team.
 
+Interested to use this with your modpack? Check the [wiki](https://github.com/aitecraft/profile-manager/wiki).
+
 ### Development Status
 
-⚠ Currently in development.
-
-So far, the basic functionality of the profile manager has been completed. We have currently paused development as we believe the profile manager is useable for most cases. If there are any features you would like (us) to add, please create an issue or pull request.
+The basic functionality of the profile manager is complete. The profile manager is useable for most cases and we will continue to provide fixes if needed. If there are any features you would like (us) to add, please create an issue or pull request.
 
 ## Implemented Features
 
@@ -58,11 +58,3 @@ Should you choose to enable the option, users of the Aitecraft Launcher will hav
 
 ### Language Fallbacks
 Incomplete translations? No worries! The Profile Manager will use translation strings from a fallback language of your choosing!
-
-## Other stuff
-
-Few things regarding this repo:
-
-- The resources directory will probably be removed soon, since the changes to it aren't necessarily updates to the profile manager itself, but rather updates to just our own implementatation of it.
-    - We will provide a wiki to help configure the API and `config.json` in the future.
-- We will not make any code changes privately just for our modpack. In the event we do so, we will make that very clear. We want this project to be something the modpack community can use to easily distribute their mods.
