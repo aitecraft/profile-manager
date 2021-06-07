@@ -11,6 +11,7 @@ Func MainWindowProfileSettings($top)
     PS_CreateGroup($top)
     CreateJVMHeapSlider($top+20)
     CreateUpdateProfileButton($top+80)
+    Return $top + 140
 EndFunc
 
 Func PS_CreateGroup($top)
@@ -26,8 +27,9 @@ Func CreateJVMHeapSlider($top)
     GUICtrlCreateLabel(Lang("labels.jvm_heap_size"), 20, $top + 15)
     $mem_slider = GUICtrlCreateSlider(120, $top, 200, 25)
     
-    ; Set 8 GB limit
-    GUICtrlSetLimit(-1, 8, 1)
+    ; Set 8 GB max limit and specified min limit
+    $limit = Config_Profile_GetJVM_Minimum_Heap_Size() / 1024
+    GUICtrlSetLimit(-1, 8, $limit)
     GUICtrlSetOnEvent(-1, "MemSliderMoved")
     GUICtrlSetData(-1, Config_Profile_GetJVM_Heap_Size() / 1024)
 

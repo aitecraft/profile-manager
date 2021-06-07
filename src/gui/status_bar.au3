@@ -50,4 +50,6 @@ Func MainWindowStatusBar($top)
     $progress_label_1 = GUICtrlCreateLabel("", 5, $top + 30, 330, 15, BitOR($SS_CENTER, $SS_CENTERIMAGE))
 
     $progress_label_2 = GUICtrlCreateLabel("", 5, $top + 50, 330, 15, BitOR($SS_CENTER, $SS_CENTERIMAGE))
+
+    Return $top + 70
 EndFunc

@@ -33,22 +33,18 @@ EndFunc
 
 ; API Root URL
 Func Config_GetAPIEndpoint()
-    return json_get($config, '.api.endpoint')
-EndFunc
-
-Func Config_GetAPIIndex()
-    return json_get($config, '.api.index')
+    return json_get($config, '.api_endpoint')
 EndFunc
 
 ; Minecraft Installation Directory
 Func Config_GetMCDir()
     ;Local $mc_dir = json_get($config, '.default_mc_dir')
-    Local $mc_dir = GetPref('.mc_dir', '.default_mc_dir')
+    Local $mc_dir = GetPref('.mc_dir', '.defaults.mc_dir')
     return StringReplace($mc_dir, '<appdata>', @AppDataDir)
 EndFunc
 
 Func Config_GetLang()
-    return GetPref('.language', '.default_lang')
+    return GetPref('.language', '.defaults.lang')
 EndFunc
 
 ; Profile Name
@@ -64,21 +60,21 @@ Func Config_Profile_GetName()
 EndFunc
 
 Func Config_GetProfileNameIsID()
-    return GetPref('.profile_name_is_id', '.compatibility.profile_name_is_id')
+    return GetPref('.profile_name_is_id', '.defaults.compatibility.profile_name_is_id')
 EndFunc
 
 Func Config_GetCreateEmptyJAR()
-    return GetPref('.create_empty_jar', '.compatibility.create_empty_jar')
+    return GetPref('.create_empty_jar', '.defaults.compatibility.create_empty_jar')
 EndFunc
 
 ; Profile ID (just needs to be unique, used only by launcher)
 Func Config_Profile_GetID()
-    return json_get($config, '.profile.main.id')
+    return json_get($config, '.profile.id')
 EndFunc
 
 ; Profile Directory (mods, saves and settings files are all inside this directory)
 Func Config_Profile_GetDir($sub_dir = "")
-    Local $profile_dir = json_get($config, '.profile.main.dir')
+    Local $profile_dir = json_get($config, '.profile.dir')
     If $sub_dir <> "" Then
         $profile_dir &= "\" & $sub_dir
         NormalizePath($profile_dir)
@@ -86,9 +82,13 @@ Func Config_Profile_GetDir($sub_dir = "")
     return StringReplace(StringReplace($profile_dir, '<mc_dir>', Config_GetMCDir()), '<appdata>', @AppDataDir)
 EndFunc
 
+Func Config_Profile_GetJVM_Minimum_Heap_Size()
+    Return Json_Get($config, '.profile.jvm.minimum_heap_size')
+EndFunc
+
 ; Maximum Memory Allocated to the Java VM Heap.
 Func Config_Profile_GetJVM_Heap_Size()
-    return GetPref('.jvm_heap_size', '.profile.jvm.default_heap_size')
+    return GetPref('.jvm_heap_size', '.defaults.jvm_heap_size')
 EndFunc
 
 ; Arguments passed to the Java VM.
@@ -114,10 +114,30 @@ Func Config_Proprietary_ChangeSkin()
     return json_get($config, '.proprietary.change_skin_option')
 EndFunc
 
-Func Config_Proprietary_AitecraftLauncherImport()
-    return json_get($config, '.proprietary.aitecraft_launcher_import')
+Func Config_Proprietary_OpenWebsite()
+    return json_get($config, '.proprietary.open_website_option')
 EndFunc
 
 Func Config_Proprietary_OpenSchematicsFolderOption()
     return json_get($config, '.proprietary.open_schematics_folder_option')
+EndFunc
+
+Func Config_GUIGet_OpenFoldersMenu()
+    Return Json_Get($config, '.gui.open_folders_menu')
+EndFunc
+
+Func Config_GUIGet_OptimizerMod()
+    Return Json_Get($config, '.gui.optimizer_mod')
+EndFunc
+
+Func Config_GUIGet_Misc_ReinstallFabric()
+    Return Json_Get($config, '.gui.misc.reinstall_fabric')
+EndFunc
+
+Func Config_GUIGet_Misc_VerifyFiles()
+    Return Json_Get($config, '.gui.misc.verify_files')
+EndFunc
+
+Func Config_GUIGet_ProfileSettings()
+    Return Json_Get($config, '.gui.profile_settings')
 EndFunc

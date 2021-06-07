@@ -32,57 +32,53 @@ Func SMLang($term)
 EndFunc
 
 Func MainWindowMenuBar()
-    
-    ; ----------------------------
-    ; Import Options
-    ;SMLang('import')
-    ;$menu_import = GUICtrlCreateMenu(MLangT())
-    
-    ;If (Config_Proprietary_AitecraftLauncherImport()) Then
-    ;    $menu_import_aitecraft = GUICtrlCreateMenuItem(MLangO('aitecraft_launcher'), $menu_import)
-    ;    GUICtrlSetOnEvent(-1, "Import_Aitecraft")
-    ;EndIf
 
-    ;$menu_import_general = GUICtrlCreateMenuItem(MLangO('general'), $menu_import)
-    ;GUICtrlSetOnEvent(-1, "Import_General")
-    ; ----------------------------
+    If (Config_GUIGet_OpenFoldersMenu()) Then
+        ; ----------------------------
+        ; Open Folder Options
+        SMLang('open')
+        $menu_open = GUICtrlCreateMenu(MLangT())
+        
+        $menu_open_mods = GUICtrlCreateMenuItem(MLangO('mods_folder'), $menu_open)
+        GUICtrlSetOnEvent(-1, "Open_Mods")
 
-    ; ----------------------------
-    ; Open Folder Options
-    SMLang('open')
-    $menu_open = GUICtrlCreateMenu(MLangT())
-    
-    $menu_open_mods = GUICtrlCreateMenuItem(MLangO('mods_folder'), $menu_open)
-    GUICtrlSetOnEvent(-1, "Open_Mods")
+        $menu_open_logs = GUICtrlCreateMenuItem(MLangO('logs_folder'), $menu_open)
+        GUICtrlSetOnEvent(-1, "Open_Logs")
 
-    $menu_open_logs = GUICtrlCreateMenuItem(MLangO('logs_folder'), $menu_open)
-    GUICtrlSetOnEvent(-1, "Open_Logs")
+        $menu_open_rp = GUICtrlCreateMenuItem(MLangO('resourcepack_folder'), $menu_open)
+        GUICtrlSetOnEvent(-1, "Open_RP")
 
-    $menu_open_rp = GUICtrlCreateMenuItem(MLangO('resourcepack_folder'), $menu_open)
-    GUICtrlSetOnEvent(-1, "Open_RP")
-
-    If Config_Proprietary_OpenSchematicsFolderOption() Then
-        $menu_open_schematics = GUICtrlCreateMenuItem(MLangO('schematics_folder'), $menu_open)
-        GUICtrlSetOnEvent(-1, "Open_Schematics")
+        If Config_Proprietary_OpenSchematicsFolderOption() Then
+            $menu_open_schematics = GUICtrlCreateMenuItem(MLangO('schematics_folder'), $menu_open)
+            GUICtrlSetOnEvent(-1, "Open_Schematics")
+        EndIf
+        
+        $menu_open_profile = GUICtrlCreateMenuItem(MLangO('profile_folder'), $menu_open)
+        GUICtrlSetOnEvent(-1, "Open_Profile")
+        ; ----------------------------
     EndIf
-    
-    $menu_open_profile = GUICtrlCreateMenuItem(MLangO('profile_folder'), $menu_open)
-    GUICtrlSetOnEvent(-1, "Open_Profile")
-    ; ----------------------------
 
     ; ----------------------------
     ; Settings..
-
+    
     SMLang('settings')
     $menu_settings = GUICtrlCreateMenu(MLangT())
+    
+    If Config_GUIGet_ProfileSettings() Then
+        Global $menu_settings_createEmptyJAR = GUICtrlCreateMenuItem(MLangO('create_empty_jar'), $menu_settings)
+        SetMenuBarCheckboxState(-1, Config_GetCreateEmptyJAR())
+        GUICtrlSetOnEvent(-1, "Settings_CreateEmptyJAR")
 
-    Global $menu_settings_createEmptyJAR = GUICtrlCreateMenuItem(MLangO('create_empty_jar'), $menu_settings)
-    SetMenuBarCheckboxState(-1, Config_GetCreateEmptyJAR())
-    GUICtrlSetOnEvent(-1, "Settings_CreateEmptyJAR")
+        Global $menu_settings_profileNameIsID = GUICtrlCreateMenuItem(MLangO('profile_name_is_id'), $menu_settings)
+        SetMenuBarCheckboxState(-1, Config_GetProfileNameIsID())
+        GUICtrlSetOnEvent(-1, "Settings_ProfileNameIsID")
+        
+        GUICtrlCreateMenuItem("", $menu_settings)
+    EndIf
 
-    Global $menu_settings_profileNameIsID = GUICtrlCreateMenuItem(MLangO('profile_name_is_id'), $menu_settings)
-    SetMenuBarCheckboxState(-1, Config_GetProfileNameIsID())
-    GUICtrlSetOnEvent(-1, "Settings_ProfileNameIsID")
+
+    Global $menu_settings_mc_dir = GUICtrlCreateMenuItem(MLangO('mc_dir'), $menu_settings)
+    GUICtrlSetOnEvent(-1, "Settings_MCDir")
     ; ----------------------------
 
     ; ----------------------------
@@ -104,13 +100,21 @@ Func MainWindowMenuBar()
     ; ----------------------------
 
     ; ----------------------------
-    ; Change Skin Option
-    If (Config_Proprietary_ChangeSkin()) Then
+    ; Modpack-specfic Change Skin and Open Website Options
+    If (Config_Proprietary_ChangeSkin() Or Config_Proprietary_OpenWebsite()) Then
         SMLang('aitecraft')
 
         $menu_aitecraft = GUICtrlCreateMenu(MLangT())
-        $menu_aitecraft_change_skin = GUICtrlCreateMenuItem(MLangO('change_skin'), $menu_aitecraft)
-        GUICtrlSetOnEvent(-1, "Aitecraft_ChangeSkin")
+
+        If Config_Proprietary_ChangeSkin() Then
+            $menu_aitecraft_change_skin = GUICtrlCreateMenuItem(MLangO('change_skin'), $menu_aitecraft)
+            GUICtrlSetOnEvent(-1, "Aitecraft_ChangeSkin")
+        EndIf
+
+        If Config_Proprietary_OpenWebsite() Then
+            $menu_aitecraft_open_website = GUICtrlCreateMenuItem(MLangO('open_website'), $menu_aitecraft)
+            GUICtrlSetOnEvent(-1, "Aitecraft_OpenWebsite")
+        EndIf
     EndIf
     ; ----------------------------
 
@@ -188,8 +192,16 @@ Func Settings_ProfileNameIsID()
     EndIf
 EndFunc
 
+Func Settings_MCDir()
+    NotImplementedMsgBox()
+EndFunc
+
 Func Aitecraft_ChangeSkin()
     OpenInBrowser(API_GetSkinChangerURL())
+EndFunc
+
+Func Aitecraft_OpenWebsite()
+    OpenInBrowser(API_GetWebsiteURL())
 EndFunc
 
 Func About_Version()

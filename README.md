@@ -1,14 +1,14 @@
 # Aitecraft Profile Manager
 
-Introducing the Aitecraft Profile Manager, a heavily customizable profile manager built from the ground up, specifically for Fabric modpacks. Featuring multi-language support and an easy to modify configuration for all your modpack needs.
-
-Built and supported by the Aitecraft team.
+A heavily customizable profile manager built specifically for Fabric modpacks. Featuring multi-language support and an easy to modify configuration for all your modpack needs.
 
 Interested to use this with your modpack? Check the [wiki](https://github.com/aitecraft/profile-manager/wiki).
 
+Built and supported by the Aitecraft team.
+
 ### Development Status
 
-The basic functionality of the profile manager is complete. The profile manager is useable for most cases and we will continue to provide fixes if needed. If there are any features you would like (us) to add, please create an issue or pull request.
+The basic functionality of the profile manager is complete. The profile manager is useable for most cases and we will continue to provide fixes if needed. If there are any features or documentation changes you would like (us) to add, please create an issue or pull request.
 
 ## Implemented Features
 
@@ -29,7 +29,7 @@ Have mods that only certain users prefer? You can now let them choose the mod th
 Fabric is at the forefront of Aitecraft Profile Manager. It will automatically install any version of Fabric as instructed by your API! No more manually updating Fabric.
 
 ### Incremental Updates
-Updating even large modpacks will be a breeze for your users thanks to a modern update system, that works by only downloading files that have been updated or were never on your install.
+Updating even large modpacks will be a breeze for your users thanks to an incremental update system, that works by only downloading files that have been updated or were never on your install.
 
 ### Built for All Hardware
 Built on AutoIt3, Aitecraft Profile Manager is supported across a wide range of Windows versions, from 7 to the latest builds of 10, without any sacrifices on any version. Thanks to the lightweight nature of AutoIt, Aitecraft Profile Manager consumes <20 MB of memory! This is far lower than anything using web-based technologies. All that while having a far simpler and easier to customize codebase than a similar C/C++ codebase! (Especially GUIs)
@@ -41,20 +41,12 @@ These are features that we plan to add before reaching v1.0.
 ### Download via Browser
 Looking at you OptiFine.
 
+### Profile Manager Auto-Update
+Basic system to update the profile manager automatically.
+
 ## Planned Features II
 
 These are nice-to-have features that we are planning to add post v1.0. No promises though.
 
-### Single-file Download Option
-Tweak just a couple of lines of code and build the Profile Manager as a standalone executable that downloads the configuration files on its own, from your own API instead of having to ship ZIP files and then spending time helping less tech savvy users.
-
-Note: Since an EXE compiled via AutoIt is almost always flagged as a trojan by Windows Security / Defender, just shipping the ZIP with a standard `AutoIt3.exe`, a compiled `au3` file and a batch script to launch the Profile Manager might be more user friendly than this solution.
-
 ### Import Feature
 Helps users import Minecraft settings and resource packs from any of their existing Minecraft installations directly into the custom directory for your modpack.
-
-#### Expanded Import for Aitecraft Launcher
-Should you choose to enable the option, users of the Aitecraft Launcher will have the option to import almost everything to the modpack custom directory, including screenshots, schematics and world saves in addition to the Minecraft settings and resource packs.
-
-### Language Fallbacks
-Incomplete translations? No worries! The Profile Manager will use translation strings from a fallback language of your choosing!

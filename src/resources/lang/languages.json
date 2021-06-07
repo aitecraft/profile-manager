@@ -4,15 +4,6 @@
             "id": "en",
             "file_name": "en.json",
             "name": "English"
-        },
-        {
-            "id": "upd_en",
-            "file_name": "upd_en.json",
-            "name": "ɥsᴉlƃuƎ"
         }
-    ],
-    "fallback": {
-        "enabled": true,
-        "language_id": "en"
-    }
+    ]
 }

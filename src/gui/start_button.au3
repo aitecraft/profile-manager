@@ -22,7 +22,8 @@ Func OnClick_StartButton()
     EndIf
 EndFunc
 
-Func MainWindowStartButton()
-    $startButton = GUICtrlCreateButton(Lang("buttons.start"), 100, 20, 150, 80)
+Func MainWindowStartButton($top)
+    $startButton = GUICtrlCreateButton(Lang("buttons.start"), 100, $top, 150, $top + 60)
     GUICtrlSetOnEvent(-1, "OnClick_StartButton")
+    Return $top + 90
 EndFunc

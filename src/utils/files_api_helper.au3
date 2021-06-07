@@ -15,7 +15,7 @@ Global $files_download_list_urls[0]
 Global $files_download_list_file_paths[0]
 
 Func FAPI_Init()
-    $files_api_url = API_GetFAPIEndpoint() & API_GetFAPIIndex()
+    $files_api_url = API_GetFAPIEndpoint()
     $files_api_data = Json_FromURL($files_api_url)
 EndFunc
 

@@ -1,16 +1,12 @@
 #include-once
 #include "extras.au3"
 #include "../utils/update.au3"
+#include "../utils/read_config.au3"
 
 Func MainWindowMiscSettings($top)
     MS_CreateGroup($top)
     MS_CreateButtons($top + 18)
-    ; Verify files button
-    ; Reinstall fabric button
-    ; Optimizer mod change button [no, move to its own section]
-    ; Both will just call the files API
-    ; add check to files api if a file ver > api's latest ver cuz that would mean fapi&api out of sync
-    ; or allow re init of API
+    Return $top + 70
 EndFunc
 
 Func MS_CreateGroup($top)
@@ -18,10 +14,23 @@ Func MS_CreateGroup($top)
 EndFunc
 
 Func MS_CreateButtons($top)
+    
     GUICtrlCreateButton(Lang("buttons.reinstall_fabric"), 20, $top, 150, 30)
     GUICtrlSetOnEvent(-1, "MS_ReinstallFabric")
+    
+    If Not Config_GUIGet_Misc_ReinstallFabric() Then
+        GUICtrlSetState(-1, 128)
+    EndIf
+
+    ; ----------------------------------------
+
     GUICtrlCreateButton(Lang("buttons.verify_files"), 180, $top, 150, 30)
     GUICtrlSetOnEvent(-1, "MS_VerifyFiles")
+    
+    If Not Config_GUIGet_Misc_VerifyFiles() Then
+        GUICtrlSetState(-1, 128)
+    EndIf
+
 EndFunc
 
 Func MS_ReinstallFabric()

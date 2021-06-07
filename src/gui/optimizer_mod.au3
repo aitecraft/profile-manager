@@ -20,6 +20,7 @@ Global $om_script_pause_end
 Func MainWindowOMSettings($top)
     OM_CreateGroup($top)
     OM_CreateLabelAndButton($top + 18)
+    Return $top + 70
 EndFunc
 
 Func OM_CreateGroup($top)

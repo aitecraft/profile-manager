@@ -1,21 +1,25 @@
 {
-    "_comment": "This file is not meant to be changed, unless you are modifying the profile manager for a different modpack. To change settings, edit the prefs.json file instead. Values in this file are default values and should not be changed.",
+    "_comment": "This file is not meant to be changed. To change settings, edit the prefs.json file instead. Values in this file are default values and should not be changed.",
     
-    "api": {
-        "endpoint": "https://aitecraft.glitch.me/pm/rev_api/",
-        "index": "index.json"
-    },
+    "api_endpoint": "https://aitecraft.glitch.me/pm/rev_api/dev-index.json",
+    
+    "defaults": {
+        "mc_dir": "<appdata>\\.minecraft",
+        "lang": "en",
+        "jvm_heap_size": 2048,
         
-    "default_mc_dir": "<appdata>\\.minecraft",
-    "default_lang": "en",
+        "compatibility": {
+            "_comment": "These settings help maintain compatibility with third-party / older launchers.",
+            "profile_name_is_id": true,
+            "create_empty_jar": false
+        }
+    },
     
     "profile": {
-        "main": {
-            "id": "Aitecraft",
-            "dir": "<mc_dir>\\aitecraft"
-        },
+        "id": "Aitecraft",
+        "dir": "<mc_dir>\\aitecraft",
         "jvm": {
-            "default_heap_size": 2048,
+            "minimum_heap_size": 2048,
             "args": "-XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M"
         },
         "misc": {
@@ -23,17 +27,20 @@
             "encoded_icon_file": "resources/aitecraft-icon-base64.txt"
         }
     },
-
-    "compatibility": {
-        "_comment": "These settings help maintain compatibility with third-party / older launchers.",
-
-        "profile_name_is_id": true,
-        "create_empty_jar": false
-    },
     
     "proprietary": {
         "change_skin_option": true,
-        "aitecraft_launcher_import": true,
+        "open_website_option": true,
         "open_schematics_folder_option": true
+    },
+
+    "gui": {
+        "open_folders_menu": true,
+        "optimizer_mod": true,
+        "misc": {
+            "reinstall_fabric": true,
+            "verify_files": true
+        },
+        "profile_settings": true
     }
 }

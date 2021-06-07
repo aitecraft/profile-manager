@@ -3,6 +3,7 @@
 #include "../utils/lang_manager.au3"
 #include "menu_bar.au3"
 #include "../utils/end_program.au3"
+#include "../utils/read_config.au3"
 #include "start_button.au3"
 #include "profile_settings.au3"
 #include "misc_settings.au3"
@@ -15,11 +16,27 @@ Func CreateMainWindow()
     GUISetOnEvent($GUI_EVENT_CLOSE, "CloseApp")
 
     MainWindowMenuBar()
-    MainWindowStartButton()
-    MainWindowStatusBar(110)
-    MainWindowOMSettings(180)
-    MainWindowMiscSettings(250)
-    MainWindowProfileSettings(320)
+
+    ; GUI
+    $top = 20
+    
+    $top = MainWindowStartButton($top)
+    $top = MainWindowStatusBar($top)
+    
+    If Config_GUIGet_OptimizerMod() Then
+        $top = MainWindowOMSettings($top)
+    EndIf
+
+    If Config_GUIGet_Misc_ReinstallFabric() Or Config_GUIGet_Misc_VerifyFiles() Then
+        $top = MainWindowMiscSettings($top)
+    EndIf
+    
+    If Config_GUIGet_ProfileSettings() Then
+        $top = MainWindowProfileSettings($top)
+    EndIf
+
+    ; Resize accordingly
+    WinMove($hMainGui, "", Default, Default, Default, $top + 25 + 25)
 EndFunc
 
 Func GetMainWindowHandle()

@@ -84,7 +84,8 @@
                 "title": "Settings",
                 "options": {
                     "create_empty_jar": "Create Empty JAR",
-                    "profile_name_is_id": "Profile Name is Profile ID"
+                    "profile_name_is_id": "Profile Name is Profile ID",
+                    "mc_dir": "Change Minecraft Directory"
                 }
             },
             "language": {
@@ -93,7 +94,8 @@
             "aitecraft": { 
                 "title": "Aitecraft",
                 "options": {
-                    "change_skin": "Change Skin"
+                    "change_skin": "Change Skin",
+                    "open_website": "Open Website"
                 }
             },
             "about": {
@@ -168,7 +170,7 @@
                 },
                 "profile_name_is_id": {
                     "title": "\"Profile Name is Profile ID\" Changed - Are you sure?",
-                    "message": "Most launchers, except the new C++/CEF based vanilla launcher, run into problems when the Profile Name and Profile ID do not match. Only enable this option if you are using the newest vanilla launcher.\r\n\r\nIf you proceed, you might have to update the modpack profile, either by simply clicking the Update Profile button, or by re-installing Fabric."
+                    "message": "Most launchers, except the new C++/CEF based vanilla launcher, run into problems when the Profile Name and Profile ID do not match. Disable this option only if you are using the newest vanilla launcher.\r\n\r\nIf you proceed, you might have to update the modpack profile, either by simply clicking the Update Profile button, or by re-installing Fabric."
                 }
             }
         }

@@ -6,11 +6,11 @@
 #include "json_io.au3"
 
 Global $api_data
-Global Const $supported_api_format_version = -8
+Global Const $supported_api_format_version = -7
 Global $api_initialized = False
 
 Func InitAPIData()
-    $api_url = Config_GetAPIEndpoint() & Config_GetAPIIndex()
+    $api_url = Config_GetAPIEndpoint()
     $api_data = Json_FromURL($api_url)
     $api_initialized = True
 
@@ -30,11 +30,7 @@ Func APIGet($path)
 EndFunc
 
 Func API_GetFAPIEndpoint()
-    return APIGet("files_api.endpoint")
-EndFunc
-
-Func API_GetFAPIIndex()
-    return APIGet("files_api.index")
+    return APIGet("files_api_endpoint")
 EndFunc
 
 Func API_GetLatestVersion()
@@ -57,37 +53,6 @@ Func API_GetSkinChangerURL()
     return APIGet("other.skin_changer")
 EndFunc
 
-#cs
- Func API_GetLatestFullVersionJSON()
-    $latest_full_version = APIGet("modpack.latest.full.version")
-    return VAPI_GetSpecificVersionJSON($latest_full_version)
+Func API_GetWebsiteURL()
+    return APIGet("other.website")
 EndFunc
-
-Func VAPI_GetSpecificVersionJSON($version)
-    $versions_array = Json_ObjGet($files_api_data, "versions")
-    For $i = 0 To UBound($versions_array) - 1
-        $ver_num = Json_ObjGet($versions_array[$i], "version")
-        If ($ver_num == $version) Then
-            $url = Json_ObjGet($versions_array[$i], "url")
-            
-            If Json_IsNull($url) Then
-                If VAPIGet("api.url_from_name_if_null") Then
-                    $url = API_GetVAPIEndpoint() & $ver_num & "/" & VAPIGet("api.index_if_null")
-                Else
-                    UnexpectedExitErrorMsgBox()
-                    Exit
-                EndIf
-            EndIf
-
-            $response = HttpGet($url)
-            Return Json_Decode($response)
-        EndIf
-    Next
-EndFunc
-
-Func API_GetLatestIncrementalVersionJSON()
-    $latest_inc_version = APIGet("modpack.latest.incremental.version")
-    return VAPI_GetSpecificVersionJSON($latest_inc_version)
-EndFunc
- 
-#ce
