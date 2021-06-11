@@ -8,6 +8,7 @@
 #include "../utils/write_prefs.au3"
 #include "../utils/fabric_setup.au3"
 #include "../utils/api_helper.au3"
+#include "../utils/client_data.au3"
 
 Global $option = ''
 
@@ -193,7 +194,28 @@ Func Settings_ProfileNameIsID()
 EndFunc
 
 Func Settings_MCDir()
-    NotImplementedMsgBox()
+    ; First confirm if user wants to change MC Directory
+    $ob = ObjCreate("Scripting.Dictionary")
+    $ob.Add("mc_dir", Config_GetMCDir())
+    
+    If QuickYesNoMsgBox_LangDynamic("mc_dir_changed_warning", $ob, $mbQuestion) = 6 Then
+        $new_dir = AskUserForMCDir()
+        
+        ; If user chooses cancel or closes the window
+        If $new_dir = "" Then
+            Return
+        EndIf
+        
+        ; Save old directory's Client Data
+        CD_UpdateFile()
+
+        ; Set value in prefs for new directory
+        Prefs_SetMC_Dir($new_dir)
+        ; Reload Client Data from new directory
+        CD_LoadData()
+        ; Reload App - refreshes GUI
+        ReloadApp()
+    EndIf
 EndFunc
 
 Func Aitecraft_ChangeSkin()

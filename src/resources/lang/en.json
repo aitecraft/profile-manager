@@ -55,7 +55,8 @@
             "misc_settings": "Miscellaneous Settings",
             "optimizer_mod": "Optimizer Mod",
             "pick_optimizer_mod": "Please choose an Optimization Mod you prefer from the options below:",
-            "please_wait": "Please wait..."
+            "please_wait": "Please wait...",
+            "select_new_mc_dir": "Select your Minecraft directory"
         },
         "labels_dynamic": {
             "mem_size": "$<mem_size_amount> $<mem_size_unit>",
@@ -172,6 +173,10 @@
                     "title": "\"Profile Name is Profile ID\" Changed - Are you sure?",
                     "message": "Most launchers, except the new C++/CEF based vanilla launcher, run into problems when the Profile Name and Profile ID do not match. Disable this option only if you are using the newest vanilla launcher.\r\n\r\nIf you proceed, you might have to update the modpack profile, either by simply clicking the Update Profile button, or by re-installing Fabric."
                 }
+            },
+            "mc_dir_changed_warning": {
+                "title": "Changing Minecraft Directory - Are you sure?",
+                "message": "Your current Minecraft directory is set to:\r\n\r\n$<mc_dir>\r\n\r\nWould you like to change it? (Choose \"Yes\" only if you know exactly what you're doing, the profile manager will not verify that the selected directory is a Minecraft directory.)\r\n\r\n"
             }
         }
     }

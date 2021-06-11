@@ -149,10 +149,12 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
                             ; File exists and hash matches with API. Do nothing.
                         Else
                             ; File exists but hash mismatch
+                            ;ConsoleWrite("Hash mismatch! - " & $filepath)
                             FAPIFile_AddToDownloadList($file, FAPIFile_GetURL($obj))
                         EndIf
                     Else
                         ; File doesn't exist
+                        ;ConsoleWrite("File doesn't exist! - " & $filepath)
                         FAPIFile_AddToDownloadList($file, FAPIFile_GetURL($obj))
                     EndIf
                 EndIf

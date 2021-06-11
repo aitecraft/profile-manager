@@ -6,7 +6,7 @@
 #include "misc.au3"
 #include "../gui/extras.au3"
 
-Func DownloadFileBulk(ByRef $url_list, ByRef $file_list, $progress_callback_func, $callback_timer = 400)
+Func DownloadFileBulk(ByRef $url_list, ByRef $file_list, $progress_callback_func, $callback_timer = 400, $redundancy = 2)
     
     ;_ArrayDisplay($url_list)
     ;_ArrayDisplay($file_list)
@@ -26,8 +26,10 @@ Func DownloadFileBulk(ByRef $url_list, ByRef $file_list, $progress_callback_func
     For $i = 0 To $list_size - 1
         CreateFolderFromFilePath($file_list[$i])
 
-        ;$dw_handles[$i] = InetGet($url_list[$i], $file_list[$i], 0, $INET_DOWNLOADBACKGROUND)
-        $dw_handles[$i] = InetGet($url_list[$i], $file_list[$i], 1, $INET_DOWNLOADBACKGROUND)
+        ;$dw_handles[$i] = InetGet($url_list[$i], $file_list[$i], $INET_LOCALCACHE, $INET_DOWNLOADBACKGROUND)
+        
+        ; Using force reload by default to avoid any caching issues.
+        $dw_handles[$i] = InetGet($url_list[$i], $file_list[$i], $INET_FORCERELOAD, $INET_DOWNLOADBACKGROUND)
     Next
 
     ; Progress Callbacks
@@ -67,21 +69,42 @@ Func DownloadFileBulk(ByRef $url_list, ByRef $file_list, $progress_callback_func
 
     ; Check if any file failed to download
     ; and close handles
+
+    $download_success = True
+
+    Local $empty_arr[0]
+    $redundancy_url_list = $empty_arr
+    $redundancy_file_list = $empty_arr
+
     For $i = 0 To $list_size - 1
         Local $aData = InetGetInfo($dw_handles[$i])
-        ;ConsoleWrite(@error & @CRLF)
-        ;ConsoleWrite($aData[$INET_DOWNLOADSIZE] & @CRLF)
-        If @error <> 0 Or $aData[$INET_DOWNLOADSIZE] <= 0 Then
+        ;ConsoleWrite("-------" & $file_list[$i] & "-------" & @CRLF)
+        ;ConsoleWrite("@error: " & @error & @CRLF)
+        ;ConsoleWrite("Download size: " & $aData[$INET_DOWNLOADSIZE] & @CRLF)
+        ;ConsoleWrite("Download size: " & $aData[$INET_DOWNLOADERROR] & @CRLF)
+        If @error Or $aData[$INET_DOWNLOADERROR] <> 0 Then
+            
             FileDelete($file_list[$i])
-            ;ConsoleWrite("ERROR triggered")
-            ;ConsoleWrite($file_list[$i])
-            Return False ; If an error occurred then return from the function and delete the file.
+            $download_success = False
+            ;ConsoleWrite("ERROR triggered" & @CRLF)
+
+            If $redundancy > 0 Then
+                _ArrayAdd($redundancy_file_list, $file_list[$i])
+                _ArrayAdd($redundancy_url_list, $url_list[$i])
+            EndIf
         EndIf
         
         InetClose($dw_handles[$i])
     Next
 
-    ; If everything was downloaded, return true
+    If $download_success Then
+        ; If everything was downloaded, return true
+        Return True
+    ElseIf $redundancy > 0 Then
+        Return DownloadFileBulk($redundancy_url_list, $redundancy_file_list, $progress_callback_func, $callback_timer, $redundancy - 1)
+    EndIf
+    
+    
     Return True
     
 EndFunc
