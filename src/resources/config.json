@@ -1,7 +1,7 @@
 {
     "_comment": "This file is not meant to be changed. To change settings, edit the prefs.json file instead. Values in this file are default values and should not be changed.",
     
-    "api_endpoint": "https://aitecraft.glitch.me/pm/rev_api/dev-index.json",
+    "api_endpoint": "https://aitecraft.glitch.me/pm/rev_api/index.json",
     
     "defaults": {
         "mc_dir": "<appdata>\\.minecraft",
@@ -20,7 +20,7 @@
         "dir": "<mc_dir>\\aitecraft",
         "jvm": {
             "minimum_heap_size": 2048,
-            "args": "-XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M"
+            "args": ""
         },
         "misc": {
             "_comment": "This only works with the Official Minecraft Launcher. Path relative to main AU3/EXE.",

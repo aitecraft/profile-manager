@@ -30,7 +30,10 @@
     "strings": {
         "optimizer_mods": {
             "optifine": "OptiFabric + OptiFine",
-            "caffeine_mc_minus_phosphor": "Sodium + Lithium",
+            "sodium_lithium": "Sodium + Lithium",
+            "phosphor_lithium": "Phosphor + Lithium",
+            "lithium": "Lithium ONLY",
+            "none": "None",
             "caffeine_mc": "Sodium + Lithium + Phosphor"
         },
         "buttons": {
