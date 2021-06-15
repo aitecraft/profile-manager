@@ -126,7 +126,7 @@
                 },
                 "unsupported_api_format_version": {
                     "title": "Unsupported API Version",
-                    "message": "This installation of Aitecraft Profile Manager does not support the specified API format. Please update to a newer version. Program will now exit."
+                    "message": "This installation of Aitecraft Profile Manager does not support the specified API format. Please update to a newer version. Program will now exit.\r\n\r\n"
                 }
             },
             "update_done": {

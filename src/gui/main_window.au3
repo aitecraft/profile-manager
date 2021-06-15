@@ -15,6 +15,9 @@ Func CreateMainWindow()
     Global $hMainGui = GUICreate(Lang('general.app_title'), 350, 485)
     GUISetOnEvent($GUI_EVENT_CLOSE, "CloseApp")
 
+    ; Set font size
+    GUISetFont(8.5)
+
     MainWindowMenuBar()
 
     ; GUI
