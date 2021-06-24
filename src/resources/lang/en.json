@@ -58,8 +58,13 @@
             "misc_settings": "Miscellaneous Settings",
             "optimizer_mod": "Optimizer Mod",
             "pick_optimizer_mod": "Please choose an Optimization Mod you prefer from the options below:",
-            "please_wait": "Please wait...",
-            "select_new_mc_dir": "Select your Minecraft directory"
+            "select_new_mc_dir": "Select your Minecraft directory",
+            "status": {
+                "please_wait": "Please wait...",
+                "installing_fabric": "Installing Fabric...",
+                "parsing_files_api": "Parsing Files API...",
+                "checking_files": "Checking Files..."
+            }
         },
         "labels_dynamic": {
             "mem_size": "$<mem_size_amount> $<mem_size_unit>",

@@ -4,7 +4,9 @@
 #include "client_data.au3"
 #include "read_config.au3"
 #include "../gui/extras.au3"
+#include "../gui/status_bar.au3"
 #include "download.au3"
+#include "modrinth_api_helper.au3"
 #include <StringConstants.au3>
 #include <JSON.au3>
 #include <Array.au3>
@@ -50,6 +52,28 @@ EndFunc
 
 Func FAPIFile_GetURL($obj)
     Return Json_ObjGet($obj, "url")
+EndFunc
+
+Func FAPIFile_GetProvider($obj)
+    Return Json_ObjGet($obj, "provider")
+EndFunc
+
+Func FAPIFile_ProcessModrinth(ByRef $obj)
+    $provider = Json_ObjGet($obj, "provider")
+    If $provider == "modrinth" Then
+        $mod_id = Json_ObjGet($obj, "mod_id")
+        $mod_version = Json_ObjGet($obj, "mod_version")
+        $modrinth_data = ModrinthAPI_GetData($mod_id, $mod_version)
+        
+        $hash = Json_ObjGet($modrinth_data, "hash")
+        $url = Json_ObjGet($modrinth_data, "url")
+
+        Json_ObjPut($obj, "hash", $hash)
+        Json_ObjPut($obj, "url", $url)
+
+        Return True
+    EndIf
+    Return False
 EndFunc
 
 Func FAPIFile_CheckCondition($obj, $condition_key, $condition_value)
@@ -103,6 +127,8 @@ EndFunc
 
 Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
 
+    Status_SetParsingFilesAPI()
+
     FAPI_Init()
     FAPIFile_InitDownloadList()
 
@@ -124,6 +150,8 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
         
     Next
 
+    Status_SetCheckingFiles()
+
     ; Initialize the crypt library
     If $hashCheckAllFiles Then _Crypt_Startup()
 
@@ -133,6 +161,9 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
 
 
         If $obj <> False Then
+
+            $modrinth = FAPIFile_ProcessModrinth($obj)
+
             If (CD_GetVersion() >= FAPIFile_GetLastUpdated($obj)) Then
                 ; We can just ignore this..., file exists and is up-to-date.
                 ; TODO
@@ -143,7 +174,13 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
                     $filepath = FAPI_FilePathToFullPath($file)
 
                     If FileExists($filepath) Then
-                        $local_hash = _Crypt_HashFile($filepath, $CALG_SHA_256)
+                        $local_hash = ""
+                        If $modrinth Then
+                            $local_hash = _Crypt_HashFile($filepath, $CALG_SHA_512)
+                        Else
+                            $local_hash = _Crypt_HashFile($filepath, $CALG_SHA_256)
+                        EndIf
+
                         $remote_hash = FAPIFile_GetHash($obj)
                         If $local_hash = $remote_hash Then
                             ; File exists and hash matches with API. Do nothing.
@@ -185,7 +222,11 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
     ; Now, add all files remaining in the FAPI to the Download List
     ; Also add those files to the CD File List
     For $file In FAPI_GetAllFilePaths()
-        FAPIFile_AddToDownloadList($file, FAPIFile_GetURL(FAPI_GetFromFilePath($file)))
+        $file_obj = FAPI_GetFromFilePath($file)
+
+        FAPIFile_ProcessModrinth($file_obj)
+        
+        FAPIFile_AddToDownloadList($file, FAPIFile_GetURL($file_obj))
         CD_AddFileToList($file)
     Next
 

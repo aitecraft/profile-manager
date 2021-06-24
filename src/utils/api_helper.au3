@@ -6,7 +6,7 @@
 #include "json_io.au3"
 
 Global $api_data
-Global Const $supported_api_format_version = -7
+Global Const $supported_api_format_version = -6
 Global $api_initialized = False
 
 Func InitAPIData()
@@ -31,6 +31,10 @@ EndFunc
 
 Func API_GetFAPIEndpoint()
     return APIGet("files_api_endpoint")
+EndFunc
+
+Func API_GetModrinthAPIEndpoint()
+    return APIGet("modrinth_api_endpoint")
 EndFunc
 
 Func API_GetLatestVersion()

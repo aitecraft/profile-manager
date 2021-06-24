@@ -1,5 +1,6 @@
 #include-once
 #include <StaticConstants.au3>
+#include "../utils/lang_manager.au3"
 
 Global $progress_bar
 Global $progress_label_1
@@ -32,7 +33,19 @@ Func Status_DownloadCallback($downloaded_count, $total_count, $downloaded_size, 
 EndFunc
 
 Func Status_SetPleaseWait()
-    GUICtrlSetData($progress_label_1, Lang("labels.please_wait"))
+    GUICtrlSetData($progress_label_1, Lang("labels.status.please_wait"))
+EndFunc
+
+Func Status_SetInstallingFabric()
+    GUICtrlSetData($progress_label_2, Lang("labels.status.installing_fabric"))
+EndFunc
+
+Func Status_SetParsingFilesAPI()
+    GUICtrlSetData($progress_label_2, Lang("labels.status.parsing_files_api"))
+EndFunc
+
+Func Status_SetCheckingFiles()
+    GUICtrlSetData($progress_label_2, Lang("labels.status.checking_files"))
 EndFunc
 
 Func Status_Hide()

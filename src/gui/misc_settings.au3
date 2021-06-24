@@ -34,11 +34,7 @@ Func MS_CreateButtons($top)
 EndFunc
 
 Func MS_ReinstallFabric()
-    Status_SetPleaseWait()
-
     $res = InstallOrUpdate(True, False, True, Status_DownloadCallback)
-
-    Status_Hide()
 
     If $res Then
         QuickOKMsgBox_Lang("fabric_reinstall_done.success")
@@ -49,11 +45,7 @@ Func MS_ReinstallFabric()
 EndFunc
 
 Func MS_VerifyFiles()
-    Status_SetPleaseWait()
-
     $res = InstallOrUpdate(True, True, False, Status_DownloadCallback)
-
-    Status_Hide()
 
     If $res Then
         QuickOKMsgBox_Lang("file_verify_done.success")

@@ -6,11 +6,7 @@
 #include <StaticConstants.au3>
 
 Func OnClick_StartButton()
-    Status_SetPleaseWait()
-
     $res = InstallOrUpdate(False, False, False, Status_DownloadCallback)
-
-    Status_Hide()
 
     If $res == "uptodate" Then
         QuickOKMsgBox_Lang("update_done.uptodate")

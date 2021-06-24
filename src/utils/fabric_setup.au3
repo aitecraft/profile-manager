@@ -3,6 +3,7 @@
 #include "client_data.au3"
 #include "api_helper.au3"
 #include "../gui/extras.au3"
+#include "../gui/status_bar.au3"
 #include "end_program.au3"
 #include "download.au3"
 #include "json_io.au3"
@@ -123,6 +124,8 @@ Func Fabric_InstallOrUpdate($forced = False)
         ; Fabric installation disabled
         Return True
     EndIf
+
+    Status_SetInstallingFabric()
 
     ; Init Fabric's API Data
     FabricAPI_Init(API_GetFabric("loader.version"), API_GetFabric("loader.mc_version"))

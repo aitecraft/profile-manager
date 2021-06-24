@@ -4,9 +4,12 @@
 #include "fabric_setup.au3"
 #include "files_api_helper.au3"
 #include "../gui/optimizer_mod.au3"
+#include "../gui/status_bar.au3"
 #include <JSON.au3>
 
 Func InstallOrUpdate($forced = False, $forcedFiles = False, $forcedFabric = False, $filesDownloadCallback = "")
+    Status_SetPleaseWait()
+
     ; If Optimizer Mod is set to null, make user set optimizer mod first.
     $om_val = CD_GetOptimizerMod()
     If Json_IsNull($om_val) Or $om_val == "" Then
@@ -16,6 +19,7 @@ Func InstallOrUpdate($forced = False, $forcedFiles = False, $forcedFabric = Fals
     If Not $forced Then
         If (CD_GetVersion() >= API_GetLatestVersion()) Then
             ; Already up-to-date
+            Status_Hide()
             Return 'uptodate'
         EndIf
     EndIf
@@ -40,6 +44,7 @@ Func InstallOrUpdate($forced = False, $forcedFiles = False, $forcedFabric = Fals
     ;#cs
     $fabric = Fabric_InstallOrUpdate($forcedFabric)
     If Not $fabric Then
+        Status_Hide()
         Return False
     EndIf
     ;#ce
@@ -54,5 +59,8 @@ Func InstallOrUpdate($forced = False, $forcedFiles = False, $forcedFabric = Fals
     ;CD_ClearFilesList()
     
     CD_UpdateFile()
+
+    Status_Hide()
+
     Return $files
 EndFunc

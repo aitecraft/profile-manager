@@ -49,7 +49,7 @@ EndFunc
 
 Func OM_Dlg_Create($run_install_after_close = False, $pause_script = True)
     $om_dlg_gui = GUICreate(Lang("labels.optimizer_mod"), 251, 181, -1, -1, BitOR($WS_CAPTION, $WS_POPUP, $WS_BORDER), -1, GetMainWindowHandle())
-    
+
     GUICtrlCreateLabel(Lang("labels.pick_optimizer_mod"), 8, 8, 228, 25)
 
     $om_dlg_cbox_init_val = ""
