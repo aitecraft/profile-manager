@@ -29,12 +29,26 @@
     },
     "strings": {
         "optimizer_mods": {
-            "optifine": "OptiFabric + OptiFine",
-            "sodium_lithium": "Sodium + Lithium",
-            "phosphor_lithium": "Phosphor + Lithium",
-            "lithium": "Lithium ONLY",
-            "none": "None",
-            "caffeine_mc": "Sodium + Lithium + Phosphor"
+            "optifine": {
+                "name": "OptiFine + OptiFabric",
+                "description": "The classic Minecraft optimization mod\r\n(Currently, shaders are very buggy)"
+            },
+            "sodium_lithium": {
+                "name": "Sodium + Lithium",
+                "description": "Sodium: Best-in-class FPS Improvements\r\n(Warning: unstable, bleeding-edge build)\r\nand\r\nLithium: Best-in-class TPS Improvements"
+            },
+            "lithium": {
+                "name": "Lithium ONLY",
+                "description": "Best-in-class TPS Improvements"
+            },
+            "iris_lithium": {
+                "name": "Iris + Lithium",
+                "description": "Iris: A shaders mod.\r\n(Warning: experimental build)\r\nand\r\nLithium: Best-in-class TPS Improvements"
+            },
+            "none": {
+                "name": "None",
+                "description": ""
+            }
         },
         "buttons": {
             "update_profile": "Update Profile",

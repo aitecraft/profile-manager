@@ -42,25 +42,24 @@ Func FAPI_GetAllFilePaths()
     Return Json_ObjGetKeys($files_api_data)
 EndFunc
 
-Func FAPIFile_GetLastUpdated($obj)
+Func FAPIFile_GetLastUpdated(ByRef $obj)
     Return Json_ObjGet($obj, "last_updated_version")
 EndFunc
 
-Func FAPIFile_GetHash($obj)
+Func FAPIFile_GetHash(ByRef $obj)
     Return Json_ObjGet($obj, "hash")
 EndFunc
 
-Func FAPIFile_GetURL($obj)
+Func FAPIFile_GetURL(ByRef $obj)
     Return Json_ObjGet($obj, "url")
 EndFunc
 
-Func FAPIFile_GetProvider($obj)
+Func FAPIFile_GetProvider(ByRef $obj)
     Return Json_ObjGet($obj, "provider")
 EndFunc
 
 Func FAPIFile_ProcessModrinth(ByRef $obj)
-    $provider = Json_ObjGet($obj, "provider")
-    If $provider == "modrinth" Then
+    If FAPIFile_IsModrinth($obj) Then
         $mod_id = Json_ObjGet($obj, "mod_id")
         $mod_version = Json_ObjGet($obj, "mod_version")
         $modrinth_data = ModrinthAPI_GetData($mod_id, $mod_version)
@@ -70,13 +69,18 @@ Func FAPIFile_ProcessModrinth(ByRef $obj)
 
         Json_ObjPut($obj, "hash", $hash)
         Json_ObjPut($obj, "url", $url)
+    EndIf
+EndFunc
 
+Func FAPIFile_IsModrinth(ByRef $obj)
+    $provider = Json_ObjGet($obj, "provider")
+    If $provider == "modrinth" Then
         Return True
     EndIf
     Return False
 EndFunc
 
-Func FAPIFile_CheckCondition($obj, $condition_key, $condition_value)
+Func FAPIFile_CheckCondition(ByRef $obj, $condition_key, $condition_value)
     $condition_obj = Json_ObjGet($obj, "condition")
 
     ; If condition key not found, then return true / download file anyway
@@ -112,16 +116,12 @@ Func FAPIFile_AddToDownloadList($file, $url)
     EndIf
 EndFunc
 
-Func FAPIFile_FallbackDownloadCallback($downloaded_count, $total_count, $downloaded_size, $total_broken, $total_size)
-    ConsoleWrite($downloaded_size & @CRLF)
-EndFunc
-
 Func FAPIFile_DownloadFromList($downloadCallback = "")
     If UBound($files_download_list_urls) <= 0 Then
         Return True
     EndIf
 
-    If Not IsFunc($downloadCallback) Then $downloadCallback = FAPIFile_FallbackDownloadCallback
+    If Not IsFunc($downloadCallback) Then $downloadCallback = Status_DownloadCallback
     Return DownloadFileBulk($files_download_list_urls, $files_download_list_file_paths, $downloadCallback)
 EndFunc
 
@@ -150,6 +150,13 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
         
     Next
 
+    ; Resolve Modrinth Provider Files
+    For $file In FAPI_GetAllFilePaths() 
+        $fobj = FAPI_GetFromFilePath($file)
+
+        FAPIFile_ProcessModrinth($fobj)
+    Next
+
     Status_SetCheckingFiles()
 
     ; Initialize the crypt library
@@ -159,11 +166,7 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
     For $file In CD_GetFilesList()
         $obj = FAPI_GetFromFilePath($file)
 
-
         If $obj <> False Then
-
-            $modrinth = FAPIFile_ProcessModrinth($obj)
-
             If (CD_GetVersion() >= FAPIFile_GetLastUpdated($obj)) Then
                 ; We can just ignore this..., file exists and is up-to-date.
                 ; TODO
@@ -175,7 +178,9 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
 
                     If FileExists($filepath) Then
                         $local_hash = ""
-                        If $modrinth Then
+                        
+                        ; SHA 512 if modrinth is the provider
+                        If FAPIFile_IsModrinth($obj) Then
                             $local_hash = _Crypt_HashFile($filepath, $CALG_SHA_512)
                         Else
                             $local_hash = _Crypt_HashFile($filepath, $CALG_SHA_256)

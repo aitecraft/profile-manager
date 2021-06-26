@@ -13,6 +13,7 @@
 Global $om_mod_label
 Global $om_dlg_gui
 Global $om_dlg_cbox
+Global $om_dlg_desc_label
 Global $om_dlg_button
 Global $om_dlg_ins_after_close
 Global $om_script_pause_end
@@ -48,7 +49,12 @@ Func _WM_COMMAND($hWnd, $Msg, $wParam, $lParam)
 EndFunc
 
 Func OM_Dlg_Create($run_install_after_close = False, $pause_script = True)
-    $om_dlg_gui = GUICreate(Lang("labels.optimizer_mod"), 251, 181, -1, -1, BitOR($WS_CAPTION, $WS_POPUP, $WS_BORDER), -1, GetMainWindowHandle())
+    $om_dlg_gui = GUICreate(Lang("labels.optimizer_mod"), 250, 210, -1, -1, BitOR($WS_CAPTION, $WS_POPUP, $WS_BORDER), -1, GetMainWindowHandle())
+
+    ; Move GUI to be slightly below center of main window
+    $mainpos = WinGetPos(GetMainWindowHandle())
+    $xpos = $mainpos[0] + (($mainpos[2]/2) - (250 / 2))
+    WinMove($om_dlg_gui, "", $xpos, $mainpos[1] + ($mainpos[3]/2))
 
     GUICtrlCreateLabel(Lang("labels.pick_optimizer_mod"), 8, 8, 228, 25)
 
@@ -65,16 +71,20 @@ Func OM_Dlg_Create($run_install_after_close = False, $pause_script = True)
         EndIf
     Next
     
-    $om_dlg_cbox = GUICtrlCreateCombo($om_dlg_cbox_init_val, 40, 72, 169, 25, $CBS_DROPDOWNLIST)
+    $om_dlg_cbox = GUICtrlCreateCombo($om_dlg_cbox_init_val, 40, 50, 169, 25, $CBS_DROPDOWNLIST)
+    GUICtrlSetOnEvent(-1, "OM_Dlg_ComboChanged")
 
     ; Add other options 
     For $mod in $om_options
         If CD_GetOptimizerMod() <> $mod Then
-            GUICtrlSetData($om_dlg_cbox, OM_GetName($mod))
+            GUICtrlSetData(-1, OM_GetName($mod))
         EndIf
     Next
 
-    $om_dlg_button = GUICtrlCreateButton(Lang("buttons.confirm"), 64, 136, 113, 33)
+    ; Mod Description
+    $om_dlg_desc_label = GUICtrlCreateLabel(OM_GetSelectedDescription(), 8, 90, 228, 50, $SS_CENTER)
+
+    $om_dlg_button = GUICtrlCreateButton(Lang("buttons.confirm"), 64, 166, 113, 33)
     If Not ($pause_script) Then
         GUICtrlSetOnEvent(-1, "OM_Dlg_ConfirmButtonOnClick")
     EndIf
@@ -95,6 +105,29 @@ Func OM_Dlg_Create($run_install_after_close = False, $pause_script = True)
 
 EndFunc
 
+Func Util_ModNameToID($name)
+    $mod_id = ""
+
+    For $mod In API_GetOptimizer("options")
+        If $name == OM_GetName($mod) Then
+            $mod_id = $mod
+            ExitLoop
+        EndIf
+    Next
+
+    If $mod_id = "" Then
+        UnexpectedExitErrorMsgBox()
+        Exit
+    EndIf
+
+    Return $mod_id
+EndFunc
+
+Func OM_Dlg_ComboChanged()
+    $val = GUICtrlRead($om_dlg_cbox)
+    GUICtrlSetData($om_dlg_desc_label, OM_GetDescription(Util_ModNameToID($val)))
+EndFunc
+
 Func OM_Dlg_ConfirmButtonOnClick()
     ; Do the confirmation stuff
     $val = GUICtrlRead($om_dlg_cbox)
@@ -106,22 +139,7 @@ Func OM_Dlg_ConfirmButtonOnClick()
     ; Freeze Optimizer Dialog
     GUISetState(@SW_DISABLE, $om_dlg_gui)
 
-    $mod_id = ""
-
-    ; Find Mod ID from Name
-    For $mod In API_GetOptimizer("options")
-        If $val == OM_GetName($mod) Then
-            $mod_id = $mod
-            ExitLoop
-        EndIf
-    Next
-
-    If $mod_id = "" Then
-        UnexpectedExitErrorMsgBox()
-        Exit
-    EndIf
-
-    CD_SetOptimizerMod($mod_id)
+    CD_SetOptimizerMod(Util_ModNameToID($val))
     GUICtrlSetData($om_mod_label, OM_GetSelectedName())
 
     ; Update files
@@ -142,9 +160,20 @@ Func OM_GetSelectedName()
     Return OM_GetName(CD_GetOptimizerMod())
 EndFunc
 
+Func OM_GetSelectedDescription()
+    Return OM_GetDescription(CD_GetOptimizerMod())
+EndFunc
+
 Func OM_GetName($lang_str)
     If Json_IsNull($lang_str) Or $lang_str = "" Then
         Return ""
     EndIf
-    Return Lang("optimizer_mods." & $lang_str)
+    Return Lang("optimizer_mods." & $lang_str & ".name")
+EndFunc
+
+Func OM_GetDescription($lang_str)
+    If Json_IsNull($lang_str) Or $lang_str = "" Then
+        Return ""
+    EndIf
+    Return Lang("optimizer_mods." & $lang_str & ".description")
 EndFunc
