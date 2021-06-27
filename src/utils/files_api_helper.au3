@@ -89,15 +89,26 @@ Func FAPIFile_CheckCondition(ByRef $obj, $condition_key, $condition_value)
         Return True
     EndIf
 
-    If Json_ObjGet($condition_obj, $condition_key) == $condition_value Then
-        ;ConsoleWrite($condition_value & @CRLF & Json_ObjGet($condition_obj, $condition_key) & @CRLF)
-        Return True
-    ElseIf @error = 1 Then
+
+    $current_condition_obj = Json_ObjGet($condition_obj, $condition_key)
+
+    If @error = 1 Then
         ; If $condition_key doesn't exist, ignore.
         Return True
-    Else
-        Return False
     EndIf
+
+
+    If IsArray($current_condition_obj) Then
+        For $val In $current_condition_obj
+            ; If any value in array matches, then return True
+            If $val == $condition_value Then Return True
+        Next
+        Exit
+    Else
+        If $current_condition_obj == $condition_value Then Return True
+    EndIf
+
+    Return False
 EndFunc
 
 Func FAPIFile_InitDownloadList()
