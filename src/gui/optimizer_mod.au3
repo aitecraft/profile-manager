@@ -54,7 +54,7 @@ Func OM_Dlg_Create($run_install_after_close = False, $pause_script = True)
     ; Move GUI to be slightly below center of main window
     $mainpos = WinGetPos(GetMainWindowHandle())
     $xpos = $mainpos[0] + (($mainpos[2]/2) - (250 / 2))
-    WinMove($om_dlg_gui, "", $xpos, $mainpos[1] + ($mainpos[3]/2))
+    WinMove($om_dlg_gui, "", $xpos, $mainpos[1] + 200 + 50)
 
     GUICtrlCreateLabel(Lang("labels.pick_optimizer_mod"), 8, 8, 228, 25)
 

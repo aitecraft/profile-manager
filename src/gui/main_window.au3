@@ -8,6 +8,7 @@
 #include "profile_settings.au3"
 #include "misc_settings.au3"
 #include "optimizer_mod.au3"
+#include "status_bar.au3"
 
 Global $hMainGui
 

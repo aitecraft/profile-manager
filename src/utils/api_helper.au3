@@ -16,6 +16,7 @@ Func InitAPIData()
 
     ; Ensure API Format Version is supported
     If (APIGet("metadata.api_format_version") <> $supported_api_format_version) Then
+        $api_initialized = False
         UnsupportedAPIFormatVersionMsgBox()
         EndProgram()
     EndIf
