@@ -48,8 +48,9 @@ Func MojangAPI_Init($mc_version)
             Return True
         EndIf
     Next
-
-    Fabric_ErrorOutAndExit()
+    
+    UnexpectedExitErrorMsgBox("fabric_setup.au3 -> MojangAPI_Init", "mc_no_matching_version_found", $mc_version)
+    EndProgram()
 EndFunc
 
 Func MojangAPI_Put($path, $value)
@@ -58,11 +59,6 @@ EndFunc
 
 Func MojangAPI_Get($path)
     return Json_Get($mc_version_data, "." & $path)
-EndFunc
-
-Func Fabric_ErrorOutAndExit()
-    UnexpectedExitErrorMsgBox()
-    EndProgram()
 EndFunc
 
 Func Fabric_CreateVersionJSONAndJAR()

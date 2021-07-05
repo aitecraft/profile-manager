@@ -15,7 +15,7 @@ Func DownloadFileBulk(ByRef $url_list, ByRef $file_list, $progress_callback_func
     ; Ensure Arrays are of same size, and also array size > 0
     $list_size = UBound($url_list)
     If ($list_size <> UBound($file_list)) Or ($list_size <= 0) Then
-        UnexpectedExitErrorMsgBox()
+        UnexpectedExitErrorMsgBox("download.au3 -> DownloadFileBulk", "bulkdownload_arrays_size_mismatch", $list_size)
         Exit
     EndIf
 

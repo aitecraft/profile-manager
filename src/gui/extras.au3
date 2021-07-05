@@ -35,9 +35,25 @@ Func NotImplementedMsgBox()
     QuickOKMsgBox_Lang("todo")
 EndFunc
 
-Func UnexpectedExitErrorMsgBox()
-    ;MsgBox($MB_OK + $MB_ICONINFORMATION, Lang('errors.unexpected_exit.title'), Lang('errors.unexpected_exit.message'))
-    ;QuickOKMsgBox(Lang('errors.unexpected_exit.title'), Lang('errors.unexpected_exit.message'), $mbCritical)
+Func UnexpectedExitErrorMsgBox($error_trace = "", $error_lang_str = "", $error_additional_info = "")
+    If $error_trace == "" Then
+        UnexpectedExitErrorMsgBoxBackup()
+    Else
+        If $error_lang_str == "" Then
+            $error_lang_str = "unexpected_error_fallback"
+        EndIf
+
+        $ob = ObjCreate("Scripting.Dictionary")
+        $ob.Add("error-title", Lang("errors." & $error_lang_str & ".title"))
+        $ob.Add("error-message", Lang("errors." & $error_lang_str & ".message"))
+        $ob.Add("error-trace", $error_trace)
+        $ob.Add("error-extra", $error_additional_info)
+
+        QuickOKMsgBox_LangDynamic("errors.unexpected_error_template", $ob, $mbCritical)
+    EndIf
+EndFunc
+
+Func UnexpectedExitErrorMsgBoxBackup()
     QuickOKMsgBox_Lang("errors.unexpected_exit", $mbCritical)
 EndFunc
 

@@ -49,7 +49,7 @@ Func CD_RemoveFileFromList($file_path)
         _ArrayDelete($files, $index)
         CDSet('files', $files)
     Else
-        UnexpectedExitErrorMsgBox()
+        UnexpectedExitErrorMsgBox("client_data.au3 -> CD_RemoveFileFromList", "client_data_tried_deleting_non_existant_file_record", $file_path)
         EndProgram()
     EndIf
 EndFunc

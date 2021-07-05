@@ -116,7 +116,7 @@ Func Util_ModNameToID($name)
     Next
 
     If $mod_id = "" Then
-        UnexpectedExitErrorMsgBox()
+        UnexpectedExitErrorMsgBox("optimizer_mod.au3 -> Util_ModNameToID", "optimizer_mod_unexpected", $name)
         Exit
     EndIf
 

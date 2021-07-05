@@ -119,7 +119,7 @@ EndFunc
 
 Func FAPIFile_AddToDownloadList($file, $url)
     If Json_IsNull($url) Or $url = Null Or $url = "" Then
-        UnexpectedExitErrorMsgBox()
+        UnexpectedExitErrorMsgBox("files_api_helper.au3 -> FAPIFile_AddToDownloadList", "files_api_no_url_provided", $file)
         Exit
     Else
         _ArrayAdd($files_download_list_urls, $url)
@@ -150,7 +150,7 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
 
         ; Also ensure all files' Last Updated is not > API Latest Version
         If API_GetLatestVersion() < FAPIFile_GetLastUpdated($fobj) Then
-            UnexpectedExitErrorMsgBox()
+            UnexpectedExitErrorMsgBox("files_api_helper.au3 -> FAPI_InstallOrUpdate", "files_api_has_version_num_greater_than_api", $file)
             Exit
         EndIf
         

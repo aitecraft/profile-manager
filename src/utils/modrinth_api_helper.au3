@@ -26,7 +26,7 @@ Func ModrinthAPI_GetData($modID, $target_version)
     Next
 
     If $version_index == -1 Then
-        UnexpectedExitErrorMsgBox()
+        UnexpectedExitErrorMsgBox("modrinth_api_helper.au3 -> ModrinthAPI_GetData [1]", "modrinth_api_no_matching_version_found", $modID & " - " & $target_version)
         Exit
     EndIf
 
@@ -49,7 +49,7 @@ Func ModrinthAPI_GetData($modID, $target_version)
     EndIf
 
     If $file_index == -1 Then
-        UnexpectedExitErrorMsgBox()
+        UnexpectedExitErrorMsgBox("modrinth_api_helper.au3 -> ModrinthAPI_GetData [2]", "modrinth_api_no_matching_file_found", $modID & " - " & $target_version)
         Exit
     EndIf
     

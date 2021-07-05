@@ -1,3 +1,4 @@
+#include-once
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
 #include "../utils/lang_manager.au3"

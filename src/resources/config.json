@@ -1,7 +1,7 @@
 {
     "_comment": "This file is not meant to be changed. To change settings, edit the prefs.json file instead. Values in this file are default values and should not be changed.",
     
-    "api_endpoint": "https://aitecraft.glitch.me/pm/rev_api/dev-index.json",
+    "api_endpoint": "https://aitecraft.glitch.me/pm/rev_api/index.json",
     
     "defaults": {
         "mc_dir": "<appdata>\\.minecraft",

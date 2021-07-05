@@ -31,19 +31,19 @@
         "optimizer_mods": {
             "optifine": {
                 "name": "OptiFine + OptiFabric",
-                "description": "The classic Minecraft optimization mod\r\n(Currently, shaders are very buggy)"
+                "description": "The classic Minecraft optimization mod\r\n(Currently, shaders are buggy)"
             },
             "sodium_lithium": {
                 "name": "Sodium + Lithium",
-                "description": "Sodium: Best-in-class FPS Improvements\r\n(Warning: unstable, bleeding-edge build)\r\nand\r\nLithium: Best-in-class TPS Improvements"
+                "description": "Sodium: Best-in-class FPS Improvements\r\n(Warning: bleeding-edge build)\r\nand\r\nLithium: Best-in-class TPS Improvements"
             },
             "lithium": {
-                "name": "Lithium ONLY",
+                "name": "Lithium Only",
                 "description": "Best-in-class TPS Improvements"
             },
             "iris_lithium": {
                 "name": "Iris + Lithium",
-                "description": "Iris: A shaders mod.\r\n(Warning: experimental build)\r\nand\r\nLithium: Best-in-class TPS Improvements"
+                "description": "Iris: A shaders mod, includes Sodium\r\nand\r\nLithium: Best-in-class TPS Improvements"
             },
             "none": {
                 "name": "None",
@@ -76,7 +76,7 @@
             "status": {
                 "please_wait": "Please wait...",
                 "installing_fabric": "Installing Fabric...",
-                "parsing_files_api": "Parsing Files API...",
+                "parsing_files_api": "Parsing Files API and Modrinth API...",
                 "checking_files": "Checking Files..."
             }
         },
@@ -141,7 +141,11 @@
             "errors": {
                 "unexpected_exit": {
                     "title": "Unexpected Error",
-                    "message": "Encountered an unexpected and unhandled error! Program will now exit."
+                    "message": "Encountered an unexpected and unhandled error! Program will now exit. No details available."
+                },
+                "unexpected_error_template": {
+                    "title": "Unexpected Error: $<error-title>",
+                    "message": "Encountered an unexpected and unhandled error! Program will now exit. More details below:\r\n\r\nTrace: $<error-trace>\r\n\r\nMessage: $<error-message>\r\n\r\nAdditional Info: $<error-extra>\r\n\r\n"
                 },
                 "unsupported_api_format_version": {
                     "title": "Unsupported API Version",
@@ -199,6 +203,44 @@
             "mc_dir_changed_warning": {
                 "title": "Changing Minecraft Directory - Are you sure?",
                 "message": "Your current Minecraft directory is set to:\r\n\r\n$<mc_dir>\r\n\r\nWould you like to change it? (Choose \"Yes\" only if you know exactly what you're doing, the profile manager will not verify that the selected directory is a Minecraft directory.)\r\n\r\n"
+            }
+        },
+        "errors": {
+            "unexpected_error_fallback": {
+                "title": "Unknown Error",
+                "message": "No error string was provided for translation. See trace or additional info for more details."
+            },
+            "optimizer_mod_unexpected": {
+                "title": "Optimizer Mod Processing Error",
+                "message": "Expected to get a mod ID. Got an empty string instead. Very strange error. Please see other details..."
+            },
+            "files_api_has_version_num_greater_than_api": {
+                "title": "Files API Error",
+                "message": "The Files API may be misconfigured. This error also occurs if the main API cache is outdated. Try relaunching the Aitecraft Profile Manager..."
+            },
+            "files_api_no_url_provided": {
+                "title": "Files API Error",
+                "message": "URL field is null, empty or missing in Files API."
+            },
+            "mc_no_matching_version_found": {
+                "title": "Minecraft Version Not Found",
+                "message": "The specified version of Minecraft by the API was not found in the Minecraft versions list."
+            },
+            "bulkdownload_arrays_size_mismatch": {
+                "title": "Bulk Download Error",
+                "message": "File Path and File URLs arrays are of different sizes. Could also be that the arrays are empty."
+            },
+            "client_data_tried_deleting_non_existant_file_record": {
+                "title": "Client Data Deletion Error",
+                "message": "A non-existant file record was requested to be deleted from the Client Data files list."
+            },
+            "modrinth_api_no_matching_version_found": {
+                "title": "Modrinth API Error",
+                "message": "Specified version not found in the Modrinth API for specified mod."
+            },
+            "modrinth_api_no_matching_file_found": {
+                "title": "Modrinth API Error",
+                "message": "Required file not found in the Modrinth API for specified mod."
             }
         }
     }
