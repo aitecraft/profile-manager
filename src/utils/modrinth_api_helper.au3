@@ -59,14 +59,14 @@ Func ModrinthAPI_GetData($modID, $target_version)
     
 
     ; SHA-512 Hash
-    $hash = Json_Get($files_list[$i], ".hashes.sha512")
+    $hash = Json_Get($files_list[$file_index], ".hashes.sha512")
     StringUpper($hash)
     $hash = "0x" & $hash
     
     Json_Put($processed_json, ".hash", $hash)
 
     ; File Download URL
-    Json_Put($processed_json, ".url", Json_Get($files_list[$i], ".url"))
+    Json_Put($processed_json, ".url", Json_Get($files_list[$file_index], ".url"))
 
     Return $processed_json
 EndFunc
