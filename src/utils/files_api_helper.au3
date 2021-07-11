@@ -103,7 +103,6 @@ Func FAPIFile_CheckCondition(ByRef $obj, $condition_key, $condition_value)
             ; If any value in array matches, then return True
             If $val == $condition_value Then Return True
         Next
-        Exit
     Else
         If $current_condition_obj == $condition_value Then Return True
     EndIf
