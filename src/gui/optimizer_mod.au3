@@ -39,12 +39,14 @@ Func OM_ChangeButtonClick()
 EndFunc
 
 Func _WM_COMMAND($hWnd, $Msg, $wParam, $lParam)
-    If BitAND($wParam, 0x0000FFFF) =  $om_dlg_button Then 
+    If BitAND($wParam, 0x0000FFFF) =  $om_dlg_button Then
         If OM_Dlg_ConfirmButtonOnClick() Then
             $om_script_pause_end = True
             GUIRegisterMsg($WM_COMMAND, "")
         EndIf
-    EndIf        
+    ElseIf BitAND($wParam, 0x0000FFFF) =  $om_dlg_cbox Then
+        OM_Dlg_ComboChanged()
+    EndIf
     Return $GUI_RUNDEFMSG
 EndFunc
 
@@ -72,7 +74,9 @@ Func OM_Dlg_Create($run_install_after_close = False, $pause_script = True)
     Next
     
     $om_dlg_cbox = GUICtrlCreateCombo($om_dlg_cbox_init_val, 40, 50, 169, 25, $CBS_DROPDOWNLIST)
-    GUICtrlSetOnEvent(-1, "OM_Dlg_ComboChanged")
+    If Not ($pause_script) Then
+        GUICtrlSetOnEvent(-1, "OM_Dlg_ComboChanged")
+    EndIf
 
     ; Add other options 
     For $mod in $om_options
@@ -107,7 +111,6 @@ EndFunc
 
 Func Util_ModNameToID($name)
     $mod_id = ""
-
     For $mod In API_GetOptimizer("options")
         If $name == OM_GetName($mod) Then
             $mod_id = $mod
@@ -125,6 +128,7 @@ EndFunc
 
 Func OM_Dlg_ComboChanged()
     $val = GUICtrlRead($om_dlg_cbox)
+    If $val == "" Then Return
     GUICtrlSetData($om_dlg_desc_label, OM_GetDescription(Util_ModNameToID($val)))
 EndFunc
 
