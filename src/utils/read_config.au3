@@ -3,6 +3,7 @@
 #include "lang_manager.au3"
 #include "json_io.au3"
 #include "misc.au3"
+#include "log.au3"
 
 Global Const $configFileName = "resources/config.json"
 Global Const $prefsFileName = "resources/prefs.json"
@@ -27,8 +28,17 @@ EndFunc
 
 ; Initialize Config Data
 Func LoadConfig()
+    LogWrite("[CONFIG] Loading config file - " & $configFileName)
     $config = Json_FromFile($configFileName)
+    LogWrite("[CONFIG] Loaded config file.")
+
+    LogWrite("[CONFIG] Loading prefs file - " & $prefsFileName)
     $prefs = Json_FromFile($prefsFileName)
+    LogWrite("[CONFIG] Loaded prefs file.")
+    
+    LogWrite("[CONFIG] Minecraft Directory: " & Config_GetMCDir())
+    LogWrite("[CONFIG] Profile ID: " & Config_Profile_GetID())
+    LogWrite("[CONFIG] Profile Directory: " & Config_Profile_GetDir())
 EndFunc
 
 ; API Root URL

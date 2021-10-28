@@ -1,4 +1,5 @@
 #include-once
+#include <Math.au3>
 
 Func CreateFolder($folder)
     NormalizePath($folder)

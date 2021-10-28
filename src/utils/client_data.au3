@@ -5,6 +5,7 @@
 #include "end_program.au3"
 #include "json_io.au3"
 #include "read_config.au3"
+#include "log.au3"
 
 Global Const $client_file_name = "client_data.json"
 Global $client_file_path
@@ -12,6 +13,9 @@ Global $client_data
 
 Func CD_LoadData()
     $client_file_path = Config_Profile_GetDir() & "/" & $client_file_name
+
+    LogWrite("[CLIENT DATA] Loading data from - " & $client_file_path)
+
     $client_data = Json_FromFile($client_file_path)
     If $client_data == "" Then
         Local $files[0]
@@ -19,6 +23,9 @@ Func CD_LoadData()
         CD_SetOptimizerMod(Null)
         CD_SetVersion(0)
     EndIf
+
+    LogWrite("[CLIENT DATA] Loaded data")
+    LogWrite("[CLIENT DATA] Current version: " & CD_GetVersion())
 EndFunc
 
 Func CDGet($path)
@@ -74,4 +81,5 @@ EndFunc
 
 Func CD_SetVersion($ver)
     CDSet('version', $ver)
+    LogWrite("[CLIENT DATA] Version changed to: " & $ver)
 EndFunc

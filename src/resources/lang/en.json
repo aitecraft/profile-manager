@@ -145,7 +145,7 @@
                 },
                 "unexpected_error_template": {
                     "title": "Unexpected Error: $<error-title>",
-                    "message": "Encountered an unexpected and unhandled error! Program will now exit. More details below:\r\n\r\nTrace: $<error-trace>\r\n\r\nMessage: $<error-message>\r\n\r\nAdditional Info: $<error-extra>\r\n\r\n"
+                    "message": "Encountered an unexpected and unhandled error! Program will now exit. More details below:\r\n\r\nTrace: $<error-trace>\r\n\r\nMessage: $<error-message>\r\n\r\nAdditional Info: $<error-extra>\r\n\r\n\r\n\r\n"
                 },
                 "unsupported_api_format_version": {
                     "title": "Unsupported API Version",

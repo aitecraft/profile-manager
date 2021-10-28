@@ -1,5 +1,6 @@
 #include-once
 #include "json_io.au3"
+#include "log.au3"
 #include <JSON.au3>
 #include <MsgBoxConstants.au3>
 
@@ -29,15 +30,20 @@ Func LoadLang($name)
     Next
 
     If Not $Loaded Then
+        LogWrite("[LANG] [ERROR] Program tried to load invalid language file. Requested language id: " & $name)
         MsgBox($MB_OK + $MB_ICONINFORMATION, "Error", "Program tried to load invalid language file...")
+    Else
+        LogWrite("[LANG] Loaded language with id: " & $current_lang_id)
     EndIf
 EndFunc
 
 Func Lang($term)
     $ret = json_get($current_lang, ".strings." & $term)
     If @error == 1 And @extended == 0 Then
+        LogWrite("[LANG] [ERROR] Failed to localize (Reason: unknown. Term likely does not exist in language file). Term: " & $term)
         Return $term
     ElseIf json_isnull($ret) Then
+        LogWrite("[LANG] [ERROR] Failed to localize (Reason: term's value is null). Term: " & $term)
         Return $term
     Else
         Return $ret
@@ -49,6 +55,7 @@ Func LangNum($num)
     $num_str = String($num)
 
     If Not (StringIsInt($num_str) Or StringIsFloat($num_str)) Then
+        LogWrite("[LANG] [ERROR] Failed to localize number - " & $num_str)
         Return "[error-localizing-number]"
     EndIf
 
@@ -119,6 +126,7 @@ EndFunc
 
 Func LoadLangFromIdWithCheck($e)
     If Not IsCurrentLang($e) Then
+        LogWrite("[LANG] Switching to new language with id: " & $e)
         LoadLang($e)
         Return True
     EndIf

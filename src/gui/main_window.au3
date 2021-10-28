@@ -4,6 +4,7 @@
 #include "menu_bar.au3"
 #include "../utils/end_program.au3"
 #include "../utils/read_config.au3"
+#include "../utils/log.au3"
 #include "start_button.au3"
 #include "profile_settings.au3"
 #include "misc_settings.au3"
@@ -69,6 +70,8 @@ Func CloseApp()
 EndFunc
 
 Func ReloadApp()
+    LogWrite("Reloading App...")
+
     HideMainWindow()
     EndProgram(False)
     GUIDelete($hMainGui)

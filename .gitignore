@@ -7,7 +7,9 @@ src/resources/prefs.json
 src/resources/client_data.json
 src/resources/lang/experiments/
 src/resources/fabric/
+src/resources/pm.log
 api_schemas/
 revised_api/
 bin/
 hash_helper/
+

@@ -5,6 +5,7 @@
 #include "read_config.au3"
 #include "../gui/extras.au3"
 #include "../gui/status_bar.au3"
+#include "log.au3"
 #include "download.au3"
 #include "modrinth_api_helper.au3"
 #include <StringConstants.au3>
@@ -17,8 +18,11 @@ Global $files_download_list_urls[0]
 Global $files_download_list_file_paths[0]
 
 Func FAPI_Init()
+    LogWrite("[FILES API] Initializing...")
     $files_api_url = API_GetFAPIEndpoint()
+    LogWrite("[FILES API] Loading from " & $files_api_url)
     $files_api_data = Json_FromURL($files_api_url)
+    LogWrite("[FILES API] Loaded.")
 EndFunc
 
 Func FAPI_GetFromFilePath($path)    
@@ -62,6 +66,7 @@ Func FAPIFile_ProcessModrinth(ByRef $obj)
     If FAPIFile_IsModrinth($obj) Then
         $mod_id = Json_ObjGet($obj, "mod_id")
         $mod_version = Json_ObjGet($obj, "mod_version")
+        LogWrite("[FILES API] [MODRINTH] Processing for "  & $mod_id & " - " & $mod_version)
         $modrinth_data = ModrinthAPI_GetData($mod_id, $mod_version)
         
         $hash = Json_ObjGet($modrinth_data, "hash")
@@ -121,6 +126,7 @@ Func FAPIFile_AddToDownloadList($file, $url)
         UnexpectedExitErrorMsgBox("files_api_helper.au3 -> FAPIFile_AddToDownloadList", "files_api_no_url_provided", $file)
         Exit
     Else
+        LogWrite("[FILES API] Added " & $file & " to download list. URL: " & $url)
         _ArrayAdd($files_download_list_urls, $url)
         _ArrayAdd($files_download_list_file_paths, FAPI_FilePathToFullPath($file))
     EndIf
@@ -161,11 +167,13 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
     Next
 
     ; Resolve Modrinth Provider Files
+    LogWrite("[FILES API] Started processing data from Modrinth")
     For $file In FAPI_GetAllFilePaths() 
         $fobj = FAPI_GetFromFilePath($file)
 
         FAPIFile_ProcessModrinth($fobj)
     Next
+    LogWrite("[FILES API] Finished processing data from Modrinth")
 
     Status_SetCheckingFiles()
 
@@ -199,9 +207,10 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
                         $remote_hash = FAPIFile_GetHash($obj)
                         If $local_hash = $remote_hash Then
                             ; File exists and hash matches with API. Do nothing.
+                            LogWrite("[FILES API] Hash matched - " & $file)
                         Else
                             ; File exists but hash mismatch
-                            ;ConsoleWrite("Hash mismatch! - " & $filepath)
+                            LogWrite("[FILES API] [WARNING] Hash mismatch! - " & $file)
                             FAPIFile_AddToDownloadList($file, FAPIFile_GetURL($obj))
                         EndIf
                     Else

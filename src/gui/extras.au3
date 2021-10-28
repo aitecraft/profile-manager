@@ -2,6 +2,7 @@
 #include "../utils/lang_manager.au3"
 #include "libs/CustomMsgBox.au3"
 #include "../utils/misc.au3"
+#include "../utils/log.au3"
 #include "main_window.au3"
 
 Func QuickOKMsgBox($title, $message, $flags = $mbInformation)
@@ -36,6 +37,13 @@ Func NotImplementedMsgBox()
 EndFunc
 
 Func UnexpectedExitErrorMsgBox($error_trace = "", $error_lang_str = "", $error_additional_info = "")
+    LogWrite("[ERROR] Unexpected Exit Error called. More details below:")
+    LogWrite("Error Trace: " & $error_trace)
+    LogWrite("Error Additional Info: " & $error_additional_info)
+    LogWrite("Error Language String: " & $error_lang_str)
+    LogWrite("Translated Error Title: " & Lang("errors." & $error_lang_str & ".title"))
+    LogWrite("Translated Error Message: " & Lang("errors." & $error_lang_str & ".message"))
+    
     If $error_trace == "" Then
         UnexpectedExitErrorMsgBoxBackup()
     Else
@@ -65,8 +73,10 @@ EndFunc
 
 Func OpenFolder($path)
     If Not FileExists($path) Then
+        LogWrite("[OPEN FOLDER] Non existant folder (" & $path & ") requested to be opened.")
         $yesno = QuickYesNoMsgBox_Lang("folder_doesnt_exist")
         If $yesno = 6 Then
+            LogWrite("[OPEN FOLDER] Created new folder at " & $path )
             CreateFolder($path)
         Else
             Return

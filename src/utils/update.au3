@@ -5,9 +5,12 @@
 #include "files_api_helper.au3"
 #include "../gui/optimizer_mod.au3"
 #include "../gui/status_bar.au3"
+#include "log.au3"
 #include <JSON.au3>
 
 Func InstallOrUpdate($forced = False, $forcedFiles = False, $forcedFabric = False, $filesDownloadCallback = "")
+    LogWrite("[UPDATE] Checking for update...")
+    
     Status_SetPleaseWait()
 
     ; If Optimizer Mod is set to null, make user set optimizer mod first.
@@ -19,6 +22,7 @@ Func InstallOrUpdate($forced = False, $forcedFiles = False, $forcedFabric = Fals
     If Not $forced Then
         If (CD_GetVersion() >= API_GetLatestVersion()) Then
             ; Already up-to-date
+            LogWrite("[UPDATE] Up to Date.")
             Status_Hide()
             Return 'uptodate'
         EndIf
