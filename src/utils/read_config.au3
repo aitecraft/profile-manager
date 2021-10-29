@@ -19,6 +19,8 @@ Func GetPref($prefsPath, $configPath)
         $confVal = Json_Get($config, $configPath)
         ; Add value to prefs
         Json_Put($prefs, $prefsPath, $confVal)
+        ; Log
+        LogWrite("[PREFS] Initialized " & $prefsPath & " to default value of " & $confVal)
         ; Return
         Return $confVal
     Else
@@ -75,6 +77,10 @@ EndFunc
 
 Func Config_GetCreateEmptyJAR()
     return GetPref('.create_empty_jar', '.defaults.compatibility.create_empty_jar')
+EndFunc
+
+Func Config_GetStrictHashCheck()
+    return GetPref('.strict_hash_check', '.defaults.strict_hash_check')
 EndFunc
 
 ; Profile ID (just needs to be unique, used only by launcher)

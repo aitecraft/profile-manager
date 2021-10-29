@@ -31,11 +31,11 @@
         "optimizer_mods": {
             "optifine": {
                 "name": "OptiFine + OptiFabric",
-                "description": "The classic Minecraft optimization mod\r\n(Currently, shaders are buggy)"
+                "description": "The classic Minecraft optimization mod"
             },
             "sodium_lithium": {
                 "name": "Sodium + Lithium",
-                "description": "Sodium: Best-in-class FPS Improvements\r\n(Warning: bleeding-edge build)\r\nand\r\nLithium: Best-in-class TPS Improvements"
+                "description": "Sodium: Best-in-class FPS Improvements\r\nand\r\nLithium: Best-in-class TPS Improvements"
             },
             "lithium": {
                 "name": "Lithium Only",
@@ -108,6 +108,7 @@
                 "options": {
                     "create_empty_jar": "Create Empty JAR",
                     "profile_name_is_id": "Profile Name is Profile ID",
+                    "strict_hash_check": "Strict Hash Check",
                     "mc_dir": "Change Minecraft Directory"
                 }
             },
@@ -199,6 +200,10 @@
                     "title": "\"Profile Name is Profile ID\" Changed - Are you sure?",
                     "message": "Most launchers, except the new C++/CEF based vanilla launcher, run into problems when the Profile Name and Profile ID do not match. Disable this option only if you are using the newest vanilla launcher.\r\n\r\nIf you proceed, you might have to update the modpack profile, either by simply clicking the Update Profile button, or by re-installing Fabric."
                 }
+            },
+            "strict_hash_check_changed_warning": {
+                "title": "\"Strict Hash Check\" Changed - Are you sure?",
+                "message": "Enabling this will FORCE the \"Verify Files\" option to re-download ALL files which encounter a hash mismatch - including config files. This means some mod config files will also get reset when running \"Verify Files\".\r\n\r\nOnly enable this if you think that your config files are messed up. The mod JAR files are re-downloaded in case of a hash mismatch regardless of this option.\r\n\r\n"
             },
             "mc_dir_changed_warning": {
                 "title": "Changing Minecraft Directory - Are you sure?",

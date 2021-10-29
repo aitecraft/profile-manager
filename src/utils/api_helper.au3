@@ -7,7 +7,7 @@
 #include "log.au3"
 
 Global $api_data
-Global Const $supported_api_format_version = -5
+Global Const $supported_api_format_version = -4
 Global $api_initialized = False
 
 Func InitAPIData()

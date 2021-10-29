@@ -29,6 +29,11 @@ Func Prefs_SetCreateEmptyJAR($val)
     LogWrite("[PREFS] Set 'Create Empty JAR' to " & $val)
 EndFunc
 
+Func Prefs_SetStrictHashCheck($val)
+    Json_Put($prefs, '.strict_hash_check', $val)
+    LogWrite("[PREFS] Set 'Strict Hash Check' to " & $val)
+EndFunc
+
 Func Prefs_UpdateFile()
     Json_ToFile($prefsFileName, $prefs)
     LogWrite("[PREFS] Updated prefs file")

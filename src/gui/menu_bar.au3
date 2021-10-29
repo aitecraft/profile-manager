@@ -78,9 +78,15 @@ Func MainWindowMenuBar()
         GUICtrlCreateMenuItem("", $menu_settings)
     EndIf
 
+    Global $menu_settings_strictHashCheck = GUICtrlCreateMenuItem(MLangO('strict_hash_check'), $menu_settings)
+    SetMenuBarCheckboxState(-1, Config_GetStrictHashCheck())
+    GUICtrlSetOnEvent(-1, "Settings_StrictHashCheck")
+
+    GUICtrlCreateMenuItem("", $menu_settings)
 
     Global $menu_settings_mc_dir = GUICtrlCreateMenuItem(MLangO('mc_dir'), $menu_settings)
     GUICtrlSetOnEvent(-1, "Settings_MCDir")
+
     ; ----------------------------
 
     ; ----------------------------
@@ -191,6 +197,13 @@ Func Settings_ProfileNameIsID()
     If QuickYesNoMsgBox_Lang("compatibility_settings_changed_warning.profile_name_is_id", $mbExclamation) = 6 Then
         Prefs_SetProfileNameIsID(Not Config_GetProfileNameIsID())
         SetMenuBarCheckboxState($menu_settings_profileNameIsID, Config_GetProfileNameIsID())
+    EndIf
+EndFunc
+
+Func Settings_StrictHashCheck()
+    If QuickYesNoMsgBox_Lang("strict_hash_check_changed_warning") = 6 Then
+        Prefs_SetStrictHashCheck(Not Config_GetStrictHashCheck())
+        SetMenuBarCheckboxState($menu_settings_strictHashCheck, Config_GetStrictHashCheck())
     EndIf
 EndFunc
 

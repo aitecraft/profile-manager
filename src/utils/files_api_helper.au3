@@ -85,6 +85,17 @@ Func FAPIFile_IsModrinth(ByRef $obj)
     Return False
 EndFunc
 
+Func FAPIFile_IgnoreHashMismatch(ByRef $obj)
+    $ignore_mismatch = Json_ObjGet($obj, "ignore_hash_mismatch")
+
+    ; If key does not exist, do NOT ignore mismatches 
+    If @error = 1 Then
+        Return False
+    EndIf
+
+    Return $ignore_mismatch
+EndFunc
+
 Func FAPIFile_CheckCondition(ByRef $obj, $condition_key, $condition_value)
     $condition_obj = Json_ObjGet($obj, "condition")
 
@@ -210,8 +221,12 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
                             LogWrite("[FILES API] Hash matched - " & $file)
                         Else
                             ; File exists but hash mismatch
-                            LogWrite("[FILES API] [WARNING] Hash mismatch! - " & $file)
-                            FAPIFile_AddToDownloadList($file, FAPIFile_GetURL($obj))
+                            If Config_GetStrictHashCheck() Or Not FAPIFile_IgnoreHashMismatch($obj)  Then
+                                LogWrite("[FILES API] [WARNING] Hash mismatch! - " & $file)
+                                FAPIFile_AddToDownloadList($file, FAPIFile_GetURL($obj))
+                            Else
+                                LogWrite("[FILES API] Hash mismatch! (ignored) - " & $file)
+                            EndIf
                         EndIf
                     Else
                         ; File doesn't exist
@@ -237,6 +252,7 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
             ; Delete file in this case
             CD_RemoveFileFromList($file)
             FileDelete(FAPI_FilePathToFullPath($file))
+            LogWrite("[FILES API] File deleted - " & $file)
         EndIf
     Next
 
@@ -247,8 +263,6 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
     ; Also add those files to the CD File List
     For $file In FAPI_GetAllFilePaths()
         $file_obj = FAPI_GetFromFilePath($file)
-
-        FAPIFile_ProcessModrinth($file_obj)
         
         FAPIFile_AddToDownloadList($file, FAPIFile_GetURL($file_obj))
         CD_AddFileToList($file)

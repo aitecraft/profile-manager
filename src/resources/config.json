@@ -1,12 +1,13 @@
 {
     "_comment": "This file is not meant to be changed. To change settings, edit the prefs.json file instead. Values in this file are default values and should not be changed.",
     
-    "api_endpoint": "https://aitecraft.glitch.me/pm/rev_api/index.json",
+    "api_endpoint": "https://aitecraft.glitch.me/pm/rev_api/dev-index.json",
     
     "defaults": {
         "mc_dir": "<appdata>\\.minecraft",
         "lang": "en",
         "jvm_heap_size": 2048,
+        "strict_hash_check": false,
         
         "compatibility": {
             "_comment": "These settings help maintain compatibility with third-party / older launchers.",
