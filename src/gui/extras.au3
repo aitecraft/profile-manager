@@ -66,6 +66,7 @@ Func UnexpectedExitErrorMsgBoxBackup()
 EndFunc
 
 Func UnsupportedAPIFormatVersionMsgBox()
+    LogWrite("[ERROR] Unsupported API Format Version.")
     QuickOKMsgBox_Lang("errors.unsupported_api_format_version", $mbCritical)
     ;QuickOKMsgBox(Lang('errors.unsupported_api_format_version.title'), Lang('errors.unsupported_api_format_version.message'), $mbCritical)
     ;MsgBox($MB_OK + $MB_ICONINFORMATION, Lang('errors.unsupported_api_format_version.title'), Lang('errors.unsupported_api_format_version.message'))

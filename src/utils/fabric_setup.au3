@@ -9,6 +9,7 @@
 #include "json_io.au3"
 #include "misc.au3"
 #include "launcher_profiles.au3"
+#include "log.au3"
 #include <JSON.au3>
 #include <Array.au3>
 #include <FileConstants.au3>
@@ -39,6 +40,8 @@ Func FabricAPI_Get($path)
 EndFunc
 
 Func MojangAPI_Init($mc_version)
+    LogWrite("[FABRIC INSTALL] Loading data from Mojang API for " & $mc_version)
+
     $ver_manifest = Json_FromURL(API_GetFabric("loader.apis.mojang_mc_version_list.api_endpoint"))
     $ver_list = Json_ObjGet($ver_manifest, "versions")
 
@@ -62,6 +65,8 @@ Func MojangAPI_Get($path)
 EndFunc
 
 Func Fabric_CreateVersionJSONAndJAR()
+    LogWrite("[FABRIC INSTALL] Installing Fabric version - " & FabricAPI_Get("id"))
+
     MojangAPI_Init(API_GetFabric("loader.mc_version"))
     
     $libs = MojangAPI_Get("libraries")
@@ -93,6 +98,8 @@ Func Fabric_CreateVersionJSONAndJAR()
 
     ; Version JSON
     Json_ToFile($folder & FabricAPI_Get("id") & ".json", $mc_version_data)
+    LogWrite("[FABRIC INSTALL] Created version JSON")
+
 EndFunc
 
 Func Fabric_UpdateProfile()
@@ -106,22 +113,30 @@ Func Fabric_UpdateProfile()
     LauncherProfile_Put("lastVersionId", FabricAPI_Get("id"))
 
     LauncherProfiles_Update()
+
+    LogWrite("[FABRIC INSTALL] Updated " & Config_Profile_GetID() & " launcher profile")
 EndFunc
 
 Func Fabric_InstallOrUpdate($forced = False)
+    LogWrite("[FABRIC INSTALL] Checking for update...")
     If Not $forced Then
         If (CD_GetVersion() >= API_GetFabric("last_updated_version")) Then
             ; Already up-to-date
+            LogWrite("[FABRIC INSTALL] Up-to-date")
+            
             Return True
         EndIf
     EndIf
 
     If Not (API_GetFabric("install")) Then
+        LogWrite("[FABRIC INSTALL] Fabric installation disabled by API.")
         ; Fabric installation disabled
         Return True
     EndIf
 
+    LogWrite("[FABRIC INSTALL] Initializing Fabric installation...")
     Status_SetInstallingFabric()
+
 
     ; Init Fabric's API Data
     FabricAPI_Init(API_GetFabric("loader.version"), API_GetFabric("loader.mc_version"))
@@ -129,6 +144,9 @@ Func Fabric_InstallOrUpdate($forced = False)
     Fabric_CreateVersionJSONAndJAR()
 
     Fabric_UpdateProfile()
+
+    LogWrite("[FABRIC INSTALL] Finished installing Fabric.")
+
 
     Return True
 EndFunc

@@ -61,7 +61,9 @@ Func OM_Dlg_Create($run_install_after_close = False, $pause_script = True)
     GUICtrlCreateLabel(Lang("labels.pick_optimizer_mod"), 8, 8, 228, 25)
 
     $om_dlg_cbox_init_val = ""
+    $om_dlg_desc_label_init_val = ""
     $current_name = OM_GetSelectedName()
+    $current_desc = OM_GetSelectedDescription()
     $om_options = API_GetOptimizer("options")
 
     ; If something is selected
@@ -69,6 +71,7 @@ Func OM_Dlg_Create($run_install_after_close = False, $pause_script = True)
     For $mod In $om_options
         If CD_GetOptimizerMod() == $mod Then
             $om_dlg_cbox_init_val = $current_name
+            $om_dlg_desc_label_init_val = $current_desc
             ExitLoop
         EndIf
     Next
@@ -86,7 +89,7 @@ Func OM_Dlg_Create($run_install_after_close = False, $pause_script = True)
     Next
 
     ; Mod Description
-    $om_dlg_desc_label = GUICtrlCreateLabel(OM_GetSelectedDescription(), 8, 90, 228, 50, $SS_CENTER)
+    $om_dlg_desc_label = GUICtrlCreateLabel($om_dlg_desc_label_init_val, 8, 90, 228, 50, $SS_CENTER)
 
     $om_dlg_button = GUICtrlCreateButton(Lang("buttons.confirm"), 64, 166, 113, 33)
     If Not ($pause_script) Then
