@@ -18,7 +18,7 @@ Func CreateMainWindow()
     GUISetOnEvent($GUI_EVENT_CLOSE, "CloseApp")
 
     ; Set font size
-    GUISetFont(8.5)
+    GUISetFont(LangFontSize())
 
     MainWindowMenuBar()
 

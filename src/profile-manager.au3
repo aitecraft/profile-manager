@@ -3,9 +3,9 @@
 #AutoIt3Wrapper_Icon=aitecraft.ico
 #AutoIt3Wrapper_Change2CUI=y
 #AutoIt3Wrapper_Res_Description=Aitecraft Profile Manager
-#AutoIt3Wrapper_Res_Fileversion=0.6.2.0
+#AutoIt3Wrapper_Res_Fileversion=0.7.0.0
 #AutoIt3Wrapper_Res_ProductName=Aitecraft Profile Manager
-#AutoIt3Wrapper_Res_ProductVersion=beta-0.6.2
+#AutoIt3Wrapper_Res_ProductVersion=beta-0.7.0
 #AutoIt3Wrapper_Res_CompanyName=Aitecraft
 #AutoIt3Wrapper_Res_LegalCopyright=MIT License
 #AutoIt3Wrapper_Res_Language=1033

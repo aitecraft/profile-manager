@@ -21,7 +21,7 @@ Func FAPI_Init()
     LogWrite("[FILES API] Initializing...")
     $files_api_url = API_GetFAPIEndpoint()
     LogWrite("[FILES API] Loading from " & $files_api_url)
-    $files_api_data = Json_FromURL($files_api_url)
+    $files_api_data = Json_FromURL($files_api_url, True)
     LogWrite("[FILES API] Loaded.")
 EndFunc
 

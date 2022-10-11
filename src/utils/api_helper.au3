@@ -7,7 +7,7 @@
 #include "log.au3"
 
 Global $api_data
-Global Const $supported_api_format_version = -4
+Global Const $supported_api_format_version = -3
 Global $api_initialized = False
 
 Func InitAPIData()
@@ -15,7 +15,7 @@ Func InitAPIData()
     $api_url = Config_GetAPIEndpoint()
     LogWrite("[API] Loading from " & $api_url)
     
-    $api_data = Json_FromURL($api_url)
+    $api_data = Json_FromURL($api_url, True)
     $api_initialized = True
 
     LogWrite("[API] Initialized.")

@@ -28,25 +28,24 @@ Have mods that only certain users prefer? You can now let them choose the mod th
 ### Fabric First
 Fabric is at the forefront of Aitecraft Profile Manager. It will automatically install any version of Fabric as instructed by your API! No more manually updating Fabric.
 
+### Modrinth Support
+Aitecraft Profile Manager can fetch mod files directly from Modrinth. Providing the mod ID and version ID is enough for the profile manager to download the mod files. File verification also works on Modrinth-provided files.
+
 ### Incremental Updates
 Updating even large modpacks will be a breeze for your users thanks to an incremental update system, that works by only downloading files that have been updated or were never on your install.
 
 ### Built for All Hardware
 Built on AutoIt3, Aitecraft Profile Manager is supported across a wide range of Windows versions, from 7 to the latest builds of 10, without any sacrifices on any version. Thanks to the lightweight nature of AutoIt, Aitecraft Profile Manager consumes <20 MB of memory! This is far lower than anything using web-based technologies. All that while having a far simpler and easier to customize codebase than a similar C/C++ codebase! (Especially GUIs)
 
+### Bootstrapper
+Included as part of this source code is the Bootstrapper, a simple tool that downloads the profile manager and keeps it updated.
+
 ## Planned Features
 
 These are features that we plan to add before reaching v1.0.
 
-### Download via Browser
-Looking at you OptiFine.
-
-### Profile Manager Auto-Update
-Basic system to update the profile manager automatically.
-
-## Planned Features II
-
-These are nice-to-have features that we are planning to add post v1.0. No promises though.
-
 ### Import Feature
 Helps users import Minecraft settings and resource packs from any of their existing Minecraft installations directly into the custom directory for your modpack.
+
+### Download via Browser
+Looking at you OptiFine.

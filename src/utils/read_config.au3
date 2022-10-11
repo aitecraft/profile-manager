@@ -31,11 +31,16 @@ EndFunc
 ; Initialize Config Data
 Func LoadConfig()
     LogWrite("[CONFIG] Loading config file - " & $configFileName)
-    $config = Json_FromFile($configFileName)
+    $config = Json_FromFile($configFileName, True)
     LogWrite("[CONFIG] Loaded config file.")
 
     LogWrite("[CONFIG] Loading prefs file - " & $prefsFileName)
-    $prefs = Json_FromFile($prefsFileName)
+    
+    ; Strip comments from prefs.json even though it is a generated file
+    ; Users may modify it and add comments, so we may have to strip them
+    ; Comments will be lost when the application exits.
+    $prefs = Json_FromFile($prefsFileName, True)
+    
     LogWrite("[CONFIG] Loaded prefs file.")
     
     LogWrite("[CONFIG] Minecraft Directory: " & Config_GetMCDir())

@@ -21,6 +21,6 @@ EndFunc
 Func MainWindowStartButton($top)
     $startButton = GUICtrlCreateButton(Lang("buttons.start"), 100, $top, 150, $top + 60)
     GUICtrlSetOnEvent(-1, "OnClick_StartButton")
-    GUICtrlSetFont(-1, 11)
+    GUICtrlSetFont(-1, LangFontSize() * 1.3)
     Return $top + 90
 EndFunc

@@ -8,6 +8,7 @@
         "short_name": "en",
         "complete": true
     },
+    "font_size": 8.5,
     "numbers": {
         "characters": [
             "0",
@@ -151,6 +152,10 @@
                 "unsupported_api_format_version": {
                     "title": "Unsupported API Version",
                     "message": "This installation of Aitecraft Profile Manager does not support the specified API format. Please update to a newer version. Program will now exit.\r\n\r\n"
+                },
+                "http_error": {
+                    "title": "HTTP Error",
+                    "message": "Error encountered while performing HTTP request. Ensure you have an active internet connection before trying again. Program will now exit.\r\n\r\n"
                 }
             },
             "update_done": {

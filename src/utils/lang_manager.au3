@@ -13,7 +13,7 @@ Global $current_lang_id = ''
 
 ; Initialize Config Data
 Func LoadLanguageList()
-    $lang_info = Json_FromFile($languageListFileName)
+    $lang_info = Json_FromFile($languageListFileName, True)
     $languages = Json_ObjGet($lang_info, "languages")
 EndFunc
 
@@ -23,7 +23,7 @@ Func LoadLang($name)
         $id = Json_ObjGet($languages[$i], "id")
         If (StringCompare($name, $id) == 0) Then
             $loaded = True
-            $current_lang = Json_FromFile($languageFilesFolder & Json_ObjGet($languages[$i], "file_name"))
+            $current_lang = Json_FromFile($languageFilesFolder & Json_ObjGet($languages[$i], "file_name"), True)
             $current_lang_id = $id
             ExitLoop
         EndIf
@@ -45,6 +45,16 @@ Func Lang($term)
     ElseIf json_isnull($ret) Then
         LogWrite("[LANG] [ERROR] Failed to localize (Reason: term's value is null). Term: " & $term)
         Return $term
+    Else
+        Return $ret
+    EndIf
+EndFunc
+
+Func LangFontSize()
+    $ret = json_get($current_lang, ".font_size")
+    If (@error == 1 And @extended == 0) Or json_isnull($ret) Then
+        LogWrite("[LANG] [WARNING] No Font Size specified by localization file. Defaulted to 8.5.")
+        Return 8.5
     Else
         Return $ret
     EndIf

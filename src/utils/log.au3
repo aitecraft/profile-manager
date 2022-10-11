@@ -18,5 +18,6 @@ Func EndLog()
 EndFunc
 
 Func LogWrite($text)
+    StringReplace($text, @CRLF, " \n ")
     FileWrite($logfile, "[" & _Now() & "] " & $text & @CRLF)
 EndFunc

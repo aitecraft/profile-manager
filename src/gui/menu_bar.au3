@@ -213,7 +213,7 @@ Func Settings_MCDir()
     $ob.Add("mc_dir", Config_GetMCDir())
     
     If QuickYesNoMsgBox_LangDynamic("mc_dir_changed_warning", $ob, $mbQuestion) = 6 Then
-        $new_dir = AskUserForMCDir()
+        $new_dir = AskUserForMCDir(GetMainWindowHandle())
         
         ; If user chooses cancel or closes the window
         If $new_dir = "" Then

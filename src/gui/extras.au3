@@ -3,7 +3,6 @@
 #include "libs/CustomMsgBox.au3"
 #include "../utils/misc.au3"
 #include "../utils/log.au3"
-#include "main_window.au3"
 
 Func QuickOKMsgBox($title, $message, $flags = $mbInformation)
     xMsgBox($flags, $title, $message, Lang('buttons.ok'))
@@ -72,6 +71,10 @@ Func UnsupportedAPIFormatVersionMsgBox()
     ;MsgBox($MB_OK + $MB_ICONINFORMATION, Lang('errors.unsupported_api_format_version.title'), Lang('errors.unsupported_api_format_version.message'))
 EndFunc
 
+Func HTTPErrorMsgBox()
+    QuickOKMsgBox_Lang("errors.http_error", $mbCritical)
+EndFunc
+
 Func OpenFolder($path)
     If Not FileExists($path) Then
         LogWrite("[OPEN FOLDER] Non existant folder (" & $path & ") requested to be opened.")
@@ -90,6 +93,6 @@ Func OpenInBrowser($url)
     ShellExecute($url)
 EndFunc
 
-Func AskUserForMCDir()
-    Return FileSelectFolder(Lang("labels.select_new_mc_dir"), "", 0, "", GetMainWindowHandle())
+Func AskUserForMCDir($mainWindowHandle)
+    Return FileSelectFolder(Lang("labels.select_new_mc_dir"), "", 0, "", $mainWindowHandle)
 EndFunc

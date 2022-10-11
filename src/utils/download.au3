@@ -58,7 +58,9 @@ Func DownloadFileBulk(ByRef $url_list, ByRef $file_list, $progress_callback_func
         For $i = 0 To $list_size - 1
             $dw_bytes_raw += InetGetInfo($dw_handles[$i], $INET_DOWNLOADREAD)
             If InetGetInfo($dw_handles[$i], $INET_DOWNLOADCOMPLETE) Then
-                $dw_files_count = $dw_files_count + 1
+                If InetGetInfo($dw_handles[$i], $INET_DOWNLOADSUCCESS) Then
+                    $dw_files_count = $dw_files_count + 1
+                EndIf
             Else
                 $done = False
             EndIf
@@ -104,9 +106,7 @@ Func DownloadFileBulk(ByRef $url_list, ByRef $file_list, $progress_callback_func
         Return DownloadFileBulk($redundancy_url_list, $redundancy_file_list, $progress_callback_func, $callback_timer, $redundancy - 1)
     EndIf
     
-    
-    Return True
-    
+    Return False
 EndFunc
 
 Func DownloadFile($url, $file, $progress_callback_func)

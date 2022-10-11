@@ -1,6 +1,15 @@
-{
-    "_comment": "This file is not meant to be changed. To change settings, edit the prefs.json file instead. Values in this file are default values and should not be changed.",
-    
+/* WARNING!
+This file is not meant to be changed. To change settings, edit the prefs.json file instead.
+Values in this file are default values and should not be changed. 
+
+If you wish to modify the profile manager for your own modpack,
+please visit the wiki for more info:
+https://github.com/aitecraft/profile-manager/wiki
+
+config.json format is detailed here:
+https://github.com/aitecraft/profile-manager/wiki/config.json-Format
+*/
+{   
     "api_endpoint": "https://aitecraft.glitch.me/pm/rev_api/dev-index.json",
     
     "defaults": {
@@ -9,11 +18,14 @@
         "jvm_heap_size": 2048,
         "strict_hash_check": false,
         
+        // These settings help maintain compatibility with third-party / older launchers
         "compatibility": {
-            "_comment": "These settings help maintain compatibility with third-party / older launchers.",
-            "profile_name_is_id": true,
-            "create_empty_jar": false
-        }
+            
+            // Strongly recommend keeping this at true
+            "profile_name_is_id": true, 
+
+            "create_empty_jar": false,
+        },
     },
     
     "profile": {
@@ -21,18 +33,18 @@
         "dir": "<mc_dir>\\aitecraft",
         "jvm": {
             "minimum_heap_size": 2048,
-            "args": ""
+            "args": "",
         },
         "misc": {
-            "_comment": "This only works with the Official Minecraft Launcher. Path relative to main AU3/EXE.",
-            "encoded_icon_file": "resources/aitecraft-icon-base64.txt"
-        }
+            // This only works with the Official Minecraft Launcher. Path relative to main AU3/EXE.
+            "encoded_icon_file": "resources/aitecraft-icon-base64.txt",
+        },
     },
     
     "proprietary": {
         "change_skin_option": true,
         "open_website_option": true,
-        "open_schematics_folder_option": true
+        "open_schematics_folder_option": true,
     },
 
     "gui": {
@@ -40,8 +52,13 @@
         "optimizer_mod": true,
         "misc": {
             "reinstall_fabric": true,
-            "verify_files": true
+            "verify_files": true,
         },
-        "profile_settings": true
-    }
+
+        /* Visibility of "Launcher Profile Settings" as well as
+        options "Create Empty JAR" and "Profile Name is Profile ID" 
+        inside the "Settings" menu
+        */ 
+        "profile_settings": true, 
+    },
 }

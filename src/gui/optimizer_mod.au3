@@ -52,13 +52,14 @@ EndFunc
 
 Func OM_Dlg_Create($run_install_after_close = False, $pause_script = True)
     $om_dlg_gui = GUICreate(Lang("labels.optimizer_mod"), 250, 210, -1, -1, BitOR($WS_CAPTION, $WS_POPUP, $WS_BORDER), -1, GetMainWindowHandle())
+    GUISetFont(LangFontSize())
 
     ; Move GUI to be slightly below center of main window
     $mainpos = WinGetPos(GetMainWindowHandle())
     $xpos = $mainpos[0] + (($mainpos[2]/2) - (250 / 2))
     WinMove($om_dlg_gui, "", $xpos, $mainpos[1] + 200 + 50)
 
-    GUICtrlCreateLabel(Lang("labels.pick_optimizer_mod"), 8, 8, 228, 25)
+    GUICtrlCreateLabel(Lang("labels.pick_optimizer_mod"), 8, 8, 228, 50)
 
     $om_dlg_cbox_init_val = ""
     $om_dlg_desc_label_init_val = ""
