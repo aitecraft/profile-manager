@@ -42,9 +42,26 @@ https://github.com/aitecraft/profile-manager/wiki/config.json-Format
     },
     
     "proprietary": {
-        "change_skin_option": true,
-        "open_website_option": true,
         "open_schematics_folder_option": true,
+        
+        // Dynamically generated drop-down menu
+        "links": [
+            "change_skin",
+            "website",
+            {
+                "key": "downloads",
+                "content": [
+                    {
+                        "key": "java",
+                        "content": [
+                            "java_win_x64",
+                            "java_win_x86",
+                        ],
+                    },
+                    "launcher",
+                ],
+            },
+        ],
     },
 
     "gui": {
@@ -55,10 +72,11 @@ https://github.com/aitecraft/profile-manager/wiki/config.json-Format
             "verify_files": true,
         },
 
-        /* Visibility of "Launcher Profile Settings" as well as
+        /* 
+        Visibility of "Launcher Profile Settings" as well as
         options "Create Empty JAR" and "Profile Name is Profile ID" 
         inside the "Settings" menu
-        */ 
+        */
         "profile_settings": true, 
     },
 }

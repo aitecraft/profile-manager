@@ -8,6 +8,7 @@
 #include "log.au3"
 #include "download.au3"
 #include "modrinth_api_helper.au3"
+#include "curseforge_api_helper.au3"
 #include <StringConstants.au3>
 #include <JSON.au3>
 #include <Array.au3>
@@ -64,10 +65,10 @@ EndFunc
 
 Func FAPIFile_ProcessModrinth(ByRef $obj)
     If FAPIFile_IsModrinth($obj) Then
-        $mod_id = Json_ObjGet($obj, "mod_id")
-        $mod_version = Json_ObjGet($obj, "mod_version")
-        LogWrite("[FILES API] [MODRINTH] Processing for "  & $mod_id & " - " & $mod_version)
-        $modrinth_data = ModrinthAPI_GetData($mod_id, $mod_version)
+        $mod_slug = Json_ObjGet($obj, "slug")
+        $mod_version = Json_ObjGet($obj, "version")
+        LogWrite("[FILES API] [MODRINTH] Processing for "  & $mod_slug & " - " & $mod_version)
+        $modrinth_data = ModrinthAPI_GetData($mod_slug, $mod_version)
         
         $hash = Json_ObjGet($modrinth_data, "hash")
         $url = Json_ObjGet($modrinth_data, "url")
@@ -77,12 +78,35 @@ Func FAPIFile_ProcessModrinth(ByRef $obj)
     EndIf
 EndFunc
 
-Func FAPIFile_IsModrinth(ByRef $obj)
-    $provider = Json_ObjGet($obj, "provider")
-    If $provider == "modrinth" Then
+Func FAPIFile_ProcessCurseforge(ByRef $obj)
+    If FAPIFile_IsCurseforge($obj) Then
+        $mod_id = Json_ObjGet($obj, "mod_id")
+        $file_id = Json_ObjGet($obj, "file_id")
+        LogWrite("[FILES API] [CURSEFORGE] Processing for "  & $mod_id & " - " & $file_id)
+        $curseforge_data = CurseforgeAPI_GetData($mod_id, $file_id)
+        
+        $hash = Json_ObjGet($curseforge_data, "hash")
+        $url = Json_ObjGet($curseforge_data, "url")
+
+        Json_ObjPut($obj, "hash", $hash)
+        Json_ObjPut($obj, "url", $url)
+    EndIf
+EndFunc
+
+Func FAPIFile_CheckProvider(ByRef $obj, $query)
+    $provider = FAPIFile_GetProvider($obj)
+    If $provider == $query Then
         Return True
     EndIf
     Return False
+EndFunc
+
+Func FAPIFile_IsModrinth(ByRef $obj)
+    Return FAPIFile_CheckProvider($obj, "modrinth")
+EndFunc
+
+Func FAPIFile_IsCurseforge(ByRef $obj)
+    Return FAPIFile_CheckProvider($obj, "curseforge")
 EndFunc
 
 Func FAPIFile_IgnoreHashMismatch(ByRef $obj)
@@ -186,6 +210,15 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
     Next
     LogWrite("[FILES API] Finished processing data from Modrinth")
 
+    ; Resolve CurseForge Provider Files
+    LogWrite("[FILES API] Started processing data from CurseForge")
+    For $file In FAPI_GetAllFilePaths() 
+        $fobj = FAPI_GetFromFilePath($file)
+
+        FAPIFile_ProcessCurseforge($fobj)
+    Next
+    LogWrite("[FILES API] Finished processing data from CurseForge")
+
     Status_SetCheckingFiles()
 
     ; Initialize the crypt library
@@ -208,10 +241,14 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
                     If FileExists($filepath) Then
                         $local_hash = ""
                         
-                        ; SHA 512 if modrinth is the provider
                         If FAPIFile_IsModrinth($obj) Then
+                            ; SHA 512 if modrinth is the provider
                             $local_hash = _Crypt_HashFile($filepath, $CALG_SHA_512)
+                        ElseIf FAPIFile_IsCurseforge($obj) Then
+                            ; SHA 1 if curseforge is provider
+                            $local_hash = _Crypt_HashFile($filepath, $CALG_SHA1)
                         Else
+                            ; SHA 256 for self-provided
                             $local_hash = _Crypt_HashFile($filepath, $CALG_SHA_256)
                         EndIf
 

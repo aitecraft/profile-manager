@@ -46,6 +46,22 @@
                 "name": "Iris + Lithium",
                 "description": "Iris: A shaders mod, includes Sodium\r\nand\r\nLithium: Best-in-class TPS Improvements"
             },
+            "caffeine_mc": {
+                "name": "CaffeineMC",
+                "description": "Sodium: Best-in-class FPS Improvements\r\nLithium: Best-in-class TPS Improvements\r\nPhosphor: Even more TPS Improvements"
+            },
+            "iris_caffeine": {
+                "name": "Iris + CaffeineMC",
+                "description": "Iris: A shaders mod, includes Sodium\r\nLithium: Best-in-class TPS Improvements\r\nPhosphor: Even more TPS Improvements"
+            },
+            "sodium": {
+                "name": "Sodium Only",
+                "description": "Best-in-class FPS Improvements"
+            },
+            "iris_sodium": {
+                "name": "Iris + Sodium",
+                "description": "Iris: A shaders mod, includes Sodium"
+            },
             "none": {
                 "name": "None",
                 "description": ""
@@ -77,7 +93,7 @@
             "status": {
                 "please_wait": "Please wait...",
                 "installing_fabric": "Installing Fabric...",
-                "parsing_files_api": "Parsing Files API and Modrinth API...",
+                "parsing_files_api": "Parsing Files API, Modrinth API and CurseForge API...",
                 "checking_files": "Checking Files..."
             }
         },
@@ -116,11 +132,24 @@
             "language": {
                 "title": "Language"
             },
-            "aitecraft": { 
+            "links": {
                 "title": "Aitecraft",
                 "options": {
                     "change_skin": "Change Skin",
-                    "open_website": "Open Website"
+                    "website": "Open Website",
+                    "downloads": {
+                        "title": "Downloads",
+                        "options": {
+                            "java": {
+                                "title": "Java",
+                                "options": {
+                                    "java_win_x64": "Windows (64-bit)",
+                                    "java_win_x86": "Windows (32-bit)"
+                                }
+                            },
+                            "launcher": "Launcher"
+                        }
+                    }
                 }
             },
             "about": {
@@ -251,6 +280,10 @@
             "modrinth_api_no_matching_file_found": {
                 "title": "Modrinth API Error",
                 "message": "Required file not found in the Modrinth API for specified mod."
+            },
+            "curseforge_api_no_sha1_hash": {
+                "title": "CurseForge API Error",
+                "message": "No SHA-1 Hash found for specified mod file."
             }
         }
     }

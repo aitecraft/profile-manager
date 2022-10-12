@@ -131,12 +131,13 @@ Func Config_Profile_GetIcon()
     return FileRead($icon_file)
 EndFunc
 
-Func Config_Proprietary_ChangeSkin()
-    return json_get($config, '.proprietary.change_skin_option')
+Func Config_Proprietary_Links()
+    return json_get($config, '.proprietary.links')
 EndFunc
 
-Func Config_Proprietary_OpenWebsite()
-    return json_get($config, '.proprietary.open_website_option')
+Func Config_Proprietary_Links_Exists()
+    $links = Config_Proprietary_Links()
+    Return IsArray($links) And UBound($links) >= 1
 EndFunc
 
 Func Config_Proprietary_OpenSchematicsFolderOption()

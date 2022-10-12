@@ -1,6 +1,7 @@
 #include-once
 #include <GUIConstantsEx.au3>
 #include <MsgBoxConstants.au3>
+#include <JSON.au3>
 #include "../utils/lang_manager.au3"
 #include "../utils/read_config.au3"
 #include "../utils/version.au3"
@@ -12,6 +13,7 @@
 #include "../utils/client_data.au3"
 
 Global $option = ''
+Global $ctrlToTerm
 
 ; Menu Lang
 Func MLang($term)
@@ -109,20 +111,13 @@ Func MainWindowMenuBar()
 
     ; ----------------------------
     ; Modpack-specfic Change Skin and Open Website Options
-    If (Config_Proprietary_ChangeSkin() Or Config_Proprietary_OpenWebsite()) Then
-        SMLang('aitecraft')
+    If (Config_Proprietary_Links_Exists()) Then
+        SMLang('links')
 
-        $menu_aitecraft = GUICtrlCreateMenu(MLangT())
+        $ctrlToTerm = ObjCreate("Scripting.Dictionary")
 
-        If Config_Proprietary_ChangeSkin() Then
-            $menu_aitecraft_change_skin = GUICtrlCreateMenuItem(MLangO('change_skin'), $menu_aitecraft)
-            GUICtrlSetOnEvent(-1, "Aitecraft_ChangeSkin")
-        EndIf
-
-        If Config_Proprietary_OpenWebsite() Then
-            $menu_aitecraft_open_website = GUICtrlCreateMenuItem(MLangO('open_website'), $menu_aitecraft)
-            GUICtrlSetOnEvent(-1, "Aitecraft_OpenWebsite")
-        EndIf
+        $menu_links = GUICtrlCreateMenu(MLangT())
+        Links_Create($menu_links, Config_Proprietary_Links())
     EndIf
     ; ----------------------------
 
@@ -232,12 +227,25 @@ Func Settings_MCDir()
     EndIf
 EndFunc
 
-Func Aitecraft_ChangeSkin()
-    OpenInBrowser(API_GetSkinChangerURL())
+Func Links_Create($menu, $entries, $root = "", $lang_root = "links")
+    For $entry in $entries
+        If IsString($entry) Then
+            SMLang($lang_root)
+            $item = GUICtrlCreateMenuItem(MLangO($entry), $menu)
+            GUICtrlSetOnEvent(-1, "Links_Click")
+            $ctrlToTerm.Add($item, $root & $entry)
+        ElseIf Json_IsObject($entry) Then
+            $key = Json_ObjGet($entry, "key")
+            $newLang = $lang_root & ".options." & $key
+            SMLang($newLang)
+            $newMenu = GUICtrlCreateMenu(MLangT(), $menu)
+            Links_Create($newMenu, Json_ObjGet($entry, "content"), $root & $key & ".", $newLang)
+        EndIf
+    Next
 EndFunc
 
-Func Aitecraft_OpenWebsite()
-    OpenInBrowser(API_GetWebsiteURL())
+Func Links_Click()
+    OpenInBrowser(API_GetLink($ctrlToTerm.Item(@GUI_CtrlId)))
 EndFunc
 
 Func About_Version()

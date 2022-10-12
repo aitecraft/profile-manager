@@ -5,12 +5,7 @@
 #include <JSON.au3>
 
 Func ModrinthAPI_GetData($modID, $target_version)
-    $mod_data_url = API_GetModrinthAPIEndpoint() & "mod/" & $modID
-    $mod_data = Json_FromURL($mod_data_url)
-
-    $internal_modID = Json_Get($mod_data, ".id")
-
-    $mod_versions_list_url = API_GetModrinthAPIEndpoint() & "mod/" & $internal_modID & "/version"
+    $mod_versions_list_url = API_GetModrinthAPIEndpoint() & "project/" & $modID & "/version"
     $mod_versions = Json_FromURL($mod_versions_list_url)
 
     ; Iterate through versions list and pick version

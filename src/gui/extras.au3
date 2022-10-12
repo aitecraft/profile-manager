@@ -87,10 +87,14 @@ Func OpenFolder($path)
         EndIf
     EndIf
     Run("explorer /e, " & '"' & $path & '"')
+    LogWrite("[OPEN FOLDER] Opened folder at " & $path )
 EndFunc
 
 Func OpenInBrowser($url)
-    ShellExecute($url)
+    If $url <> "" Then
+        ShellExecute($url)
+        LogWrite("[OPEN BROWSER] Opened URL at " & $url )
+    EndIf
 EndFunc
 
 Func AskUserForMCDir($mainWindowHandle)

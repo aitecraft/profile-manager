@@ -44,6 +44,10 @@ Func API_GetModrinthAPIEndpoint()
     return APIGet("modrinth_api_endpoint")
 EndFunc
 
+Func API_GetCurseforgeAPIEndpoint()
+    return APIGet("curseforge_api_endpoint")
+EndFunc
+
 Func API_GetLatestVersion()
     return APIGet("latest_version")
 EndFunc
@@ -56,14 +60,10 @@ Func API_GetOptimizer($path)
     return APIGet("optimizer_mods." & $path)
 EndFunc
 
+Func API_GetLink($path)
+    return APIGet("links." & $path)
+EndFunc
+
 Func API_GetSrcRepoURL()
-    return APIGet("other.source_repo")
-EndFunc
-
-Func API_GetSkinChangerURL()
-    return APIGet("other.skin_changer")
-EndFunc
-
-Func API_GetWebsiteURL()
-    return APIGet("other.website")
+    return API_GetLink("source_repo")
 EndFunc

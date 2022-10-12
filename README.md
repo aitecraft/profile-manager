@@ -28,8 +28,10 @@ Have mods that only certain users prefer? You can now let them choose the mod th
 ### Fabric First
 Fabric is at the forefront of Aitecraft Profile Manager. It will automatically install any version of Fabric as instructed by your API! No more manually updating Fabric.
 
-### Modrinth Support
-Aitecraft Profile Manager can fetch mod files directly from Modrinth. Providing the mod ID and version ID is enough for the profile manager to download the mod files. File verification also works on Modrinth-provided files.
+### Modrinth & Curseforge Support
+Aitecraft Profile Manager can fetch mod files directly from Modrinth or CurseForge. For Modrinth, providing the project slugs and version names is enough for the profile manager to download the mod files. For CurseForge, providing the mod ID and file ID is sufficient.
+
+File verification also works on Modrinth-provided and CurseForge-provided files.
 
 ### Incremental Updates
 Updating even large modpacks will be a breeze for your users thanks to an incremental update system, that works by only downloading files that have been updated or were never on your install.
