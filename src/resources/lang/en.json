@@ -77,7 +77,8 @@
             "confirm": "Confirm",
             "reinstall_fabric": "Re-install Fabric",
             "verify_files": "Verify Files",
-            "change": "Change"
+            "change": "Change",
+            "import_profile": "Import Configurations"
         },
         "general": {
             "custom_profile": "Aitecraft",
@@ -90,10 +91,14 @@
             "optimizer_mod": "Optimizer Mod",
             "pick_optimizer_mod": "Please choose an Optimization Mod you prefer from the options below:",
             "select_new_mc_dir": "Select your Minecraft directory",
+            "import_profile": "Import Profile",
+            "pick_profile": "Please choose a profile to import your options and configurations from:",
+            "profile_directory": "Profile Directory:",
             "status": {
                 "please_wait": "Please wait...",
                 "installing_fabric": "Installing Fabric...",
-                "parsing_files_api": "Parsing Files API, Modrinth API and CurseForge API...",
+                "parsing_files_api": "Parsing Files API...",
+                "parsing_external_api": "Parsing Modrinth API and CurseForge API...",
                 "checking_files": "Checking Files..."
             }
         },
@@ -143,11 +148,13 @@
                             "java": {
                                 "title": "Java",
                                 "options": {
-                                    "java_win_x64": "Windows (64-bit)",
-                                    "java_win_x86": "Windows (32-bit)"
+                                    "win_x64": "Windows Installer (64-bit)",
+                                    "win_x86": "Windows Installer (32-bit)",
+                                    "others": "Other Platforms (Set Package Type to JRE)"
                                 }
                             },
-                            "launcher": "Launcher"
+                            "launcher": "Launcher",
+                            "tailscale": "Tailscale"
                         }
                     }
                 }
@@ -164,6 +171,10 @@
             "select_one": {
                 "title": "No Mod Chosen",
                 "message": "You must choose an Optimization Mod to use."
+            },
+            "select_one_profile": {
+                "title": "No Profile Chosen",
+                "message": "You must choose a profile to import!"
             },
             "todo": {
                 "title": "Error",
@@ -221,6 +232,16 @@
                     "message": "Files verification failed."
                 }
             },
+            "import_done": {
+                "success": {
+                    "title": "Success",
+                    "message": "Imported $<count> configuration files successfully!"
+                },
+                "failure": {
+                    "title": "Failure",
+                    "message": "Failed to import any configuration files. See the profile manager log file for more information."
+                }
+            },
             "folder_doesnt_exist": {
                 "title": "Folder Not Found",
                 "message": "The folder you were trying to open does not exist. Would you like to create and then open the folder?"
@@ -242,6 +263,14 @@
             "mc_dir_changed_warning": {
                 "title": "Changing Minecraft Directory - Are you sure?",
                 "message": "Your current Minecraft directory is set to:\r\n\r\n$<mc_dir>\r\n\r\nWould you like to change it? (Choose \"Yes\" only if you know exactly what you're doing, the profile manager will not verify that the selected directory is a Minecraft directory.)\r\n\r\n"
+            },
+            "import_warning": {
+                "title": "Importing Options - Are you sure?",
+                "message": "Are you sure you want to import Minecraft options (keybinds and other settings) as well as configurations for MiniHUD, Litematica, Tweakeroo, ItemScroller, Sodium, Iris and Modmenu from the following folder?\r\n\r\n$<dir>\r\n\r\nIf a mod doesn't have config files in this directory, your existing configuration for the mod in Aitecraft will be left untouched.\r\n\r\n\r\n\r\n"
+            },
+            "no_profiles_to_import": {
+                "title": "No Profiles to Import",
+                "message": "No profiles were found in your Minecraft installation for importing configurations. Please ensure your Minecraft Directory is correctly set (Settings -> Change Minecraft Directory).\r\n\r\nOnly profiles from the vanilla launcher are supported by this feature. For other launchers, you may have to import the configuration files manually. We are sorry for the inconvenience."
             }
         },
         "errors": {

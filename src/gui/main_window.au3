@@ -32,7 +32,7 @@ Func CreateMainWindow()
         $top = MainWindowOMSettings($top)
     EndIf
 
-    If Config_GUIGet_Misc_ReinstallFabric() Or Config_GUIGet_Misc_VerifyFiles() Then
+    If Config_GUIGet_Misc_ReinstallFabric() Or Config_GUIGet_Misc_VerifyFiles() Or Config_GUIGet_Misc_Import() Then
         $top = MainWindowMiscSettings($top)
     EndIf
     

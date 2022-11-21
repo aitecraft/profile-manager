@@ -231,9 +231,14 @@ Func Links_Create($menu, $entries, $root = "", $lang_root = "links")
     For $entry in $entries
         If IsString($entry) Then
             SMLang($lang_root)
-            $item = GUICtrlCreateMenuItem(MLangO($entry), $menu)
-            GUICtrlSetOnEvent(-1, "Links_Click")
-            $ctrlToTerm.Add($item, $root & $entry)
+            If $entry == "<separator>" Then $entry = ""
+            If $entry == "" Then
+                GUICtrlCreateMenuItem($entry, $menu)
+            Else
+                $item = GUICtrlCreateMenuItem(MLangO($entry), $menu)
+                GUICtrlSetOnEvent(-1, "Links_Click")
+                $ctrlToTerm.Add($item, $root & $entry)
+            EndIf
         ElseIf Json_IsObject($entry) Then
             $key = Json_ObjGet($entry, "key")
             $newLang = $lang_root & ".options." & $key

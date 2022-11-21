@@ -7,7 +7,7 @@
 #include "log.au3"
 
 Global $api_data
-Global Const $supported_api_format_version = -3
+Global Const $supported_api_format_version = -2
 Global $api_initialized = False
 
 Func InitAPIData()
@@ -54,6 +54,11 @@ EndFunc
 
 Func API_GetFabric($path)
     return APIGet("fabric." & $path)
+EndFunc
+
+Func API_OptimizerExists()
+    $query = APIGet("optimizer_mods")
+    Return Not (Json_IsNull($query) Or $query == "")
 EndFunc
 
 Func API_GetOptimizer($path)

@@ -73,6 +73,7 @@ EndFunc
 
 Func CD_SetOptimizerMod($mod_name)
     CDSet('optimizer_mod', $mod_name)
+    LogWrite("[CLIENT DATA] Optimizer Mod set to: " & $mod_name)
 EndFunc
 
 Func CD_GetVersion()

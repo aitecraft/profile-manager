@@ -36,7 +36,7 @@ https://github.com/aitecraft/profile-manager/wiki/config.json-Format
             "args": "",
         },
         "misc": {
-            // This only works with the Official Minecraft Launcher. Path relative to main AU3/EXE.
+            // This only works with the Official Minecraft Launcher. Path relative to working directory.
             "encoded_icon_file": "resources/aitecraft-icon-base64.txt",
         },
     },
@@ -54,15 +54,42 @@ https://github.com/aitecraft/profile-manager/wiki/config.json-Format
                     {
                         "key": "java",
                         "content": [
-                            "java_win_x64",
-                            "java_win_x86",
+                            "win_x64",
+                            "win_x86",
+                            "<separator>",
+                            "others",
                         ],
                     },
                     "launcher",
+                    "tailscale",
                 ],
             },
         ],
     },
+
+    // Files to import from a different profile
+    "imports": [
+        // Minecraft options
+        "options.txt",
+
+        // OptiFine & Iris
+        "optionsof.txt",
+        "optionsshaders.txt",
+        "config/iris.properties",
+        
+        // Sodium
+        "config/sodium-options.json",
+        
+        // Masa's mods
+        "config/litematica.json",
+        "config/itemscroller.json",
+        "config/minihud.json",
+        "config/tweakeroo.json",
+        "config/malilib.json",
+        
+        // Modmenu
+        "config/modmenu.json",
+    ],
 
     "gui": {
         "open_folders_menu": true,
@@ -70,6 +97,7 @@ https://github.com/aitecraft/profile-manager/wiki/config.json-Format
         "misc": {
             "reinstall_fabric": true,
             "verify_files": true,
+            "import": true,
         },
 
         /* 

@@ -44,7 +44,18 @@ Func Status_SetParsingFilesAPI()
     GUICtrlSetData($progress_label_2, Lang("labels.status.parsing_files_api"))
 EndFunc
 
+Func Status_SetParsingExternalAPI($current, $total)
+    GUICtrlSetData($progress_label_2, Lang("labels.status.parsing_external_api"))
+    
+    ; Unhide Progress Bar
+    GUICtrlSetState($progress_bar, 16)
+    $progress = Floor(($current / $total) * 100)
+    GUICtrlSetData($progress_bar, $progress)
+EndFunc
+
 Func Status_SetCheckingFiles()
+    ; Hide Progress Bar
+    GUICtrlSetState($progress_bar, 32)
     GUICtrlSetData($progress_label_2, Lang("labels.status.checking_files"))
 EndFunc
 

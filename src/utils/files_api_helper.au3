@@ -183,6 +183,9 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
     FAPI_Init()
     FAPIFile_InitDownloadList()
 
+    ; Total number of external provider files
+    $external_total = 0
+
     ; Apply condition filters
     For $file In FAPI_GetAllFilePaths()
         
@@ -197,27 +200,26 @@ Func FAPI_InstallOrUpdate($hashCheckAllFiles = False, $downloadCallback = "")
         ; Condition Filter
         If Not (FAPIFile_CheckCondition($fobj, "optimizer_mod", CD_GetOptimizerMod())) Then
             FAPI_DeleteFromFilePath($file)
+        ElseIf FAPIFile_IsCurseforge($fobj) Or FAPIFile_IsModrinth($fobj) Then
+            $external_total += 1
         EndIf
         
     Next
 
-    ; Resolve Modrinth Provider Files
-    LogWrite("[FILES API] Started processing data from Modrinth")
-    For $file In FAPI_GetAllFilePaths() 
-        $fobj = FAPI_GetFromFilePath($file)
+    ; Resolve External Provider Files
+    If $external_total > 0 Then
+        LogWrite("[FILES API] Started processing data from Modrinth and CurseForge")
+        $current = 1
+        For $file In FAPI_GetAllFilePaths() 
+            Status_SetParsingExternalAPI($current, $external_total)
+            $fobj = FAPI_GetFromFilePath($file)
 
-        FAPIFile_ProcessModrinth($fobj)
-    Next
-    LogWrite("[FILES API] Finished processing data from Modrinth")
-
-    ; Resolve CurseForge Provider Files
-    LogWrite("[FILES API] Started processing data from CurseForge")
-    For $file In FAPI_GetAllFilePaths() 
-        $fobj = FAPI_GetFromFilePath($file)
-
-        FAPIFile_ProcessCurseforge($fobj)
-    Next
-    LogWrite("[FILES API] Finished processing data from CurseForge")
+            FAPIFile_ProcessModrinth($fobj)
+            FAPIFile_ProcessCurseforge($fobj)
+            $current += 1
+        Next
+        LogWrite("[FILES API] Finished processing data from Modrinth and CurseForge")
+    EndIf
 
     Status_SetCheckingFiles()
 

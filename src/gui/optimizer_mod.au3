@@ -51,6 +51,13 @@ Func _WM_COMMAND($hWnd, $Msg, $wParam, $lParam)
 EndFunc
 
 Func OM_Dlg_Create($run_install_after_close = False, $pause_script = True)
+    ; If Optimizer Mod is not used by API, set it to "none"
+    If Not API_OptimizerExists() Then
+        CD_SetOptimizerMod("none")
+        GUICtrlSetData($om_mod_label, OM_GetSelectedName())
+        Return
+    EndIf
+
     $om_dlg_gui = GUICreate(Lang("labels.optimizer_mod"), 250, 210, -1, -1, BitOR($WS_CAPTION, $WS_POPUP, $WS_BORDER), -1, GetMainWindowHandle())
     GUISetFont(LangFontSize())
 

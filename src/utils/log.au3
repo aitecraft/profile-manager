@@ -7,17 +7,25 @@ Const $logFileLocation = "resources/pm.log"
 
 Func InitLog()
     $logfile = FileOpen($logFileLocation, $FO_APPEND)
-    FileWriteLine($logfile, "---------------- START OF LOG ----------------")
-    FileWriteLine($logfile, "Profile Manager Log - Started @ " & _Now())
+    LogWriteLineRaw("---------------- START OF LOG ----------------")
+    LogWriteLineRaw("Profile Manager Log - Started @ " & _Now())
 EndFunc
 
 Func EndLog()
-    FileWriteLine($logfile, "Profile Manager Log - Stopped @ " & _Now())
-    FileWrite($logfile, "----------------  END OF LOG  ----------------" & @CRLF & @CRLF)
+    LogWriteLineRaw("Profile Manager Log - Stopped @ " & _Now())
+    LogWriteRaw("----------------  END OF LOG  ----------------" & @CRLF & @CRLF)
     FileClose($logfile)
 EndFunc
 
-Func LogWrite($text)
+Func LogWrite($text, $end = @CRLF)
     StringReplace($text, @CRLF, " \n ")
-    FileWrite($logfile, "[" & _Now() & "] " & $text & @CRLF)
+    LogWriteRaw("[" & _Now() & "] " & $text & $end)
+EndFunc
+
+Func LogWriteRaw($text)
+    FileWrite($logfile, $text)
+EndFunc
+
+Func LogWriteLineRaw($text)
+    LogWriteRaw($text & @CRLF)
 EndFunc

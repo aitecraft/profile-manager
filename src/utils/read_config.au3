@@ -140,6 +140,10 @@ Func Config_Proprietary_Links_Exists()
     Return IsArray($links) And UBound($links) >= 1
 EndFunc
 
+Func Config_GetImports()
+    Return Json_Get($config, '.imports')
+EndFunc
+
 Func Config_Proprietary_OpenSchematicsFolderOption()
     return json_get($config, '.proprietary.open_schematics_folder_option')
 EndFunc
@@ -154,6 +158,10 @@ EndFunc
 
 Func Config_GUIGet_Misc_ReinstallFabric()
     Return Json_Get($config, '.gui.misc.reinstall_fabric')
+EndFunc
+
+Func Config_GUIGet_Misc_Import()
+    Return Json_Get($config, '.gui.misc.import')
 EndFunc
 
 Func Config_GUIGet_Misc_VerifyFiles()

@@ -37,17 +37,17 @@ File verification also works on Modrinth-provided and CurseForge-provided files.
 Updating even large modpacks will be a breeze for your users thanks to an incremental update system, that works by only downloading files that have been updated or were never on your install.
 
 ### Built for All Hardware
-Built on AutoIt3, Aitecraft Profile Manager is supported across a wide range of Windows versions, from 7 to the latest builds of 10, without any sacrifices on any version. Thanks to the lightweight nature of AutoIt, Aitecraft Profile Manager consumes <20 MB of memory! This is far lower than anything using web-based technologies. All that while having a far simpler and easier to customize codebase than a similar C/C++ codebase! (Especially GUIs)
+Built on AutoIt3, Aitecraft Profile Manager is supported across a wide range of Windows versions, from 7 to the latest builds of 11, without any sacrifices on any version. Thanks to the lightweight nature of AutoIt, Aitecraft Profile Manager consumes <20 MB of memory! This is far lower than anything using web-based technologies. All that while having a far simpler and easier to customize codebase than a similar C/C++ codebase! (Especially GUIs)
 
 ### Bootstrapper
 Included as part of this source code is the Bootstrapper, a simple tool that downloads the profile manager and keeps it updated.
 
+### Import Feature
+Helps users import Minecraft settings and mod configurations from any of their existing Minecraft installations directly into the custom directory for your modpack.
+
 ## Planned Features
 
 These are features that we plan to add before reaching v1.0.
-
-### Import Feature
-Helps users import Minecraft settings and resource packs from any of their existing Minecraft installations directly into the custom directory for your modpack.
 
 ### Download via Browser
 Looking at you OptiFine.

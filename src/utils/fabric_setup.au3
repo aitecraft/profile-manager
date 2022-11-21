@@ -16,22 +16,9 @@
 
 Global $fabric_loader_version_data
 Global $mc_version_data
-Global $target_loader_version
 
-Func FabricAPI_Init($loader_ver, $mc_ver)
-    If $loader_ver = "latest" Then
-        $loader_list_url_prototype = API_GetFabric("loader.apis.fabric_loader_list.api_endpoint")
-        $loader_list_url = StringReplace($loader_list_url_prototype, "<mc_version>", $mc_ver)
-
-        $loader_list_json = Json_FromURL($loader_list_url)
-        $loader_ver = Json_Get($loader_list_json, API_GetFabric("loader.apis.fabric_loader_list.get_latest_version"))
-    EndIf
-
-    $target_loader_version = $loader_ver
-
-    $profile_data_url_prototype = API_GetFabric("loader.apis.profile_json.api_endpoint")
-    $profile_data_url = StringReplace(StringReplace($profile_data_url_prototype, "<mc_version>", $mc_ver), "<loader_version>", $loader_ver)
-
+Func FabricAPI_Init()
+    $profile_data_url = API_GetFabric("loader.profile_json")
     $fabric_loader_version_data = Json_FromURL($profile_data_url)
 EndFunc
 
@@ -42,7 +29,7 @@ EndFunc
 Func MojangAPI_Init($mc_version)
     LogWrite("[FABRIC INSTALL] Loading data from Mojang API for " & $mc_version)
 
-    $ver_manifest = Json_FromURL(API_GetFabric("loader.apis.mojang_mc_version_list.api_endpoint"))
+    $ver_manifest = Json_FromURL(API_GetFabric("loader.version_manifest"))
     $ver_list = Json_ObjGet($ver_manifest, "versions")
 
     For $i = 0 To UBound($ver_list) - 1
@@ -67,15 +54,27 @@ EndFunc
 Func Fabric_CreateVersionJSONAndJAR()
     LogWrite("[FABRIC INSTALL] Installing Fabric version - " & FabricAPI_Get("id"))
 
-    MojangAPI_Init(API_GetFabric("loader.mc_version"))
+    MojangAPI_Init(FabricAPI_Get("inheritsFrom"))
     
     $libs = MojangAPI_Get("libraries")
     _ArrayConcatenate($libs, FabricAPI_Get("libraries"))
     MojangAPI_Put("libraries", $libs)
 
+    $game_args = MojangAPI_Get("arguments.game")
+    _ArrayConcatenate($game_args, FabricAPI_Get("arguments.game"))
+    MojangAPI_Put("arguments.game", $game_args)
+
+    $jvm_args = MojangAPI_Get("arguments.jvm")
+    _ArrayConcatenate($jvm_args, FabricAPI_Get("arguments.jvm"))
+    MojangAPI_Put("arguments.jvm", $jvm_args)
+
     MojangAPI_Put("id", FabricAPI_Get("id"))
 
     MojangAPI_Put("mainClass", FabricAPI_Get("mainClass"))
+
+    MojangAPI_Put("releaseTime", FabricAPI_Get("releaseTime"))
+
+    MojangAPI_Put("time", FabricAPI_Get("time"))
 
     MojangAPI_Put("type", "release")
 
@@ -139,7 +138,7 @@ Func Fabric_InstallOrUpdate($forced = False)
 
 
     ; Init Fabric's API Data
-    FabricAPI_Init(API_GetFabric("loader.version"), API_GetFabric("loader.mc_version"))
+    FabricAPI_Init()
     
     Fabric_CreateVersionJSONAndJAR()
 

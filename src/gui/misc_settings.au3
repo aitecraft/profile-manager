@@ -2,15 +2,23 @@
 #include "extras.au3"
 #include "../utils/update.au3"
 #include "../utils/read_config.au3"
+#include "profile_import.au3"
 
 Func MainWindowMiscSettings($top)
     MS_CreateGroup($top)
     MS_CreateButtons($top + 18)
-    Return $top + 70
+
+    If Config_GUIGet_Misc_Import() Then
+        Return $top + 110
+    Else
+        Return $top + 70
+    EndIf
 EndFunc
 
 Func MS_CreateGroup($top)
-    GUICtrlCreateGroup(Lang("labels.misc_settings"), 5, $top, 340, 60)
+    $height = 60
+    If Config_GUIGet_Misc_Import() Then $height = 100
+    GUICtrlCreateGroup(Lang("labels.misc_settings"), 5, $top, 340, $height)
 EndFunc
 
 Func MS_CreateButtons($top)
@@ -29,6 +37,13 @@ Func MS_CreateButtons($top)
     
     If Not Config_GUIGet_Misc_VerifyFiles() Then
         GUICtrlSetState(-1, 128)
+    EndIf
+
+    ; ----------------------------------------
+
+    If Config_GUIGet_Misc_Import() Then
+        GUICtrlCreateButton(Lang("buttons.import_profile"), 100, $top + 40, 150, 30)
+        GUICtrlSetOnEvent(-1, "MS_ImportProfile")
     EndIf
 
 EndFunc
@@ -53,4 +68,8 @@ Func MS_VerifyFiles()
         ;0x10 - Error Icon
         QuickOKMsgBox_Lang("file_verify_done.failure",0x10)
     EndIf
+EndFunc
+
+Func MS_ImportProfile()
+    Import_Dlg_Create()
 EndFunc
